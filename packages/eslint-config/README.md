@@ -1,3 +1,3 @@
-# `@turbo/eslint-config`
+# `@retailify/eslint-config`
 
-Collection of internal eslint configurations.
+Collection of ESLint configuration for internal use in Retailify.
