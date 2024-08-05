@@ -1,4 +1,3 @@
-import server from "@retailify/eslint-config/eslint.server.config";
+import server from '@retailify/eslint-config/eslint.config.server.js';
 
-/** @type {import("eslint").Linter.Config[]} */
 export default [...server];

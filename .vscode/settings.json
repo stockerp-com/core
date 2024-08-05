@@ -4,5 +4,7 @@
             "mode": "auto"
         }
     ],
-    "conventionalCommits.scopes": ["packages:db"]
+    "conventionalCommits.scopes": ["packages:db", "packages:validation"],
+    "editor.fontFamily": "'JetBrainsMonoNL Nerd Font Mono', comic sans",
+    "files.autoSave": "onFocusChange"
 }

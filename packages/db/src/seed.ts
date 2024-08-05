@@ -1,4 +1,4 @@
-import { join } from "path";
+import { db } from './client.js';
 
 (async () => {
     try {
@@ -7,6 +7,6 @@ import { join } from "path";
         console.error(error);
         process.exit(1);
     } finally {
-        await db?.$disconnect();
+        await db.$disconnect();
     }
 })();

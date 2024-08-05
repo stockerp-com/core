@@ -1,4 +1,3 @@
-import base from "@retailify/eslint-config/eslint.base.config";
+import base from '@retailify/eslint-config/eslint.config.base.js';
 
-/** @type {import("eslint").Linter.Config[]} */
 export default [...base];

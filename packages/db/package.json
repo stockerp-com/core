@@ -29,11 +29,11 @@
         "@retailify/eslint-config": "workspace:*",
         "@retailify/typescript-config": "workspace:*",
         "@types/node": "^22.1.0",
-        "eslint": "latest",
+        "eslint": "^9.8.0",
         "prisma": "^5.17.0",
         "rimraf": "^6.0.1",
-        "tsup": "latest",
+        "tsup": "^8.2.4",
         "tsx": "^4.16.5",
-        "typescript": "latest"
+        "typescript": "^5.4.5"
     }
 }
