@@ -1,3 +1,5 @@
+import { join } from "path";
+
 (async () => {
     try {
         // TODO: Add seed data here

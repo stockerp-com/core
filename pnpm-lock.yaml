@@ -43,7 +43,7 @@ importers:
         specifier: ^6.0.1
         version: 6.0.1
       tsup:
-        specifier: ^8.2.4
+        specifier: latest
         version: 8.2.4(tsx@4.16.5)(typescript@5.5.4)
       tsx:
         specifier: ^4.16.5
@@ -89,6 +89,28 @@ importers:
         version: 7.18.0(eslint@9.8.0)(typescript@5.5.4)
 
   packages/typescript-config: {}
+
+  packages/validation:
+    dependencies:
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
+    devDependencies:
+      '@retailify/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@retailify/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      eslint:
+        specifier: latest
+        version: 9.8.0
+      tsup:
+        specifier: latest
+        version: 8.2.4(tsx@4.16.5)(typescript@5.5.4)
+      typescript:
+        specifier: latest
+        version: 5.5.4
 
 packages:
 
@@ -1994,6 +2016,9 @@ packages:
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+
+  zod@3.23.8:
+    resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
 
 snapshots:
 
@@ -4072,3 +4097,5 @@ snapshots:
       strip-ansi: 7.1.0
 
   yocto-queue@0.1.0: {}
+
+  zod@3.23.8: {}
