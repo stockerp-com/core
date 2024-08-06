@@ -1,1 +1,1 @@
-# `admin-server`
+# Admin server
