@@ -18,6 +18,34 @@ importers:
         specifier: ^5.4.5
         version: 5.4.5
 
+  apps/admin-server:
+    dependencies:
+      '@retailify/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+      '@retailify/validation':
+        specifier: workspace:*
+        version: link:../../packages/validation
+    devDependencies:
+      '@retailify/eslint-config':
+        specifier: workspace:*
+        version: link:../../packages/eslint-config
+      '@retailify/typescript-config':
+        specifier: workspace:*
+        version: link:../../packages/typescript-config
+      '@types/node':
+        specifier: ^22.1.0
+        version: 22.1.0
+      eslint:
+        specifier: ^9.8.0
+        version: 9.8.0
+      tsup:
+        specifier: ^8.2.4
+        version: 8.2.4(tsx@4.16.5)(typescript@5.5.4)
+      typescript:
+        specifier: ^5.4.5
+        version: 5.5.4
+
   packages/db:
     dependencies:
       '@prisma/client':

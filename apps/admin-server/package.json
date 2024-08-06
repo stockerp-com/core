@@ -1,0 +1,30 @@
+{
+    "name": "admin-server",
+    "version": "1.0.0",
+    "license": "MIT",
+    "type": "module",
+    "main": "./dist/index.js",
+    "module": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
+    "files": [
+        "dist/**"
+    ],
+    "scripts": {
+        "dev": "tsup --watch",
+        "build": "tsup",
+        "test": "echo 'Add test script here'",
+        "lint": "eslint ./src --fix"
+    },
+    "dependencies": {
+        "@retailify/db": "workspace:*",
+        "@retailify/validation": "workspace:*"
+    },
+    "devDependencies": {
+        "@retailify/eslint-config": "workspace:*",
+        "@retailify/typescript-config": "workspace:*",
+        "@types/node": "^22.1.0",
+        "eslint": "^9.8.0",
+        "tsup": "^8.2.4",
+        "typescript": "^5.4.5"
+    }
+}
