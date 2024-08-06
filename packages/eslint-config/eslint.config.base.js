@@ -2,9 +2,12 @@ import js from "@eslint/js";
 import tseslint from "typescript-eslint";
 import prettier from 'eslint-plugin-prettier/recommended'
 import globals from "globals";
+import { resolve } from 'path'
+import flatCompat from "./compat.js";
 
 export default [
     ...tseslint.configs.recommended,
+    ...flatCompat.plugins("eslint-plugin-only-warn"),
     {
         files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
         languageOptions: {
