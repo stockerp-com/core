@@ -1,0 +1,30 @@
+{
+  "name": "@retailify/trpc",
+  "version": "1.0.0",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint ./src --fix"
+  },
+  "devDependencies": {
+    "@retailify/eslint-config": "workspace:*",
+    "@retailify/typescript-config": "workspace:*",
+    "@types/node": "^22.1.0",
+    "eslint": "^9.8.0",
+    "tsup": "^8.2.4",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "@trpc/client": "^10.45.2",
+    "@trpc/server": "^10.45.2",
+    "superjson": "^2.2.1"
+  }
+}

@@ -3,6 +3,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
 import cookieParser from 'cookie-parser';
+import { createExpressTrpcMiddleware } from '@retailify/trpc/src/admin-server/middleware/express.js';
 
 export const server = (): Express => {
   const app = express();
@@ -23,6 +24,8 @@ export const server = (): Express => {
   app.get('/', (_req, res) => {
     res.send({ message: 'Hello World' });
   });
+
+  app.use('/trpc', createExpressTrpcMiddleware);
 
   return app;
 };
