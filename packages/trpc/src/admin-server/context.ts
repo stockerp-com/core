@@ -14,8 +14,8 @@ export interface Session {
 
 interface CreateContextInnerOpts {
   session: Session | null;
-  db?: Db;
-  redis?: Redis;
+  db: Db;
+  redis: Redis;
   // eslint-disable-next-line no-unused-vars
   setSessionCookie: (token: string) => void;
   getSessionCookie: () => string | null;
@@ -25,6 +25,8 @@ interface CreateContextInnerOpts {
 export const createContextInner = (opts?: CreateContextInnerOpts) => ({
   session: opts?.session,
   setSessionCookie: opts?.setSessionCookie,
+  getSessionCookie: opts?.getSessionCookie,
+  clearSessionCookie: opts?.clearSessionCookie,
   db: opts?.db,
   redis: opts?.redis,
 });

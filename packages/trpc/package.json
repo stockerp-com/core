@@ -15,8 +15,9 @@
     "lint": "eslint ./src --fix"
   },
   "devDependencies": {
-    "@retailify/eslint-config": "workspace:*",
-    "@retailify/typescript-config": "workspace:*",
+    "@retailify/eslint-config": "*",
+    "@retailify/typescript-config": "*",
+    "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^22.1.0",
     "eslint": "^9.8.0",
@@ -24,12 +25,13 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@retailify/db": "workspace:*",
-    "@retailify/redis": "workspace:*",
-    "@retailify/validation": "workspace:*",
-    "@retailify/logger": "workspace:*",
+    "@retailify/db": "*",
+    "@retailify/logger": "*",
+    "@retailify/redis": "*",
+    "@retailify/validation": "*",
     "@trpc/client": "^10.45.2",
     "@trpc/server": "^10.45.2",
+    "bcrypt": "^5.1.1",
     "jsonwebtoken": "^9.0.2",
     "superjson": "^2.2.1"
   }

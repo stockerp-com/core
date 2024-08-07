@@ -10,13 +10,13 @@
     "dist/**"
   ],
   "scripts": {
-    "build": "pnpm run db:generate && tsup",
+    "build": "npm run db:generate && tsup",
     "clean": "rimraf .turbo node_modules dist",
     "db:migrate:deploy": "prisma migrate deploy",
     "db:migrate:dev": "prisma migrate dev",
     "db:push": "prisma db push",
     "db:seed": "tsx src/seed.ts",
-    "dev": "pnpm run db:generate && tsup --watch",
+    "dev": "npm run db:generate && tsup --watch",
     "db:format": "prisma format",
     "db:generate": "prisma generate",
     "lint": "eslint ./src --fix",
@@ -27,8 +27,8 @@
     "bcrypt": "^5.1.1"
   },
   "devDependencies": {
-    "@retailify/eslint-config": "workspace:*",
-    "@retailify/typescript-config": "workspace:*",
+    "@retailify/eslint-config": "*",
+    "@retailify/typescript-config": "*",
     "@types/bcrypt": "^5.0.2",
     "@types/node": "^22.1.0",
     "eslint": "^9.8.0",

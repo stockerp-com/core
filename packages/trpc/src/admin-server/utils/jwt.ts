@@ -6,7 +6,7 @@ import logger from '@retailify/logger';
 
 // Interface for the JWT payload
 interface JwtPayload {
-  sub: string; // Internal user ID
+  sub: string; // Admin ID
 }
 
 // Converts the JWT payload to a session object
