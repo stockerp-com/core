@@ -1,4 +1,4 @@
-import { adminServerSchema } from '@retailify/validation';
+import { redisSchema } from '@retailify/validation';
 import logger from '@retailify/logger';
 import { config } from 'dotenv';
 
@@ -13,17 +13,17 @@ config({
         : '.env',
 });
 
-const { data: env, success, error } = adminServerSchema.safeParse(process.env);
+const { data: env, success, error } = redisSchema.safeParse(process.env);
 
 if (success) {
   logger.info(
-    '[ apps:admin-server ] Successfully validated environment variables',
+    '[ packages:redis ] Successfully validated environment variables',
   );
 }
 
 if (error) {
   logger.fatal(
-    '[ apps:admin-server ] Failed to validate environment variables',
+    '[ packages:redis ] Failed to validate environment variables',
     error.errors,
   );
   throw new Error(error.message);

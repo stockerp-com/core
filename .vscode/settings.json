@@ -1,15 +1,16 @@
 {
-    "eslint.workingDirectories": [
-        {
-            "mode": "auto"
-        }
-    ],
-    "conventionalCommits.scopes": [
-        "packages:db",
-        "packages:validation",
-        "apps:admin-server",
-        "packages:logger"
-    ],
-    "editor.fontFamily": "'JetBrainsMonoNL Nerd Font Mono', comic sans",
-    "files.autoSave": "onFocusChange"
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ],
+  "conventionalCommits.scopes": [
+    "packages:db",
+    "packages:validation",
+    "apps:admin-server",
+    "packages:logger",
+    "packages:redis"
+  ],
+  "editor.fontFamily": "'JetBrainsMonoNL Nerd Font Mono', comic sans",
+  "files.autoSave": "onFocusChange"
 }

@@ -1,0 +1,33 @@
+{
+  "name": "@retailify/redis",
+  "version": "1.0.0",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "dev": "NODE_ENV=development tsx --watch src/index.ts",
+    "build": "tsup",
+    "lint": "eslint ./src --fix"
+  },
+  "dependencies": {
+    "@retailify/logger": "workspace:*",
+    "@retailify/validation": "workspace:*",
+    "dotenv": "^16.4.5",
+    "redis": "^4.7.0"
+  },
+  "devDependencies": {
+    "@retailify/eslint-config": "workspace:*",
+    "@retailify/typescript-config": "workspace:*",
+    "@types/node": "^22.1.0",
+    "eslint": "^9.8.0",
+    "prisma": "^5.17.0",
+    "tsup": "^8.2.4",
+    "tsx": "^4.16.5",
+    "typescript": "^5.4.5"
+  }
+}
