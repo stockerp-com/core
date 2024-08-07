@@ -17,14 +17,20 @@
   "devDependencies": {
     "@retailify/eslint-config": "workspace:*",
     "@retailify/typescript-config": "workspace:*",
+    "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^22.1.0",
     "eslint": "^9.8.0",
     "tsup": "^8.2.4",
     "typescript": "^5.4.5"
   },
   "dependencies": {
+    "@retailify/db": "workspace:*",
+    "@retailify/redis": "workspace:*",
+    "@retailify/validation": "workspace:*",
+    "@retailify/logger": "workspace:*",
     "@trpc/client": "^10.45.2",
     "@trpc/server": "^10.45.2",
+    "jsonwebtoken": "^9.0.2",
     "superjson": "^2.2.1"
   }
 }

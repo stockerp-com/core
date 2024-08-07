@@ -4,9 +4,23 @@ import cors from 'cors';
 import rateLimit from 'express-rate-limit';
 import cookieParser from 'cookie-parser';
 import { createExpressTrpcMiddleware } from '@retailify/trpc/src/admin-server/middleware/express.js';
+import { db } from '@retailify/db';
+import { redis } from '@retailify/redis';
+import logger from '@retailify/logger';
 
 export const server = (): Express => {
   const app = express();
+
+  (async () => {
+    redis.on('error', (err) => {
+      logger.fatal('Redis Client Error', err);
+    });
+    redis.on('ready', () => logger.info('Redis Client Ready'));
+
+    await redis.connect();
+
+    await redis.ping();
+  })();
 
   app
     .use(express.json())

@@ -5,3 +5,5 @@ export const redisSchema = z.object({
   REDIS_PASSWORD: z.string().default(''),
   REDIS_PORT: z.coerce.number().default(6379),
 });
+
+export type RedisEnv = z.infer<typeof redisSchema>;
