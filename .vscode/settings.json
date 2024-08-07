@@ -10,7 +10,8 @@
     "apps:admin-server",
     "packages:logger",
     "packages:redis",
-    "packages:trpc"
+    "packages:trpc",
+    "apps:admin-client"
   ],
   "editor.fontFamily": "'JetBrainsMonoNL Nerd Font Mono', comic sans",
   "files.autoSave": "onFocusChange"

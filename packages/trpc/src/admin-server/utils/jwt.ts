@@ -1,8 +1,7 @@
-import { decode, JsonWebTokenError, sign, verify } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import { Session } from '../context.js';
 import { env } from '../env.js';
 import { TRPCError } from '@trpc/server';
-import logger from '@retailify/logger';
 
 // Interface for the JWT payload
 interface JwtPayload {
@@ -22,7 +21,7 @@ export const signJwt = (session: Session) => {
     sub: session.id.toString(),
   };
 
-  return sign(payload, env.JWT_SECRET, {
+  return jwt.sign(payload, env.JWT_SECRET, {
     expiresIn: '1h',
   });
 };
@@ -30,7 +29,7 @@ export const signJwt = (session: Session) => {
 // Decodes a JWT token and returns the corresponding session
 export const decodeJwt = (token: string): Session => {
   try {
-    const payload = decode(token) as JwtPayload | null;
+    const payload = jwt.decode(token) as JwtPayload | null;
     if (!payload) {
       throw new TRPCError({
         code: 'UNAUTHORIZED',
@@ -39,40 +38,24 @@ export const decodeJwt = (token: string): Session => {
     }
 
     return payloadToSession(payload);
-  } catch (error) {
-    if (error instanceof JsonWebTokenError) {
-      throw new TRPCError({
-        code: 'UNAUTHORIZED',
-        message: 'Invalid token',
-      });
-    } else {
-      logger.error('An error occurred while decoding the token', error);
-      throw new TRPCError({
-        code: 'INTERNAL_SERVER_ERROR',
-        message: 'An error occurred while decoding the token',
-      });
-    }
+  } catch {
+    throw new TRPCError({
+      code: 'UNAUTHORIZED',
+      message: 'Invalid token',
+    });
   }
 };
 
 // Verifies a JWT token and returns the corresponding session
 export const verifyJwt = (token: string): Session => {
   try {
-    const payload = verify(token, env.JWT_SECRET) as JwtPayload;
+    const payload = jwt.verify(token, env.JWT_SECRET) as JwtPayload;
 
     return payloadToSession(payload);
-  } catch (error) {
-    if (error instanceof JsonWebTokenError) {
-      throw new TRPCError({
-        code: 'UNAUTHORIZED',
-        message: 'Invalid token',
-      });
-    } else {
-      logger.error('An error occurred while verifying the token', error);
-      throw new TRPCError({
-        code: 'INTERNAL_SERVER_ERROR',
-        message: 'An error occurred while verifying the token',
-      });
-    }
+  } catch {
+    throw new TRPCError({
+      code: 'UNAUTHORIZED',
+      message: 'Invalid token',
+    });
   }
 };
