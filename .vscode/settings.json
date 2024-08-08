@@ -11,7 +11,8 @@
     "packages:logger",
     "packages:redis",
     "packages:trpc",
-    "apps:admin-client"
+    "apps:admin-client",
+    "packages:ui"
   ],
   "editor.fontFamily": "'JetBrainsMonoNL Nerd Font Mono', comic sans",
   "files.autoSave": "onFocusChange"
