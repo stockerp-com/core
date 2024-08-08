@@ -12,7 +12,6 @@
   },
   "aliases": {
     "components": "@retailify/ui/components",
-    "utils": "@retailify/ui/lib/utils",
-    "ui": "src/components/ui"
+    "utils": "@retailify/ui/lib/utils"
   }
 }
