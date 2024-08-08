@@ -12,7 +12,8 @@
     "packages:redis",
     "packages:trpc",
     "apps:admin-client",
-    "packages:ui"
+    "packages:ui",
+    "packages:i18n"
   ],
   "editor.fontFamily": "'JetBrainsMonoNL Nerd Font Mono', comic sans",
   "files.autoSave": "onFocusChange"
