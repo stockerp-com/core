@@ -8,6 +8,7 @@ import { hash } from 'bcrypt';
         email: 'john@doe',
         fullName: 'John Doe',
         pwHash: await hash('password', 10),
+        preferredLanguage: 'EN',
       },
     });
   } catch (error) {
