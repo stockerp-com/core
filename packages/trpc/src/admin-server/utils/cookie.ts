@@ -1,7 +1,7 @@
 import { CreateExpressContextOptions } from '@trpc/server/adapters/express';
 import { env } from '../env.js';
 
-const COOKIE_NAME = 'token';
+const COOKIE_NAME = 'admin:token';
 
 export const setSessionCookie = (
   res: CreateExpressContextOptions['res'],

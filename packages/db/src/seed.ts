@@ -3,7 +3,7 @@ import { hash } from 'bcrypt';
 
 (async () => {
   try {
-    await db.admin.create({
+    await db.employee.create({
       data: {
         email: 'john@doe',
         fullName: 'John Doe',

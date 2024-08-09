@@ -5,7 +5,7 @@ import { TRPCError } from '@trpc/server';
 
 // Interface for the JWT payload
 interface JwtPayload {
-  sub: string; // Admin ID
+  sub: string; // Employee ID
 }
 
 // Converts the JWT payload to a session object
