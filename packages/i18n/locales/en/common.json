@@ -8,5 +8,6 @@
     "add": "Add",
     "back": "Back",
     "next": "Next"
-  }
+  },
+  "greeting": "Hello, World!"
 }

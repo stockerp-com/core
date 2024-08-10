@@ -4,14 +4,16 @@ import cors from 'cors';
 import rateLimit from 'express-rate-limit';
 import cookieParser from 'cookie-parser';
 import { createExpressTrpcMiddleware } from '@retailify/trpc/src/admin-server/middleware/express.js';
-import { db } from '@retailify/db';
 import { redis } from '@retailify/redis';
 import logger from '@retailify/logger';
+import { db } from '@retailify/db';
+import * as i18nextMiddleware from 'i18next-http-middleware';
+import { initI18n } from './utils/i18n.js';
 
-export const server = (): Express => {
+export const server = async (): Promise<Express> => {
   const app = express();
 
-  (async () => {
+  await (async () => {
     redis.on('error', (err) => {
       logger.fatal('Redis Client Error', err);
     });
@@ -21,6 +23,8 @@ export const server = (): Express => {
 
     await redis.ping();
   })();
+
+  const i18n = await initI18n();
 
   app
     .use(express.json())
@@ -33,13 +37,17 @@ export const server = (): Express => {
         limit: 100,
       }),
     )
-    .use(cookieParser());
+    .use(cookieParser())
+    .use(i18nextMiddleware.handle(i18n));
 
-  app.get('/', (_req, res) => {
-    res.send({ message: 'Hello World' });
+  app.get('/', (req, res) => {
+    res.send({
+      message: req.t('greeting'),
+      your_locale: req.language,
+    });
   });
 
-  app.use('/trpc', createExpressTrpcMiddleware);
+  app.use('/trpc', createExpressTrpcMiddleware(db, redis));
 
   return app;
 };

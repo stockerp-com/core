@@ -1,4 +1,4 @@
-import { redisSchema } from '@retailify/validation';
+import { redisSchema } from '@retailify/validation/env/redis.schema';
 import logger from '@retailify/logger';
 import { config } from 'dotenv';
 
