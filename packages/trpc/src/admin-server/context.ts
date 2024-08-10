@@ -7,6 +7,7 @@ import {
   setSessionCookie,
 } from './utils/cookie.js';
 import { TRPCError } from '@trpc/server';
+import { type TFunction } from 'i18next';
 
 export interface Session {
   id: number;
@@ -16,6 +17,7 @@ interface CreateContextInnerOpts {
   session: Session | null;
   db: Db;
   redis: Redis;
+  t: TFunction;
   // eslint-disable-next-line no-unused-vars
   setSessionCookie: (token: string) => void;
   getSessionCookie: () => string | null;
@@ -32,7 +34,12 @@ export const createContextInner = (opts?: CreateContextInnerOpts) => ({
 });
 
 interface CreateContextOpts {
-  expressContextOpts: CreateExpressContextOptions;
+  expressContextOpts: {
+    req: CreateExpressContextOptions['req'] & {
+      t: TFunction;
+    };
+    res: CreateExpressContextOptions['res'];
+  };
   db: Db;
   redis: Redis;
 }
@@ -56,6 +63,7 @@ export const createContext = (opts?: CreateContextOpts) => {
     setSessionCookie: (token: string) => setSessionCookie(res, token),
     getSessionCookie: () => getSessionCookie(req),
     clearSessionCookie: () => clearSessionCookie(res),
+    t: req.t,
   });
 };
 
