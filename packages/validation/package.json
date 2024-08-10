@@ -1,28 +1,22 @@
 {
-    "name": "@retailify/validation",
-    "version": "1.0.0",
-    "license": "MIT",
-    "type": "module",
-    "main": "./dist/index.js",
-    "module": "./dist/index.mjs",
-    "types": "./dist/index.d.ts",
-    "files": [
-        "dist/**"
-    ],
-    "scripts": {
-        "build": "tsup",
-        "dev": "tsup --watch",
-        "lint": "eslint ./src --fix"
-    },
-    "devDependencies": {
-        "@retailify/eslint-config": "*",
-        "@retailify/typescript-config": "*",
-        "@types/node": "^22.1.0",
-        "eslint": "^9.8.0",
-        "tsup": "^8.2.4",
-        "typescript": "^5.4.5"
-    },
-    "dependencies": {
-        "zod": "^3.23.8"
-    }
+  "name": "@retailify/validation",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./*": "./src/*.ts"
+  },
+  "scripts": {
+    "lint": "eslint ./src --fix"
+  },
+  "devDependencies": {
+    "@retailify/eslint-config": "*",
+    "@retailify/typescript-config": "*",
+    "@types/node": "^22.1.0",
+    "eslint": "^9.8.0",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
+  }
 }

@@ -1,8 +1,8 @@
 import { publicProcedure } from '../../../procedures/public.js';
-import { signUpSchema } from '@retailify/validation';
 import { hash } from 'bcrypt';
 import { processSession } from '../../../utils/session.js';
 import { TRPCError } from '@trpc/server';
+import { signUpSchema } from '@retailify/validation/admin/auth/sign-up.schema';
 
 export const signUpHandler = publicProcedure
   .input(signUpSchema)

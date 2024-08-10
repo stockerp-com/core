@@ -6,7 +6,7 @@ export default defineConfig({
   clean: true,
   dts: true,
   entry: ['src/admin-server/index.ts', 'src/client/index.ts'],
-  format: ['cjs', 'esm'],
+  format: ['esm'],
   minify: isProduction,
   sourcemap: true,
   external: [/generated/],

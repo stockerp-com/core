@@ -1,4 +1,4 @@
-import { adminServerSchema } from '@retailify/validation';
+import { adminServerSchema } from '@retailify/validation/env/admin-server.schema';
 import logger from '@retailify/logger';
 import { config } from 'dotenv';
 
