@@ -4,6 +4,7 @@ import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { Suspense, useState } from 'react';
 import { httpBatchLink } from '@trpc/client';
 import { trpc } from './utils/trpc';
+import SuperJSON from 'superjson';
 
 const router = createRouter({ routeTree });
 
@@ -20,12 +21,7 @@ export function AppProvider() {
       links: [
         httpBatchLink({
           url: 'http://localhost:3000/trpc',
-          // You can pass any HTTP headers you wish here
-          // async headers() {
-          //   return {
-          //     authorization: getAuthCookie(),
-          //   };
-          // },
+          transformer: SuperJSON,
         }),
       ],
     }),
