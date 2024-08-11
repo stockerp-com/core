@@ -3,7 +3,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
 import cookieParser from 'cookie-parser';
-import { createExpressTrpcMiddleware } from '@retailify/trpc/src/admin-server/middleware/express.js';
+import { createExpressTrpcMiddleware } from '@retailify/trpc/admin-server/middleware/express';
 import { redis } from '@retailify/redis';
 import logger from '@retailify/logger';
 import { db } from '@retailify/db';

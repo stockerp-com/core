@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
+import { TRPCError } from '@trpc/server';
 import { Session } from '../context.js';
 import { env } from '../env.js';
-import { TRPCError } from '@trpc/server';
 
 // Interface for the JWT payload
 interface JwtPayload {

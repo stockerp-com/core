@@ -31,6 +31,7 @@ export const createContextInner = (opts?: CreateContextInnerOpts) => ({
   clearSessionCookie: opts?.clearSessionCookie,
   db: opts?.db,
   redis: opts?.redis,
+  t: opts?.t,
 });
 
 interface CreateContextOpts {

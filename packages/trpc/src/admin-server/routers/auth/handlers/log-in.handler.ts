@@ -1,8 +1,8 @@
 import { TRPCError } from '@trpc/server';
 import { publicProcedure } from '../../../procedures/public.js';
 import { compare } from 'bcrypt';
-import { processSession } from '../../../utils/session.js';
 import { logInSchema } from '@retailify/validation/admin/auth/log-in.schema';
+import { processSession } from '../../../utils/session.js';
 
 export const logInHandler = publicProcedure
   .input(logInSchema)

@@ -3,15 +3,10 @@
   "version": "1.0.0",
   "license": "MIT",
   "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
-  "files": [
-    "dist/**"
-  ],
+  "exports": {
+    "./*": "./src/*.ts"
+  },
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
     "lint": "eslint ./src --fix"
   },
   "devDependencies": {
@@ -21,7 +16,6 @@
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^22.1.0",
     "eslint": "^9.8.0",
-    "tsup": "^8.2.4",
     "typescript": "^5.4.5"
   },
   "dependencies": {
@@ -29,8 +23,8 @@
     "@retailify/logger": "*",
     "@retailify/redis": "*",
     "@retailify/validation": "*",
-    "@trpc/client": "^10.45.2",
-    "@trpc/server": "^10.45.2",
+    "@trpc/client": "^11.0.0-rc.477",
+    "@trpc/server": "^11.0.0-rc.477",
     "bcrypt": "^5.1.1",
     "i18next": "^23.12.2",
     "jsonwebtoken": "^9.0.2",
