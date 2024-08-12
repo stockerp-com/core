@@ -1,6 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import SubmitButton from '@retailify/ui/components/form/SubmitButton';
-import { Button } from '@retailify/ui/components/ui/button';
 import {
   Form,
   FormControl,
@@ -52,7 +51,7 @@ export default function LogInForm() {
                   {...field}
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage t={t} />
             </FormItem>
           )}
         />
@@ -69,7 +68,7 @@ export default function LogInForm() {
                   {...field}
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage t={t} />
             </FormItem>
           )}
         />
