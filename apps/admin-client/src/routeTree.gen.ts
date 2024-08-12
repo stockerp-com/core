@@ -14,6 +14,7 @@ import { Route as rootRoute } from './routes/~__root'
 import { Route as AuthImport } from './routes/~_auth'
 import { Route as IndexImport } from './routes/~index'
 import { Route as AuthSignUpImport } from './routes/~_auth/~sign-up'
+import { Route as AuthSignInImport } from './routes/~_auth/~sign-in'
 
 // Create/Update Routes
 
@@ -29,6 +30,11 @@ const IndexRoute = IndexImport.update({
 
 const AuthSignUpRoute = AuthSignUpImport.update({
   path: '/sign-up',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthSignInRoute = AuthSignInImport.update({
+  path: '/sign-in',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -50,6 +56,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthImport
       parentRoute: typeof rootRoute
     }
+    '/_auth/sign-in': {
+      id: '/_auth/sign-in'
+      path: '/sign-in'
+      fullPath: '/sign-in'
+      preLoaderRoute: typeof AuthSignInImport
+      parentRoute: typeof AuthImport
+    }
     '/_auth/sign-up': {
       id: '/_auth/sign-up'
       path: '/sign-up'
@@ -64,7 +77,7 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
-  AuthRoute: AuthRoute.addChildren({ AuthSignUpRoute }),
+  AuthRoute: AuthRoute.addChildren({ AuthSignInRoute, AuthSignUpRoute }),
 })
 
 /* prettier-ignore-end */
@@ -85,8 +98,13 @@ export const routeTree = rootRoute.addChildren({
     "/_auth": {
       "filePath": "~_auth.tsx",
       "children": [
+        "/_auth/sign-in",
         "/_auth/sign-up"
       ]
+    },
+    "/_auth/sign-in": {
+      "filePath": "~_auth/~sign-in.tsx",
+      "parent": "/_auth"
     },
     "/_auth/sign-up": {
       "filePath": "~_auth/~sign-up.tsx",

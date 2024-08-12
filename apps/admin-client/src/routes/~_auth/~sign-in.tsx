@@ -1,49 +1,49 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import AuthTitle from './components/AuthTitle';
+import { trpc } from '../../utils/trpc';
+import { toast } from '@retailify/ui/lib/toast';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import {
-  SignUpInput,
-  signUpSchema,
-} from '@retailify/validation/admin/auth/sign-up.schema';
+  SignInInput,
+  signInSchema,
+} from '@retailify/validation/admin/auth/sign-in.schema';
 import {
   Form,
+  FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormControl,
   FormMessage,
 } from '@retailify/ui/components/ui/form';
-import SubmitButton from '@retailify/ui/components/form/SubmitButton';
-import { trpc } from '../../utils/trpc';
-import { SignIn } from 'phosphor-react';
-import { PasswordInput } from '@retailify/ui/components/form/PasswordInput';
 import { Input } from '@retailify/ui/components/ui/input';
-import { toast } from '@retailify/ui/lib/toast';
+import { PasswordInput } from '@retailify/ui/components/form/PasswordInput';
+import SubmitButton from '@retailify/ui/components/form/SubmitButton';
+import { SignIn } from 'phosphor-react';
 
-export const Route = createFileRoute('/_auth/sign-up')({
-  component: SignUpComponent,
+export const Route = createFileRoute('/_auth/sign-in')({
+  component: SignInComponent,
 });
 
-function SignUpComponent() {
+function SignInComponent() {
   const { t } = useTranslation();
 
   return (
     <div className="flex flex-col gap-16">
       <AuthTitle
-        title={t('content:auth.sign_up.title')}
-        subtitle={t('content:auth.sign_up.subtitle')}
+        title={t('content:auth.sign_in.title')}
+        subtitle={t('content:auth.sign_in.subtitle')}
       />
-      <SignUpForm />
+      <SignInForm />
     </div>
   );
 }
 
-function SignUpForm() {
+function SignInForm() {
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
-  const { mutate, isPending } = trpc.auth.signUp.useMutation({
+  const { t } = useTranslation();
+  const { mutate, isPending } = trpc.auth.signIn.useMutation({
     onSuccess({ message }) {
       toast.success(message);
       navigate({
@@ -55,17 +55,15 @@ function SignUpForm() {
     },
   });
 
-  const form = useForm<SignUpInput>({
-    resolver: zodResolver(signUpSchema),
+  const form = useForm<SignInInput>({
+    resolver: zodResolver(signInSchema),
     defaultValues: {
-      fullName: '',
       email: '',
       password: '',
-      preferredLanguage: i18n.language,
     },
   });
 
-  function onSubmit(values: SignUpInput) {
+  function onSubmit(values: SignInInput) {
     mutate(values);
   }
 
@@ -77,37 +75,17 @@ function SignUpForm() {
       >
         <FormField
           control={form.control}
-          name="fullName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel required>
-                {t('content:auth.sign_up.form_fields.full_name.label')}
-              </FormLabel>
-              <FormControl>
-                <Input
-                  placeholder={t(
-                    'content:auth.sign_up.form_fields.full_name.placeholder',
-                  )}
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage t={t} />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
           name="email"
           render={({ field }) => (
             <FormItem>
               <FormLabel required>
-                {t('content:auth.sign_up.form_fields.email.label')}
+                {t('content:auth.sign_in.form_fields.email.label')}
               </FormLabel>
               <FormControl>
                 <Input
                   type="email"
                   placeholder={t(
-                    'content:auth.sign_up.form_fields.email.placeholder',
+                    'content:auth.sign_in.form_fields.email.placeholder',
                   )}
                   {...field}
                 />
@@ -122,12 +100,12 @@ function SignUpForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel required>
-                {t('content:auth.sign_up.form_fields.password.label')}
+                {t('content:auth.sign_in.form_fields.password.label')}
               </FormLabel>
               <FormControl>
                 <PasswordInput
                   placeholder={t(
-                    'content:auth.sign_up.form_fields.password.placeholder',
+                    'content:auth.sign_in.form_fields.password.placeholder',
                   )}
                   t={t}
                   {...field}
@@ -140,7 +118,7 @@ function SignUpForm() {
         <SubmitButton
           addMt
           loading={isPending}
-          text={t('common:actions.sign_up')}
+          text={t('common:actions.sign_in')}
           icon={SignIn}
         />
       </form>

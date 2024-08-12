@@ -15,7 +15,9 @@ export const signInHandler = publicProcedure
     if (!employee) {
       throw new TRPCError({
         code: 'BAD_REQUEST',
-        message: ctx.t?.('res:auth.sign_in.invalid_credentials'),
+        message: ctx.t?.('res:auth.sign_in.invalid_email', {
+          email: input.email,
+        }),
       });
     }
 
@@ -23,7 +25,7 @@ export const signInHandler = publicProcedure
     if (!validPassword) {
       throw new TRPCError({
         code: 'BAD_REQUEST',
-        message: ctx.t?.('res:auth.sign_in.invalid_credentials'),
+        message: ctx.t?.('res:auth.sign_in.invalid_password'),
       });
     }
 
