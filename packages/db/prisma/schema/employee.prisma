@@ -7,11 +7,5 @@ model Employee {
   email    String @unique
   pwHash   String
 
-  preferredLanguage PreferredLanguage
-}
-
-enum PreferredLanguage {
-  EN
-  RU
-  UA
+  preferredLanguage String
 }

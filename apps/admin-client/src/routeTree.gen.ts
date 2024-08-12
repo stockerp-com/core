@@ -12,8 +12,8 @@
 
 import { Route as rootRoute } from './routes/~__root'
 import { Route as AuthImport } from './routes/~_auth'
+import { Route as IndexImport } from './routes/~index'
 import { Route as AuthSignUpImport } from './routes/~_auth/~sign-up'
-import { Route as AuthLogInImport } from './routes/~_auth/~log-in'
 
 // Create/Update Routes
 
@@ -22,13 +22,13 @@ const AuthRoute = AuthImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthSignUpRoute = AuthSignUpImport.update({
-  path: '/sign-up',
-  getParentRoute: () => AuthRoute,
+const IndexRoute = IndexImport.update({
+  path: '/',
+  getParentRoute: () => rootRoute,
 } as any)
 
-const AuthLogInRoute = AuthLogInImport.update({
-  path: '/log-in',
+const AuthSignUpRoute = AuthSignUpImport.update({
+  path: '/sign-up',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -36,19 +36,19 @@ const AuthLogInRoute = AuthLogInImport.update({
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
     '/_auth': {
       id: '/_auth'
       path: ''
       fullPath: ''
       preLoaderRoute: typeof AuthImport
       parentRoute: typeof rootRoute
-    }
-    '/_auth/log-in': {
-      id: '/_auth/log-in'
-      path: '/log-in'
-      fullPath: '/log-in'
-      preLoaderRoute: typeof AuthLogInImport
-      parentRoute: typeof AuthImport
     }
     '/_auth/sign-up': {
       id: '/_auth/sign-up'
@@ -63,7 +63,8 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren({
-  AuthRoute: AuthRoute.addChildren({ AuthLogInRoute, AuthSignUpRoute }),
+  IndexRoute,
+  AuthRoute: AuthRoute.addChildren({ AuthSignUpRoute }),
 })
 
 /* prettier-ignore-end */
@@ -74,19 +75,18 @@ export const routeTree = rootRoute.addChildren({
     "__root__": {
       "filePath": "~__root.tsx",
       "children": [
+        "/",
         "/_auth"
       ]
+    },
+    "/": {
+      "filePath": "~index.tsx"
     },
     "/_auth": {
       "filePath": "~_auth.tsx",
       "children": [
-        "/_auth/log-in",
         "/_auth/sign-up"
       ]
-    },
-    "/_auth/log-in": {
-      "filePath": "~_auth/~log-in.tsx",
-      "parent": "/_auth"
     },
     "/_auth/sign-up": {
       "filePath": "~_auth/~sign-up.tsx",

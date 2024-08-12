@@ -1,8 +1,4 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router';
-
-// @ts-expect-error - required for image optimization
-import logotype from '../assets/logotype-black.svg?format=webp';
-import { Badge } from '@retailify/ui/components/ui/badge';
 import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/_auth')({
@@ -19,12 +15,7 @@ function AuthComponent() {
           <Outlet />
         </main>
       </div>
-      <div className="w-full h-full bg-muted flex flex-col gap-2 items-center justify-center">
-        <img src={logotype} className="max-w-[30%] w-full drop-shadow-sm" />
-        <Badge variant="outline">
-          <i>{t('glossary:roles.admin')}</i>
-        </Badge>
-      </div>
+      <div className="w-full h-full hidden bg-muted lg:flex flex-col gap-2 items-center justify-center"></div>
     </div>
   );
 }

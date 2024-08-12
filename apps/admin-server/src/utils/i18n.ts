@@ -14,7 +14,7 @@ export const initI18n = async () => {
     .init({
       fallbackLng: 'en',
       defaultNS: 'common',
-      ns: ['common', 'glossary', 'auth'],
+      ns: ['common', 'content', 'errors', 'res'],
       backend: {
         loadPath: path.resolve(
           __dirname,

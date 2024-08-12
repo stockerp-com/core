@@ -1,0 +1,20 @@
+{
+  "http": {
+    "400": "Bad Request",
+    "401": "Unauthorized",
+    "403": "Forbidden",
+    "404": "Not Found",
+    "408": "Request Timeout",
+    "429": "Too Many Requests",
+    "500": "Internal Server Error"
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Please enter a valid email address",
+    "password": "Password must contain at least one uppercase letter, one lowercase letter, one number, one special character, and be at least 12 characters long.",
+    "min_one": "This field must be at least {{count}} character",
+    "min_other": "This field must be at least {{count}} characters",
+    "max_one": "This field must be at most {{count}} character",
+    "max_other": "This field must be at most {{count}} characters"
+  }
+}

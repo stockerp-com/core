@@ -1,13 +1,23 @@
 {
-  "button": {
+  "roles": {
+    "admin": "Administrator"
+  },
+  "actions": {
     "submit": "Submit",
     "cancel": "Cancel",
     "save": "Save",
-    "delete": "Delete",
     "edit": "Edit",
+    "delete": "Delete",
     "add": "Add",
-    "back": "Back",
-    "next": "Next"
-  },
-  "greeting": "Hello, World!"
+    "view": "View",
+    "search": "Search",
+    "clear": "Clear",
+    "reset": "Reset",
+    "sign_up": "Sign up",
+    "sign_in": "Sign in",
+    "sign_out": "Sign out",
+    "reset_password": "Reset password",
+    "hide_password": "Hide password",
+    "show_password": "Show password"
+  }
 }

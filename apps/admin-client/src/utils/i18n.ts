@@ -9,7 +9,7 @@ const options: InitOptions = {
     escapeValue: false,
   },
   defaultNS: 'common',
-  ns: ['common', 'glossary', 'auth', 'validation'],
+  ns: ['common', 'content', 'errors', 'res'],
 };
 
 i18next

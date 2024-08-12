@@ -16,7 +16,9 @@ export const signUpHandler = publicProcedure
     if (existingUser) {
       throw new TRPCError({
         code: 'BAD_REQUEST',
-        message: 'Email already in use',
+        message: ctx.t?.('res:auth.sign_up.email_taken', {
+          email: input.email,
+        }),
       });
     }
 
@@ -32,7 +34,7 @@ export const signUpHandler = publicProcedure
     if (!employee) {
       throw new TRPCError({
         code: 'INTERNAL_SERVER_ERROR',
-        message: 'Failed to create user',
+        message: ctx.t?.('res:auth.sign_up.failed'),
       });
     }
 
@@ -41,6 +43,8 @@ export const signUpHandler = publicProcedure
     });
 
     return {
-      message: 'Successfully signed up',
+      message: ctx.t?.('res:auth.sign_up.success', {
+        email: input.email,
+      }),
     };
   });

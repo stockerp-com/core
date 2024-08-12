@@ -150,14 +150,29 @@ const FormDescription = React.forwardRef<
 });
 FormDescription.displayName = 'FormDescription';
 
+const parseErrorString = (errorString: string) => {
+  const [path, query] = errorString.split('?');
+  const params = new URLSearchParams(query);
+  const options: Record<string, string | number> = {};
+  params.forEach((value, key) => {
+    options[key] = key === 'count' ? Number(value) : value;
+  });
+  return { path, options };
+};
+
 const FormMessage = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement> & {
-    t: (key: string) => string;
+    t: (key: string, options?: Record<string, string | number>) => string;
   }
 >(({ className, children, t, ...props }, ref) => {
   const { error, formMessageId } = useFormField();
-  const body = error ? t(String(error?.message)) : children;
+  const errorMessage = error ? String(error?.message) : '';
+
+  const { path, options } = errorMessage
+    ? parseErrorString(errorMessage)
+    : { path: '', options: {} };
+  const body = error ? (path ? t(path, options) : undefined) : children;
 
   if (!body) {
     return null;
@@ -167,7 +182,10 @@ const FormMessage = React.forwardRef<
     <p
       ref={ref}
       id={formMessageId}
-      className={cn('text-[0.8rem] font-medium text-destructive', className)}
+      className={cn(
+        'text-[0.8rem] font-medium text-destructive leading-4',
+        className,
+      )}
       {...props}
     >
       {body}

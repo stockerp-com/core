@@ -1,0 +1,25 @@
+{
+  "auth": {
+    "sign_up": {
+      "success": "Successfully registered as \"{{email}}\"",
+      "email_taken": "\"{{email}}\" is already taken",
+      "failed": "Failed to register"
+    },
+    "forgot_password": {
+      "link_sent": "We have emailed you a link to reset your password",
+      "invalid_email": "There is no account with the email \"{{email}}\"",
+      "success": "You have successfully reset your password",
+      "failed": "Failed to send password reset email"
+    },
+    "sign_in": {
+      "success": "Successfully signed in as \"{{email}}\"",
+      "invalid_email": "There is no account with the email \"{{email}}\"",
+      "invalid_password": "Invalid password",
+      "failed": "Failed to sign in"
+    },
+    "sign_out": {
+      "success": "Successfully signed out",
+      "failed": "Failed to sign out"
+    }
+  }
+}

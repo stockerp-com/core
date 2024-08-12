@@ -1,11 +1,11 @@
 import { TRPCError } from '@trpc/server';
 import { publicProcedure } from '../../../procedures/public.js';
 import { compare } from 'bcrypt';
-import { logInSchema } from '@retailify/validation/admin/auth/log-in.schema';
 import { processSession } from '../../../utils/session.js';
+import { signInSchema } from '@retailify/validation/admin/auth/sign-in.schema';
 
-export const logInHandler = publicProcedure
-  .input(logInSchema)
+export const signInHandler = publicProcedure
+  .input(signInSchema)
   .mutation(async ({ ctx, input }) => {
     const employee = await ctx.db?.employee.findUnique({
       where: {
@@ -14,16 +14,16 @@ export const logInHandler = publicProcedure
     });
     if (!employee) {
       throw new TRPCError({
-        code: 'NOT_FOUND',
-        message: 'Employee not found',
+        code: 'BAD_REQUEST',
+        message: ctx.t?.('res:auth.sign_in.invalid_credentials'),
       });
     }
 
     const validPassword = await compare(input.password, employee.pwHash);
     if (!validPassword) {
       throw new TRPCError({
-        code: 'UNAUTHORIZED',
-        message: 'Invalid password',
+        code: 'BAD_REQUEST',
+        message: ctx.t?.('res:auth.sign_in.invalid_credentials'),
       });
     }
 
@@ -32,6 +32,8 @@ export const logInHandler = publicProcedure
     });
 
     return {
-      message: 'Successfully logged in',
+      message: ctx.t?.('res:auth.sign_in.success', {
+        email: input.email,
+      }),
     };
   });

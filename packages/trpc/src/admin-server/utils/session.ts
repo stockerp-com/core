@@ -36,7 +36,7 @@ export const clearSession = async (ctx: Context) => {
   if (!session) {
     throw new TRPCError({
       code: 'UNAUTHORIZED',
-      message: 'Unauthorized',
+      message: ctx.t?.('res:auth.sign_out.failed'),
     });
   }
 

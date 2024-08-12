@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '../ui/button';
+import { Button, ButtonProps } from '../ui/button';
 import { cn } from '@retailify/ui/lib/utils';
 import { Spinner } from 'phosphor-react';
 
@@ -14,7 +14,7 @@ export default function SubmitButton(props: {
     <Button
       className={cn(
         'flex items-center justify-center gap-2',
-        props.addMt ? 'mt-4' : undefined,
+        props.addMt ? 'mt-8' : undefined,
         props.loading ? 'cursor-wait' : undefined,
       )}
       disabled={props.disabled || props.loading}

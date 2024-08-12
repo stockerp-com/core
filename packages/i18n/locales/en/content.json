@@ -1,0 +1,58 @@
+{
+  "auth": {
+    "sign_up": {
+      "title": "Sign up",
+      "subtitle": "Create your account",
+      "form_fields": {
+        "full_name": {
+          "label": "Full name",
+          "placeholder": "John Doe"
+        },
+        "email": {
+          "label": "Email address",
+          "placeholder": "john@doe.com"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "••••••••"
+        }
+      }
+    },
+    "forgot_password": {
+      "title": "Forgot password",
+      "subtitle": "We will send you a 6-digit code that will allow you to reset your password",
+      "form_fields": {
+        "email": {
+          "label": "Email address",
+          "placeholder": "john@doe.com"
+        },
+        "otp": {
+          "label": "6-digit code",
+          "placeholder": "123456"
+        },
+        "new_password": {
+          "label": "New password",
+          "placeholder": "••••••••"
+        }
+      }
+    },
+    "sign_in": {
+      "title": "Sign in",
+      "subtitle": "Sign in to your account",
+      "form_fields": {
+        "email": {
+          "label": "Email address",
+          "placeholder": "john@doe.com"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "••••••••••••"
+        }
+      }
+    },
+    "sign_out": {
+      "title": "Sign out",
+      "subtitle": "Are you sure you want to sign out?"
+    }
+  }
+}
