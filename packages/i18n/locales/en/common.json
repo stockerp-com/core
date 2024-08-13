@@ -27,6 +27,7 @@
       "light": "Light",
       "dark": "Dark",
       "system": "System"
-    }
+    },
+    "settings": "Settings"
   }
 }

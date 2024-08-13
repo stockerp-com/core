@@ -33,6 +33,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@retailify/ui/components/ui/dropdown-menu';
+import { Skeleton } from '@retailify/ui/components/ui/skeleton';
 import { useTranslation } from 'react-i18next';
 import {
   PiSignOut,
@@ -55,6 +56,7 @@ import { Button } from '@retailify/ui/components/ui/button';
 import SpinnerIcon from '@retailify/ui/components/ui/spinner-icon';
 import { toast } from '@retailify/ui/lib/toast';
 import { useTheme } from '@retailify/ui/components/providers/vite-theme-provider';
+import { HiOutlineCog6Tooth } from 'react-icons/hi2';
 
 export const Route = createFileRoute('/_app')({
   component: AppComponent,
@@ -153,9 +155,7 @@ function Sidebar() {
       <div className="w-full h-14 shrink-0 border-b border-b-input">
         <SidebarOrganization />
       </div>
-      <ScrollArea className="h-full">
-        <SidebarNavigation />
-      </ScrollArea>
+      <SidebarNavigation isCollapsed={isCollapsed} />
     </ResizablePanel>
   );
 }
@@ -164,20 +164,52 @@ function SidebarOrganization() {
   return <></>;
 }
 
-function SidebarNavigation() {
-  return <></>;
+function SidebarNavigation(props: { isCollapsed: boolean }) {
+  return (
+    <div className="flex flex-col justify-between h-full w-full">
+      <div className="flex h-full p-2.5"></div>
+      <div className="flex flex-col gap-2 p-2.5 border-t border-t-input">
+        <DisplayUser isCollapsed={props.isCollapsed} />
+        <SettingsMenu isCollapsed={props.isCollapsed} />
+      </div>
+    </div>
+  );
 }
 
 function Topbar() {
   return (
-    <nav className="flex justify-between px-2.5 items-center w-full bg-background border-b border-b-input h-14 sticky top-0">
-      <SettingsMenu />
-      <div></div>
-    </nav>
+    <nav className="flex justify-between px-2.5 items-center w-full bg-background border-b border-b-input h-14 sticky top-0"></nav>
   );
 }
 
-function SettingsMenu() {
+function DisplayUser(props: { isCollapsed: boolean }) {
+  const { data, isLoading, isError } = trpc.employee.findMe.useQuery();
+
+  return (
+    <div className="flex items-center gap-2">
+      <Avatar className="h-9 w-9 flex rounded-md">
+        <AvatarImage className="rounded-md" />
+        <AvatarFallback className="text-muted-foreground rounded-md">
+          {data?.employee?.fullName &&
+            getNameShorthand(data?.employee?.fullName)}
+        </AvatarFallback>
+      </Avatar>
+      {isLoading && !props.isCollapsed ? (
+        <Skeleton className="h-4 w-36" />
+      ) : isError && !props.isCollapsed ? (
+        <span className="text-destructive">Error :(</span>
+      ) : (
+        !props.isCollapsed && (
+          <span className="text-sm line-clamp-1">
+            {data?.employee?.fullName}
+          </span>
+        )
+      )}
+    </div>
+  );
+}
+
+function SettingsMenu(props: { isCollapsed: boolean }) {
   const { t } = useTranslation();
   const { data } = trpc.employee.findMe.useQuery();
   const [isSignOutDialogOpened, setIsSignOutDialogOpened] = useState(false);
@@ -189,20 +221,24 @@ function SettingsMenu() {
         setIsOpened={setIsSignOutDialogOpened}
       />
       <DropdownMenu>
-        <DropdownMenuTrigger className="rounded-full outline-none">
-          <Avatar className="border border-input h-9 w-9">
-            <AvatarImage />
-            <AvatarFallback className="text-muted-foreground">
-              {data?.employee?.fullName &&
-                getNameShorthand(data?.employee?.fullName)}
-            </AvatarFallback>
-          </Avatar>
+        <DropdownMenuTrigger asChild>
+          <Button
+            size={props.isCollapsed ? 'icon' : 'default'}
+            variant="outline"
+            className={cn(
+              !props.isCollapsed &&
+                'w-full flex items-center gap-2 justify-start',
+            )}
+          >
+            <HiOutlineCog6Tooth className="h-4 w-4" />
+            {!props.isCollapsed && t('common:settings.settings')}
+          </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="start" className="w-56">
+        <DropdownMenuContent className="w-56" align="start">
           <DropdownMenuLabel>
             <div className="flex flex-col gap-1 text-xs">
-              <span>{data?.employee?.fullName}</span>
-              <span className="font-normal text-muted-foreground">
+              <span className="line-clamp-1">{data?.employee?.fullName}</span>
+              <span className="font-normal text-muted-foreground line-clamp-1">
                 {data?.employee?.email}
               </span>
             </div>
