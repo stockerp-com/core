@@ -1,13 +1,10 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router';
-import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/_auth')({
   component: AuthComponent,
 });
 
 function AuthComponent() {
-  const { t } = useTranslation();
-
   return (
     <div className="h-[100dvh] w-[100dvw] grid grid-cols-1 lg:grid-cols-2">
       <div className="flex items-center justify-center w-full container lg:border-r lg:border-input">
