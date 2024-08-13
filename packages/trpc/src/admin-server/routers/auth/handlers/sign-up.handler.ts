@@ -1,6 +1,6 @@
 import { publicProcedure } from '../../../procedures/public.js';
 import { hash } from 'bcrypt';
-import { processSession } from '../../../utils/session.js';
+import { setSession } from '../../../utils/session.js';
 import { TRPCError } from '@trpc/server';
 import { signUpSchema } from '@retailify/validation/admin/auth/sign-up.schema';
 
@@ -38,7 +38,7 @@ export const signUpHandler = publicProcedure
       });
     }
 
-    await processSession(ctx, {
+    await setSession(ctx, {
       id: employee.id,
     });
 

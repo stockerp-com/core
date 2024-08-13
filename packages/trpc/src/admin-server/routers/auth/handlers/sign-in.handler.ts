@@ -1,7 +1,7 @@
 import { TRPCError } from '@trpc/server';
 import { publicProcedure } from '../../../procedures/public.js';
 import { compare } from 'bcrypt';
-import { processSession } from '../../../utils/session.js';
+import { setSession } from '../../../utils/session.js';
 import { signInSchema } from '@retailify/validation/admin/auth/sign-in.schema';
 
 export const signInHandler = publicProcedure
@@ -29,7 +29,7 @@ export const signInHandler = publicProcedure
       });
     }
 
-    await processSession(ctx, {
+    await setSession(ctx, {
       id: employee.id,
     });
 

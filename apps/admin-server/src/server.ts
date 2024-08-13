@@ -29,15 +29,20 @@ export const server = async (): Promise<Express> => {
   app
     .use(express.json())
     .use(express.urlencoded({ extended: true }))
+    .use(cookieParser())
     .use(helmet())
-    .use(cors())
+    .use(
+      cors({
+        origin: 'http://localhost:5173',
+        credentials: true,
+      }),
+    )
     .use(
       rateLimit({
-        windowMs: 1000 * 60 * 15,
+        windowMs: 1000 * 60,
         limit: 100,
       }),
     )
-    .use(cookieParser())
     .use(i18nextMiddleware.handle(i18n));
 
   app.get('/', (req, res) => {

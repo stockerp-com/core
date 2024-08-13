@@ -3,6 +3,7 @@ import { Redis } from '@retailify/redis';
 import { CreateExpressContextOptions } from '@trpc/server/adapters/express';
 import {
   clearSessionCookie,
+  getSession,
   getSessionCookie,
   setSessionCookie,
 } from './utils/cookie.js';
@@ -55,7 +56,7 @@ export const createContext = (opts?: CreateContextOpts) => {
 
   const { req, res } = opts.expressContextOpts;
 
-  const session = null;
+  const session = getSession(req);
 
   return createContextInner({
     session,

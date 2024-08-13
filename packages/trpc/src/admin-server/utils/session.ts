@@ -23,9 +23,10 @@ export const checkSession = async (ctx: Context) => {
   return session;
 };
 
-export const processSession = async (ctx: Context, sessionData: Session) => {
+export const setSession = async (ctx: Context, sessionData: Session) => {
   const newToken = signJwt(sessionData);
   await ctx.redis?.set(`admin:${sessionData.id}`, newToken);
+
   if (ctx.setSessionCookie) {
     ctx.setSessionCookie(newToken);
   }

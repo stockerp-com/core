@@ -21,5 +21,11 @@
       "success": "Successfully signed out",
       "failed": "Failed to sign out"
     }
+  },
+  "employee": {
+    "find_one": {
+      "success": "Successfully found employee with id \"{{id}}\"",
+      "not_found": "Employee with id \"{{id}}\" not found"
+    }
   }
 }

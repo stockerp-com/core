@@ -7,6 +7,7 @@ import { trpc } from './utils/trpc';
 import SuperJSON from 'superjson';
 import { Toaster } from '@retailify/ui/components/ui/sonner';
 import { TooltipProvider } from '@retailify/ui/components/ui/tooltip';
+import { API_URL } from './utils/constants';
 
 const router = createRouter({ routeTree });
 
@@ -22,8 +23,14 @@ export function AppProvider() {
     trpc.createClient({
       links: [
         httpBatchLink({
-          url: 'http://localhost:3000/trpc',
+          url: API_URL,
           transformer: SuperJSON,
+          fetch(url, options) {
+            return fetch(url, {
+              ...options,
+              credentials: 'include',
+            });
+          },
         }),
       ],
     }),
