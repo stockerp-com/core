@@ -1,4 +1,9 @@
-import { createFileRoute, Outlet, redirect } from '@tanstack/react-router';
+import {
+  createFileRoute,
+  Outlet,
+  redirect,
+  useNavigate,
+} from '@tanstack/react-router';
 import {
   ResizableHandle,
   ResizablePanel,
@@ -9,13 +14,33 @@ import { ScrollArea } from '@retailify/ui/components/ui/scroll-area';
 import { useState } from 'react';
 import { trpc } from '../utils/trpc';
 import { API_URL } from '../utils/constants';
-import { Skeleton } from '@retailify/ui/components/ui/skeleton';
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
 } from '@retailify/ui/components/ui/avatar';
 import { getNameShorthand } from '../utils/ui';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@retailify/ui/components/ui/dropdown-menu';
+import { useTranslation } from 'react-i18next';
+import { PiSignOut } from 'react-icons/pi';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@retailify/ui/components/ui/dialog';
+import { Button } from '@retailify/ui/components/ui/button';
+import SpinnerIcon from '@retailify/ui/components/ui/spinner-icon';
+import { toast } from '@retailify/ui/lib/toast';
 
 export const Route = createFileRoute('/_app')({
   component: AppComponent,
@@ -108,10 +133,10 @@ function Sidebar() {
       onResize={(size) => handleResize(size)}
       className={cn(
         'bg-background border-r border-r-input lg:flex flex-col items-center hidden',
-        isCollapsed && 'min-w-12 transition-all duration-300 ease-in-out',
+        isCollapsed && 'min-w-14 transition-all duration-300 ease-in-out',
       )}
     >
-      <div className="w-full h-12 shrink-0 border-b border-b-input">
+      <div className="w-full h-14 shrink-0 border-b border-b-input">
         <SidebarOrganization />
       </div>
       <ScrollArea className="h-full">
@@ -131,32 +156,94 @@ function SidebarNavigation() {
 
 function Topbar() {
   return (
-    <nav className="flex justify-between px-2.5 items-center w-full bg-background border-b border-b-input h-12 sticky top-0">
+    <nav className="flex justify-between px-2.5 items-center w-full bg-background border-b border-b-input h-14 sticky top-0">
       <div></div>
-      <DisplayUser />
+      <UserMenu />
     </nav>
   );
 }
 
-function DisplayUser() {
-  const { isLoading, isError, data } = trpc.employee.findMe.useQuery();
+function UserMenu() {
+  const { t } = useTranslation();
+  const { data } = trpc.employee.findMe.useQuery();
+  const [isSignOutDialogOpened, setIsSignOutDialogOpened] = useState(false);
 
   return (
-    <div className="flex items-center gap-2">
-      {isLoading ? (
-        <Skeleton className="h-3 w-20" />
-      ) : isError ? (
-        <span className="text-xs text-destructive">{data?.error?.message}</span>
-      ) : (
-        <span className="text-xs">{data?.employee?.fullName}</span>
-      )}
-      <Avatar className="h-8 w-8 text-xs border border-input">
-        <AvatarImage />
-        <AvatarFallback className="text-muted-foreground">
-          {data?.employee?.fullName &&
-            getNameShorthand(data?.employee?.fullName)}
-        </AvatarFallback>
-      </Avatar>
-    </div>
+    <>
+      <SignOutDialog
+        isOpened={isSignOutDialogOpened}
+        setIsOpened={setIsSignOutDialogOpened}
+      />
+      <DropdownMenu>
+        <DropdownMenuTrigger className="rounded-full outline-none">
+          <Avatar className="border border-input h-9 w-9">
+            <AvatarImage />
+            <AvatarFallback className="text-muted-foreground">
+              {data?.employee?.fullName &&
+                getNameShorthand(data?.employee?.fullName)}
+            </AvatarFallback>
+          </Avatar>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-56">
+          <DropdownMenuLabel>
+            <div className="flex flex-col gap-1 text-xs">
+              <span>{data?.employee?.fullName}</span>
+              <span className="font-normal text-muted-foreground">
+                {data?.employee?.email}
+              </span>
+            </div>
+          </DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            className="flex items-center gap-2"
+            onClick={() => setIsSignOutDialogOpened(true)}
+          >
+            <PiSignOut className="h-4 w-4" />
+            {t('common:actions.sign_out')}
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
+  );
+}
+
+function SignOutDialog(props: {
+  isOpened: boolean;
+  setIsOpened: (isOpened: boolean) => void;
+}) {
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+  const { mutate, isPending } = trpc.auth.signOut.useMutation({
+    onSuccess: ({ message }) => {
+      toast.info(message);
+      navigate({
+        to: '/sign-in',
+      });
+    },
+    onError: ({ message }) => {
+      toast.error(message);
+    },
+  });
+
+  return (
+    <Dialog open={props.isOpened} onOpenChange={props.setIsOpened}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>{t('content:auth.sign_out.title')}</DialogTitle>
+          <DialogDescription>
+            {t('content:auth.sign_out.subtitle')}
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <Button variant="secondary" onClick={() => props.setIsOpened(false)}>
+            {t('common:actions.cancel')}
+          </Button>
+          <Button className="flex items-center gap-2" onClick={() => mutate()}>
+            {isPending ? <SpinnerIcon /> : <PiSignOut className="h-4 w-4" />}
+            {t('common:actions.sign_out')}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

@@ -20,7 +20,7 @@ import {
 import { Input } from '@retailify/ui/components/ui/input';
 import { PasswordInput } from '@retailify/ui/components/form/PasswordInput';
 import SubmitButton from '@retailify/ui/components/form/SubmitButton';
-import { SignIn } from 'phosphor-react';
+import { PiSignIn } from 'react-icons/pi';
 
 export const Route = createFileRoute('/_auth/sign-in')({
   component: SignInComponent,
@@ -119,7 +119,7 @@ function SignInForm() {
           addMt
           loading={isPending}
           text={t('common:actions.sign_in')}
-          icon={SignIn}
+          icon={PiSignIn}
         />
       </form>
     </Form>

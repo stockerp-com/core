@@ -17,10 +17,10 @@ import {
 } from '@retailify/ui/components/ui/form';
 import SubmitButton from '@retailify/ui/components/form/SubmitButton';
 import { trpc } from '../../utils/trpc';
-import { SignIn } from 'phosphor-react';
 import { PasswordInput } from '@retailify/ui/components/form/PasswordInput';
 import { Input } from '@retailify/ui/components/ui/input';
 import { toast } from '@retailify/ui/lib/toast';
+import { PiSignIn } from 'react-icons/pi';
 
 export const Route = createFileRoute('/_auth/sign-up')({
   component: SignUpComponent,
@@ -141,7 +141,7 @@ function SignUpForm() {
           addMt
           loading={isPending}
           text={t('common:actions.sign_up')}
-          icon={SignIn}
+          icon={PiSignIn}
         />
       </form>
     </Form>

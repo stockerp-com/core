@@ -1,7 +1,7 @@
 import React from 'react';
-import { Input, InputProps } from '../ui/input';
-import { Button } from '../ui/button';
-import { Eye, EyeSlash } from 'phosphor-react';
+import { Input, InputProps } from '../ui/input.js';
+import { Button } from '../ui/button.js';
+import { PiEye, PiEyeSlash } from 'react-icons/pi';
 import { cn } from '@retailify/ui/lib/utils';
 
 const PasswordInput = React.forwardRef<
@@ -31,9 +31,9 @@ const PasswordInput = React.forwardRef<
         disabled={disabled}
       >
         {showPassword && !disabled ? (
-          <Eye className="h-4 w-4" aria-hidden="true" />
+          <PiEye className="h-4 w-4" aria-hidden="true" />
         ) : (
-          <EyeSlash className="h-4 w-4" aria-hidden="true" />
+          <PiEyeSlash className="h-4 w-4" aria-hidden="true" />
         )}
         <span className="sr-only">
           {showPassword
