@@ -36,6 +36,17 @@
         }
       }
     },
+    "change_password": {
+      "title": "Change password",
+      "subtitle": "Change your password",
+      "form_fields": {
+        "new_password": {
+          "label": "New password",
+          "placeholder": "••••••••",
+          "description": "This is going to be your new password"
+        }
+      }
+    },
     "sign_in": {
       "title": "Sign in",
       "subtitle": "Sign in to your account",

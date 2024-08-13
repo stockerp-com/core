@@ -11,6 +11,10 @@
       "success": "You have successfully reset your password",
       "failed": "Failed to send password reset email"
     },
+    "change_password": {
+      "success": "Successfully changed password",
+      "failed": "Failed to change password"
+    },
     "sign_in": {
       "success": "Successfully signed in as \"{{email}}\"",
       "invalid_email": "There is no account with the email \"{{email}}\"",
