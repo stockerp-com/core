@@ -23,13 +23,26 @@ import { getNameShorthand } from '../utils/ui';
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuPortal,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@retailify/ui/components/ui/dropdown-menu';
 import { useTranslation } from 'react-i18next';
-import { PiSignOut } from 'react-icons/pi';
+import {
+  PiSignOut,
+  PiUser,
+  PiPalette,
+  PiSun,
+  PiMoon,
+  PiLaptop,
+  PiCheck,
+} from 'react-icons/pi';
 import {
   Dialog,
   DialogContent,
@@ -41,6 +54,7 @@ import {
 import { Button } from '@retailify/ui/components/ui/button';
 import SpinnerIcon from '@retailify/ui/components/ui/spinner-icon';
 import { toast } from '@retailify/ui/lib/toast';
+import { useTheme } from '@retailify/ui/components/providers/vite-theme-provider';
 
 export const Route = createFileRoute('/_app')({
   component: AppComponent,
@@ -157,13 +171,13 @@ function SidebarNavigation() {
 function Topbar() {
   return (
     <nav className="flex justify-between px-2.5 items-center w-full bg-background border-b border-b-input h-14 sticky top-0">
+      <SettingsMenu />
       <div></div>
-      <UserMenu />
     </nav>
   );
 }
 
-function UserMenu() {
+function SettingsMenu() {
   const { t } = useTranslation();
   const { data } = trpc.employee.findMe.useQuery();
   const [isSignOutDialogOpened, setIsSignOutDialogOpened] = useState(false);
@@ -184,7 +198,7 @@ function UserMenu() {
             </AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-56">
+        <DropdownMenuContent align="start" className="w-56">
           <DropdownMenuLabel>
             <div className="flex flex-col gap-1 text-xs">
               <span>{data?.employee?.fullName}</span>
@@ -194,13 +208,23 @@ function UserMenu() {
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem
-            className="flex items-center gap-2"
-            onClick={() => setIsSignOutDialogOpened(true)}
-          >
-            <PiSignOut className="h-4 w-4" />
-            {t('common:actions.sign_out')}
-          </DropdownMenuItem>
+          <DropdownMenuGroup>
+            <DropdownMenuItem className="flex items-center gap-2">
+              <PiUser className="h-4 w-4" />
+              {t('common:settings.my_account')}
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="flex items-center gap-2"
+              onClick={() => setIsSignOutDialogOpened(true)}
+            >
+              <PiSignOut className="h-4 w-4" />
+              {t('common:actions.sign_out')}
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+          <DropdownMenuSeparator />
+          <DropdownMenuGroup>
+            <ColorModeSubMenu />
+          </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
     </>
@@ -238,12 +262,79 @@ function SignOutDialog(props: {
           <Button variant="secondary" onClick={() => props.setIsOpened(false)}>
             {t('common:actions.cancel')}
           </Button>
-          <Button className="flex items-center gap-2" onClick={() => mutate()}>
+          <Button
+            variant="destructive"
+            className="flex items-center gap-2"
+            onClick={() => mutate()}
+          >
             {isPending ? <SpinnerIcon /> : <PiSignOut className="h-4 w-4" />}
             {t('common:actions.sign_out')}
           </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
+  );
+}
+
+function ColorModeSubMenu() {
+  const { theme, setTheme } = useTheme();
+  const { t } = useTranslation();
+
+  return (
+    <DropdownMenuSub>
+      <DropdownMenuSubTrigger className="flex items-center gap-2">
+        <PiPalette className="h-4 w-4" />
+        {t('common:settings.theme')}
+      </DropdownMenuSubTrigger>
+      <DropdownMenuPortal>
+        <DropdownMenuSubContent className="w-40">
+          <DropdownMenuItem
+            className="flex items-center justify-between"
+            onClick={() => setTheme('light')}
+          >
+            <div className="flex items-center gap-2">
+              <PiSun className="h-4 w-4" />
+              {t('common:settings.theme_options.light')}
+            </div>
+            <PiCheck
+              className={cn(
+                'h-4 w-4',
+                theme === 'light' ? 'opacity-100' : 'opacity-0',
+              )}
+            />
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="flex items-center justify-between"
+            onClick={() => setTheme('dark')}
+          >
+            <div className="flex items-center gap-2">
+              <PiMoon className="h-4 w-4" />
+              {t('common:settings.theme_options.dark')}
+            </div>
+            <PiCheck
+              className={cn(
+                'h-4 w-4',
+                theme === 'dark' ? 'opacity-100' : 'opacity-0',
+              )}
+            />
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="flex items-center justify-between"
+            onClick={() => setTheme('system')}
+          >
+            <div className="flex items-center gap-2">
+              <PiLaptop className="h-4 w-4" />
+              {t('common:settings.theme_options.system')}
+            </div>
+            <PiCheck
+              className={cn(
+                'h-4 w-4',
+                theme === 'system' ? 'opacity-100' : 'opacity-0',
+              )}
+            />
+          </DropdownMenuItem>
+        </DropdownMenuSubContent>
+      </DropdownMenuPortal>
+    </DropdownMenuSub>
   );
 }
