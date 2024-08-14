@@ -31,5 +31,12 @@
       "success": "Successfully found employee with id \"{{id}}\"",
       "not_found": "Employee with id \"{{id}}\" not found"
     }
+  },
+  "account": {
+    "edit_profile": {
+      "success": "Successfully updated profile",
+      "email_taken": "\"{{email}}\" is already taken",
+      "failed": "Failed to update profile"
+    }
   }
 }

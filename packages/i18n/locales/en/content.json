@@ -65,5 +65,25 @@
       "title": "Sign out",
       "subtitle": "Are you sure you want to sign out?"
     }
+  },
+  "account": {
+    "edit_profile": {
+      "title": "Edit profile",
+      "subtitle": "Update your profile",
+      "form_fields": {
+        "full_name": {
+          "label": "Full name",
+          "placeholder": "John Doe"
+        },
+        "email": {
+          "label": "Email address",
+          "placeholder": "john@doe.com"
+        },
+        "picture": {
+          "label": "Profile picture",
+          "placeholder": "Upload a picture"
+        }
+      }
+    }
   }
 }
