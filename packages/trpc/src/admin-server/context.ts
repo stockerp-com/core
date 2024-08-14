@@ -35,6 +35,7 @@ export const createContextInner = (opts?: CreateContextInnerOpts) => ({
   db: opts?.db,
   redis: opts?.redis,
   t: opts?.t,
+  s3: opts?.s3,
 });
 
 interface CreateContextOpts {
