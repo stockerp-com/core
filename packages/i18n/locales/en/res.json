@@ -38,5 +38,12 @@
       "email_taken": "\"{{email}}\" is already taken",
       "failed": "Failed to update profile"
     }
+  },
+  "s3": {
+    "upload": {
+      "success": "Successfully uploaded file",
+      "loading": "Uploading...",
+      "failed": "Failed to upload file"
+    }
   }
 }

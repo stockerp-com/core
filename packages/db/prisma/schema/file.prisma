@@ -1,0 +1,18 @@
+model File {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name String
+
+  // Metadata
+  key  String @unique
+  size Int
+  type String
+
+  // For profile pictures
+  employees Employee[]
+
+  @@index([id])
+  @@index([name])
+}

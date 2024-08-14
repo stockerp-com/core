@@ -1,6 +1,8 @@
 import { editProfileSchema } from '@retailify/validation/admin/account/edit-profile.schema';
 import { adminProcedure } from '../../../procedures/admin.js';
 import { TRPCError } from '@trpc/server';
+import { env } from '../../../env.js';
+import { DeleteObjectCommand } from '@aws-sdk/client-s3';
 
 export const editProfileHandler = adminProcedure
   .input(editProfileSchema)
@@ -8,6 +10,9 @@ export const editProfileHandler = adminProcedure
     const employee = await ctx.db?.employee.findUnique({
       where: {
         id: ctx.session?.id,
+      },
+      include: {
+        picture: true,
       },
     });
     if (!employee) {
@@ -34,6 +39,28 @@ export const editProfileHandler = adminProcedure
       }
     }
 
+    const hasUserChangedPicture =
+      input.picture &&
+      employee.picture &&
+      employee.picture?.key !== input.picture.key;
+    const hasUserRemovedPicture = !input.picture && employee.picture?.key;
+
+    if (hasUserChangedPicture || hasUserRemovedPicture) {
+      await Promise.all([
+        ctx.s3?.send(
+          new DeleteObjectCommand({
+            Bucket: env.AWS_S3_BUCKET!,
+            Key: employee.picture?.key,
+          }),
+        ),
+        ctx.db?.file.delete({
+          where: {
+            key: employee.picture?.key,
+          },
+        }),
+      ]);
+    }
+
     await ctx.db?.employee.update({
       where: {
         id: ctx.session?.id,
@@ -41,7 +68,21 @@ export const editProfileHandler = adminProcedure
       data: {
         fullName: input.fullName,
         email: input.email,
-        pictureKey: input.pictureKey,
+        picture: input.picture
+          ? {
+              connectOrCreate: {
+                where: {
+                  key: input.picture.key,
+                },
+                create: {
+                  key: input.picture.key,
+                  name: input.picture.name,
+                  size: input.picture.size,
+                  type: input.picture.type,
+                },
+              },
+            }
+          : undefined,
       },
     });
 

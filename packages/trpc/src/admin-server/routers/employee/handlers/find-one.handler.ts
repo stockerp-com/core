@@ -8,6 +8,9 @@ export const findOneHandler = adminProcedure
       where: {
         id: input.id,
       },
+      include: {
+        picture: true,
+      },
     });
     if (!employee) {
       return {

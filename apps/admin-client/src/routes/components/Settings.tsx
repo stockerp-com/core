@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { trpc } from '../../utils/trpc';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -55,12 +55,22 @@ import {
   FormMessage,
 } from '@retailify/ui/components/ui/form';
 import { PasswordInput } from '@retailify/ui/components/form/PasswordInput';
+import {
+  EditProfileInput,
+  editProfileSchema,
+} from '@retailify/validation/admin/account/edit-profile.schema';
+import { Input } from '@retailify/ui/components/ui/input';
+import useS3 from '../../hooks/use-s3';
+import { Label } from '@retailify/ui/components/ui/label';
+import { DropzoneFileInput } from '@retailify/ui/components/ui/file-select';
 
 export default function SettingsMenu(props: { isCollapsed: boolean }) {
   const { t } = useTranslation();
   const { data } = trpc.employee.findMe.useQuery();
   const [isSignOutDialogOpened, setIsSignOutDialogOpened] = useState(false);
   const [isChangePasswordDialogOpened, setIsChangePasswordDialogOpened] =
+    useState(false);
+  const [isEditProfileDialogOpened, setIsEditProfileDialogOpened] =
     useState(false);
 
   return (
@@ -72,6 +82,10 @@ export default function SettingsMenu(props: { isCollapsed: boolean }) {
       <ChangePasswordDialog
         isOpened={isChangePasswordDialogOpened}
         setIsOpened={setIsChangePasswordDialogOpened}
+      />
+      <EditProfileDialog
+        isOpened={isEditProfileDialogOpened}
+        setIsOpened={setIsEditProfileDialogOpened}
       />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -98,7 +112,10 @@ export default function SettingsMenu(props: { isCollapsed: boolean }) {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem className="flex items-center gap-2">
+            <DropdownMenuItem
+              className="flex items-center gap-2"
+              onClick={() => setIsEditProfileDialogOpened(true)}
+            >
               <PiUser className="h-4 w-4" />
               {t('common:settings.my_account')}
             </DropdownMenuItem>
@@ -124,6 +141,156 @@ export default function SettingsMenu(props: { isCollapsed: boolean }) {
         </DropdownMenuContent>
       </DropdownMenu>
     </>
+  );
+}
+
+function EditProfileDialog(props: {
+  isOpened: boolean;
+  setIsOpened: (isOpened: boolean) => void;
+}) {
+  const { t } = useTranslation();
+
+  const form = useForm<EditProfileInput>({
+    resolver: zodResolver(editProfileSchema),
+    defaultValues: {
+      email: '',
+      fullName: '',
+    },
+  });
+
+  const utils = trpc.useUtils();
+
+  const { mutate, isPending } = trpc.account.editProfile.useMutation({
+    onSuccess: ({ message }) => {
+      props.setIsOpened(false);
+      toast.success(message);
+      utils.employee.findMe.invalidate();
+    },
+    onError: ({ message }) => {
+      toast.error(message);
+    },
+  });
+  const { data } = trpc.employee.findMe.useQuery();
+  const { upload } = useS3();
+
+  useEffect(() => {
+    if (data) {
+      form.reset({
+        email: data.employee?.email ?? '',
+        fullName: data.employee?.fullName ?? '',
+        picture: data.employee?.picture
+          ? {
+              key: data.employee.picture.key,
+              name: data.employee.picture.name,
+              size: data.employee.picture.size,
+              type: data.employee.picture.type,
+            }
+          : null,
+      });
+    }
+  }, [data, form]);
+
+  async function onSubmit(values: EditProfileInput) {
+    mutate(values);
+  }
+
+  return (
+    <Dialog open={props.isOpened} onOpenChange={props.setIsOpened}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>{t('content:account.edit_profile.title')}</DialogTitle>
+          <DialogDescription>
+            {t('content:account.edit_profile.subtitle')}
+          </DialogDescription>
+        </DialogHeader>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col gap-4"
+          >
+            <FormField
+              control={form.control}
+              name="fullName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel required>
+                    {t(
+                      'content:account.edit_profile.form_fields.full_name.label',
+                    )}
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder={t(
+                        'content:account.edit_profile.form_fields.full_name.placeholder',
+                      )}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage t={t} />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel required>
+                    {t('content:account.edit_profile.form_fields.email.label')}
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      type="email"
+                      placeholder={t(
+                        'content:account.edit_profile.form_fields.email.placeholder',
+                      )}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage t={t} />
+                </FormItem>
+              )}
+            />
+            <div className="space-y-2">
+              <Label htmlFor="edit_profile_picture">
+                {t('content:account.edit_profile.form_fields.picture.label')}
+              </Label>
+              <DropzoneFileInput
+                removeFile={() => form.setValue('picture', null)}
+                labelHtmlFor="edit_profile_picture"
+                placeholder={t(
+                  'content:account.edit_profile.form_fields.picture.placeholder',
+                )}
+                placeholderDragging={t(
+                  'content:account.edit_profile.form_fields.picture.dragging',
+                )}
+                maxSize={1 * 1024 * 1024}
+                contentType="image"
+                callback={async (files) => {
+                  const { data } = await upload(files[0], 'Profile_Pictures');
+                  form.setValue('picture', data);
+                }}
+                uploadedFiles={[form.watch('picture')]}
+                cdnUrl={import.meta.env.VITE_CDN_URL}
+              />
+            </div>
+          </form>
+        </Form>
+        <DialogFooter className="mt-4">
+          <Button variant="secondary" onClick={() => props.setIsOpened(false)}>
+            {t('common:actions.cancel')}
+          </Button>
+          <Button
+            className="flex items-center gap-2"
+            onClick={form.handleSubmit(onSubmit)}
+            disabled={isPending}
+          >
+            {isPending ? <SpinnerIcon /> : <PiCheck className="h-4 w-4" />}
+            {t('common:actions.save')}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }
 
@@ -162,6 +329,7 @@ function SignOutDialog(props: {
             variant="destructive"
             className="flex items-center gap-2"
             onClick={() => mutate()}
+            disabled={isPending}
           >
             {isPending ? <SpinnerIcon /> : <PiSignOut className="h-4 w-4" />}
             {t('common:actions.sign_out')}
@@ -209,7 +377,10 @@ function ChangePasswordDialog(props: {
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col gap-4"
+          >
             <FormField
               control={form.control}
               name="newPassword"
@@ -247,6 +418,7 @@ function ChangePasswordDialog(props: {
           <Button
             className="flex items-center gap-2"
             onClick={form.handleSubmit(onSubmit)}
+            disabled={isPending}
           >
             {isPending ? <SpinnerIcon /> : <PiKey className="h-4 w-4" />}
             {t('common:actions.change_password')}

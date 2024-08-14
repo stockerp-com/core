@@ -5,7 +5,6 @@ import {
   ResizablePanelGroup,
 } from '@retailify/ui/components/ui/resizable';
 import { ScrollArea } from '@retailify/ui/components/ui/scroll-area';
-import { API_URL } from '../utils/constants';
 import Topbar from './components/Topbar';
 import Sidebar from './components/Sidebar';
 
@@ -13,7 +12,7 @@ export const Route = createFileRoute('/_app')({
   component: AppComponent,
   beforeLoad: async ({ location }) => {
     try {
-      const res = await fetch(`${API_URL}/auth.verify`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/auth.verify`, {
         credentials: 'include',
       }).then((res) => res.json());
 

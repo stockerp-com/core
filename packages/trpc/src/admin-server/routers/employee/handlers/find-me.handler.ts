@@ -5,6 +5,9 @@ export const findMeHandler = adminProcedure.query(async ({ ctx }) => {
     where: {
       id: ctx.session?.id,
     },
+    include: {
+      picture: true,
+    },
   });
   if (!employee) {
     return {

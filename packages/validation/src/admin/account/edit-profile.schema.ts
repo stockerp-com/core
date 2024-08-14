@@ -14,7 +14,14 @@ export const editProfileSchema = z.object({
     .email({
       message: 'errors:validation.email',
     }),
-  pictureKey: z.string().optional(),
+  picture: z
+    .object({
+      name: z.string(),
+      key: z.string(),
+      size: z.number(),
+      type: z.string(),
+    })
+    .nullable(),
 });
 
 export type EditProfileInput = z.infer<typeof editProfileSchema>;

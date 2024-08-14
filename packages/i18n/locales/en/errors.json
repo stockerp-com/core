@@ -15,6 +15,7 @@
     "min_one": "This field must be at least {{count}} character",
     "min_other": "This field must be at least {{count}} characters",
     "max_one": "This field must be at most {{count}} character",
-    "max_other": "This field must be at most {{count}} characters"
+    "max_other": "This field must be at most {{count}} characters",
+    "file_too_large": "Max file size is {{size}} MB, yours is {{user_size}} MB."
   }
 }

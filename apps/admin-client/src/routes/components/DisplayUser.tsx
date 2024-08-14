@@ -13,7 +13,10 @@ export default function DisplayUser(props: { isCollapsed: boolean }) {
   return (
     <div className="flex items-center gap-2">
       <Avatar className="h-9 w-9 flex rounded-md">
-        <AvatarImage className="rounded-md" />
+        <AvatarImage
+          className="rounded-md"
+          src={`${import.meta.env.VITE_CDN_URL}/${data?.employee?.picture?.key}`}
+        />
         <AvatarFallback className="text-muted-foreground rounded-md">
           {data?.employee?.fullName &&
             getNameShorthand(data?.employee?.fullName)}

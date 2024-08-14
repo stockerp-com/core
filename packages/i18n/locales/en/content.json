@@ -81,7 +81,8 @@
         },
         "picture": {
           "label": "Profile picture",
-          "placeholder": "Upload a picture"
+          "placeholder": "Drag and drop your picture here or click to browse",
+          "dragging": "Drop your picture here..."
         }
       }
     }
