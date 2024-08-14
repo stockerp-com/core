@@ -9,6 +9,7 @@ import logger from '@retailify/logger';
 import { db } from '@retailify/db';
 import * as i18nextMiddleware from 'i18next-http-middleware';
 import { initI18n } from './utils/i18n.js';
+import { s3 } from '@retailify/s3';
 
 export const server = async (): Promise<Express> => {
   const app = express();
@@ -52,7 +53,7 @@ export const server = async (): Promise<Express> => {
     });
   });
 
-  app.use('/trpc', createExpressTrpcMiddleware(db, redis));
+  app.use('/trpc', createExpressTrpcMiddleware(db, redis, s3));
 
   return app;
 };

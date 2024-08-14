@@ -1,0 +1,31 @@
+{
+  "name": "@retailify/s3",
+  "version": "1.0.0",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "dev": "NODE_ENV=development tsup --watch",
+    "build": "tsup",
+    "lint": "eslint ./src --fix"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.629.0",
+    "@retailify/logger": "*",
+    "@retailify/validation": "*",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@retailify/eslint-config": "*",
+    "@retailify/typescript-config": "*",
+    "@types/node": "^22.1.0",
+    "eslint": "^9.8.0",
+    "tsup": "^8.2.4",
+    "typescript": "^5.4.5"
+  }
+}

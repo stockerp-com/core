@@ -9,6 +9,7 @@ import {
 } from './utils/cookie.js';
 import { TRPCError } from '@trpc/server';
 import { type TFunction } from 'i18next';
+import { S3 } from '@retailify/s3';
 
 export interface Session {
   id: number;
@@ -18,6 +19,7 @@ interface CreateContextInnerOpts {
   session: Session | null;
   db: Db;
   redis: Redis;
+  s3: S3;
   t: TFunction;
   // eslint-disable-next-line no-unused-vars
   setSessionCookie: (token: string) => void;
@@ -44,6 +46,7 @@ interface CreateContextOpts {
   };
   db: Db;
   redis: Redis;
+  s3: S3;
 }
 
 export const createContext = (opts?: CreateContextOpts) => {
@@ -62,6 +65,7 @@ export const createContext = (opts?: CreateContextOpts) => {
     session,
     db: opts?.db,
     redis: opts?.redis,
+    s3: opts?.s3,
     setSessionCookie: (token: string) => setSessionCookie(res, token),
     getSessionCookie: () => getSessionCookie(req),
     clearSessionCookie: () => clearSessionCookie(res),
