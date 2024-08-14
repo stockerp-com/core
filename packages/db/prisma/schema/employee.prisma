@@ -6,7 +6,7 @@ model Employee {
   fullName   String
   email      String  @unique
   pwHash     String
-  profileKey String?
+  pictureKey String?
 
   preferredLanguage String
 }
