@@ -1,0 +1,32 @@
+model Organization {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name        String
+  description String?
+  staff       EmployeeToOrganization[]
+
+  @@index([id])
+  @@index([name])
+}
+
+model EmployeeToOrganization {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId Int
+
+  employee   Employee @relation(fields: [employeeId], references: [id])
+  employeeId Int
+
+  role EmployeeRole
+
+  @@index([organizationId, employeeId])
+}
+
+enum EmployeeRole {
+  ORGANIZATION_OWNER
+}
