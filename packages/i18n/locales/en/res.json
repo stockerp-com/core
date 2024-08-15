@@ -56,6 +56,10 @@
       "not_found": "Organization with id \"{{id}}\" not found",
       "not_member": "You are not a member of organization \"{{name}}\"",
       "failed": "Failed to switch to organization"
+    },
+    "find_one": {
+      "success": "Successfully found organization with id \"{{id}}\"",
+      "not_found": "Organization with id \"{{id}}\" not found"
     }
   }
 }
