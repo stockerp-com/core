@@ -29,9 +29,36 @@ export const signInHandler = publicProcedure
       });
     }
 
-    await setSession(ctx, {
-      id: employee.id,
-    });
+    if (employee.currentOrganizationId) {
+      const member = await ctx.db?.employeeToOrganization.findUnique({
+        where: {
+          organizationId_employeeId: {
+            organizationId: employee.currentOrganizationId,
+            employeeId: ctx.session!.id,
+          },
+        },
+      });
+
+      if (!member) {
+        await setSession(ctx, {
+          id: employee.id,
+          organizationId: null,
+          role: null,
+        });
+      } else {
+        await setSession(ctx, {
+          id: employee.id,
+          organizationId: employee.currentOrganizationId,
+          role: member.role,
+        });
+      }
+    } else {
+      await setSession(ctx, {
+        id: employee.id,
+        organizationId: null,
+        role: null,
+      });
+    }
 
     return {
       message: ctx.t?.('res:auth.sign_in.success', {

@@ -40,6 +40,8 @@ export const signUpHandler = publicProcedure
 
     await setSession(ctx, {
       id: employee.id,
+      organizationId: null,
+      role: null,
     });
 
     return {

@@ -4,7 +4,7 @@ import { addSchema } from '@retailify/validation/admin/organization/add.schema';
 export const addHandler = authenticatedProcedure
   .input(addSchema)
   .mutation(async ({ ctx, input }) => {
-    return await ctx.db?.organization.create({
+    const organization = await ctx.db?.organization.create({
       data: {
         name: input.name,
         description: input.description,
@@ -16,4 +16,10 @@ export const addHandler = authenticatedProcedure
         },
       },
     });
+
+    return {
+      message: ctx.t?.('res:organization.add.success', {
+        name: organization?.name,
+      }),
+    };
   });

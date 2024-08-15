@@ -10,7 +10,9 @@ model Employee {
   pictureId Int?
 
   preferredLanguage String
-  organizations     EmployeeToOrganization[]
+
+  organizations         EmployeeToOrganization[]
+  currentOrganizationId Int?
 
   @@index([fullName])
   @@index([email])

@@ -45,5 +45,17 @@
       "loading": "Uploading...",
       "failed": "Failed to upload file"
     }
+  },
+  "organization": {
+    "add": {
+      "success": "Successfully added organization \"{{name}}\"",
+      "failed": "Failed to add organization"
+    },
+    "use": {
+      "success": "Successfully switched to organization \"{{name}}\"",
+      "not_found": "Organization with id \"{{id}}\" not found",
+      "not_member": "You are not a member of organization \"{{name}}\"",
+      "failed": "Failed to switch to organization"
+    }
   }
 }
