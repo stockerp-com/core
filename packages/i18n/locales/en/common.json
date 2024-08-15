@@ -29,6 +29,16 @@
       "dark": "Dark",
       "system": "System"
     },
-    "settings": "Settings"
+    "settings": "Settings",
+    "language": {
+      "label": "Language",
+      "placeholder": "Select language",
+      "empty": "No language found",
+      "options": {
+        "en": "English",
+        "ru": "Русский",
+        "uk-UA": "Українська"
+      }
+    }
   }
 }

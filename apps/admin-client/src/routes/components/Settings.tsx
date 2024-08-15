@@ -18,6 +18,7 @@ import { Button } from '@retailify/ui/components/ui/button';
 import { HiOutlineCog6Tooth } from 'react-icons/hi2';
 import {
   PiCheck,
+  PiGlobeSimple,
   PiKey,
   PiLaptop,
   PiMoon,
@@ -63,10 +64,19 @@ import { Input } from '@retailify/ui/components/ui/input';
 import useS3 from '../../hooks/use-s3';
 import { Label } from '@retailify/ui/components/ui/label';
 import { DropzoneFileInput } from '@retailify/ui/components/ui/file-select';
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '@retailify/ui/components/ui/command';
 
 export default function SettingsMenu(props: { isCollapsed: boolean }) {
   const { t } = useTranslation();
   const { data } = trpc.employee.findMe.useQuery();
+  const [isOpened, setIsOpened] = useState(false);
   const [isSignOutDialogOpened, setIsSignOutDialogOpened] = useState(false);
   const [isChangePasswordDialogOpened, setIsChangePasswordDialogOpened] =
     useState(false);
@@ -87,7 +97,7 @@ export default function SettingsMenu(props: { isCollapsed: boolean }) {
         isOpened={isEditProfileDialogOpened}
         setIsOpened={setIsEditProfileDialogOpened}
       />
-      <DropdownMenu>
+      <DropdownMenu open={isOpened} onOpenChange={setIsOpened}>
         <DropdownMenuTrigger asChild>
           <Button
             size={props.isCollapsed ? 'icon' : 'default'}
@@ -136,6 +146,7 @@ export default function SettingsMenu(props: { isCollapsed: boolean }) {
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
+            <LanguageSubMenu isOpened={isOpened} setIsOpened={setIsOpened} />
             <ColorModeSubMenu />
           </DropdownMenuGroup>
         </DropdownMenuContent>
@@ -488,6 +499,59 @@ function ColorModeSubMenu() {
           </DropdownMenuItem>
         </DropdownMenuSubContent>
       </DropdownMenuPortal>
+    </DropdownMenuSub>
+  );
+}
+
+const languages = ['en', 'ru', 'uk-UA'];
+
+function LanguageSubMenu(props: {
+  isOpened: boolean;
+  setIsOpened: (isOpened: boolean) => void;
+}) {
+  const { t, i18n } = useTranslation();
+
+  function onSelect(key: string) {
+    i18n.changeLanguage(key);
+  }
+
+  return (
+    <DropdownMenuSub>
+      <DropdownMenuSubTrigger className="flex items-center gap-2">
+        <PiGlobeSimple className="h-4 w-4" />
+        {t('common:settings.language.label')}
+      </DropdownMenuSubTrigger>
+      <DropdownMenuSubContent className="p-0">
+        <Command>
+          <CommandInput
+            placeholder={t('common:settings.language.placeholder')}
+            autoFocus
+          />
+          <CommandList>
+            <CommandEmpty>{t('common:settings.language.empty')}</CommandEmpty>
+            <CommandGroup>
+              {languages.map((key) => (
+                <CommandItem
+                  key={key}
+                  value={t(`common:settings.language.options.${key}`)}
+                  onSelect={() => {
+                    onSelect(key);
+                    props.setIsOpened(false);
+                  }}
+                >
+                  {t(`common:settings.language.options.${key}`)}
+                  <PiCheck
+                    className={cn(
+                      'ml-auto h-4 w-4',
+                      i18n.language === key ? 'opacity-100' : 'opacity-0',
+                    )}
+                  />
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </DropdownMenuSubContent>
     </DropdownMenuSub>
   );
 }
