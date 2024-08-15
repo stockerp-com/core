@@ -1,10 +1,10 @@
 import { editProfileSchema } from '@retailify/validation/admin/account/edit-profile.schema';
-import { adminProcedure } from '../../../procedures/admin.js';
+import { authenticatedProcedure } from '../../../procedures/authenticated.js';
 import { TRPCError } from '@trpc/server';
 import { env } from '../../../env.js';
 import { DeleteObjectCommand } from '@aws-sdk/client-s3';
 
-export const editProfileHandler = adminProcedure
+export const editProfileHandler = authenticatedProcedure
   .input(editProfileSchema)
   .mutation(async ({ ctx, input }) => {
     const employee = await ctx.db?.employee.findUnique({

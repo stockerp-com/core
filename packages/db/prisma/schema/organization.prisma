@@ -28,5 +28,5 @@ model EmployeeToOrganization {
 }
 
 enum EmployeeRole {
-  ORGANIZATION_OWNER
+  ORGANIZATION_ADMIN
 }

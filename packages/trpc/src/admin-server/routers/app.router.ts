@@ -2,6 +2,7 @@ import { router } from '../trpc.js';
 import { accountRouter } from './account/account.router.js';
 import { authRouter } from './auth/auth.router.js';
 import { employeeRouter } from './employee/employee.router.js';
+import { organizationRouter } from './organization/organization.router.js';
 import { s3Router } from './s3/s3.router.js';
 
 export const appRouter = router({
@@ -9,6 +10,7 @@ export const appRouter = router({
   employee: employeeRouter,
   account: accountRouter,
   s3: s3Router,
+  organization: organizationRouter,
 });
 
 export type AppRouter = typeof appRouter;

@@ -1,6 +1,6 @@
-import { adminProcedure } from '../../../procedures/admin.js';
+import { authenticatedProcedure } from '../../../procedures/authenticated.js';
 
-export const findMeHandler = adminProcedure.query(async ({ ctx }) => {
+export const findMeHandler = authenticatedProcedure.query(async ({ ctx }) => {
   const employee = await ctx.db?.employee.findUnique({
     where: {
       id: ctx.session?.id,

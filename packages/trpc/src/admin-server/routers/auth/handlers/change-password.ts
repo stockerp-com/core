@@ -1,9 +1,9 @@
 import { changePasswordSchema } from '@retailify/validation/admin/auth/change-password.schema';
-import { adminProcedure } from '../../../procedures/admin.js';
+import { authenticatedProcedure } from '../../../procedures/authenticated.js';
 import { TRPCError } from '@trpc/server';
 import { hash } from 'bcrypt';
 
-export const changePasswordHandler = adminProcedure
+export const changePasswordHandler = authenticatedProcedure
   .input(changePasswordSchema)
   .mutation(async ({ ctx, input }) => {
     const employee = await ctx.db?.employee.findUnique({

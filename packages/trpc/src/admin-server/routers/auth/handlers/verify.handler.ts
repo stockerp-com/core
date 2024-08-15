@@ -1,5 +1,5 @@
-import { adminProcedure } from '../../../procedures/admin.js';
+import { authenticatedProcedure } from '../../../procedures/authenticated.js';
 
-export const verifyHandler = adminProcedure.query(() => ({
+export const verifyHandler = authenticatedProcedure.query(() => ({
   ok: true,
 }));

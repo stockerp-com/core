@@ -1,7 +1,7 @@
-import { adminProcedure } from '../../../procedures/admin.js';
+import { authenticatedProcedure } from '../../../procedures/authenticated.js';
 import { findOneSchema } from '@retailify/validation/admin/employee/find-one.schema';
 
-export const findOneHandler = adminProcedure
+export const findOneHandler = authenticatedProcedure
   .input(findOneSchema)
   .query(async ({ ctx, input }) => {
     const employee = await ctx.db?.employee.findUnique({

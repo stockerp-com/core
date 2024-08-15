@@ -13,6 +13,8 @@ import { S3 } from '@retailify/s3';
 
 export interface Session {
   id: number;
+  organizationId: number | null;
+  role: 'ORGANIZATION_ADMIN' | null;
 }
 
 interface CreateContextInnerOpts {

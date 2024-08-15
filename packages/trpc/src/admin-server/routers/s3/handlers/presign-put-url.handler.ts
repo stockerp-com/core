@@ -1,10 +1,10 @@
-import { adminProcedure } from '../../../procedures/admin.js';
+import { authenticatedProcedure } from '../../../procedures/authenticated.js';
 import { presignPutUrlSchema } from '@retailify/validation/admin/s3/presign-put-url.schema';
 import { PutObjectCommand, PutObjectCommandInput } from '@aws-sdk/client-s3';
 import { env } from '../../../env.js';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
-export const presignPutUrlHandler = adminProcedure
+export const presignPutUrlHandler = authenticatedProcedure
   .input(presignPutUrlSchema)
   .query(async ({ ctx, input }) => {
     if (ctx.s3) {
