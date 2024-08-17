@@ -1,20 +1,17 @@
 import { Db } from '@retailify/db';
 import { Redis } from '@retailify/redis';
 import { CreateExpressContextOptions } from '@trpc/server/adapters/express';
-import {
-  clearSessionCookie,
-  getSession,
-  getSessionCookie,
-  setSessionCookie,
-} from './utils/cookie.js';
 import { TRPCError } from '@trpc/server';
 import { type TFunction } from 'i18next';
 import { S3 } from '@retailify/s3';
+import { getRTCookie, rmRTCookie, setRTCookie } from './utils/cookie.js';
 
 export interface Session {
   id: number;
-  organizationId: number | null;
-  role: 'ORGANIZATION_ADMIN' | null;
+  organization: {
+    id: number;
+    role: 'ORGANIZATION_ADMIN';
+  } | null;
 }
 
 interface CreateContextInnerOpts {
@@ -24,16 +21,18 @@ interface CreateContextInnerOpts {
   s3: S3;
   t: TFunction;
   // eslint-disable-next-line no-unused-vars
-  setSessionCookie: (token: string) => void;
-  getSessionCookie: () => string | null;
-  clearSessionCookie: () => void;
+  setRTCookie: (token: string) => void;
+  getRTCookie: () => string | null;
+  rmRTCookie: () => void;
+  getAT: () => string | null;
 }
 
 export const createContextInner = (opts?: CreateContextInnerOpts) => ({
   session: opts?.session,
-  setSessionCookie: opts?.setSessionCookie,
-  getSessionCookie: opts?.getSessionCookie,
-  clearSessionCookie: opts?.clearSessionCookie,
+  setRTCookie: opts?.setRTCookie,
+  getRTCookie: opts?.getRTCookie,
+  rmRTCookie: opts?.rmRTCookie,
+  getAT: opts?.getAT,
   db: opts?.db,
   redis: opts?.redis,
   t: opts?.t,
@@ -62,16 +61,17 @@ export const createContext = (opts?: CreateContextOpts) => {
 
   const { req, res } = opts.expressContextOpts;
 
-  const session = getSession(req);
+  const session = null;
 
   return createContextInner({
     session,
     db: opts?.db,
     redis: opts?.redis,
     s3: opts?.s3,
-    setSessionCookie: (token: string) => setSessionCookie(res, token),
-    getSessionCookie: () => getSessionCookie(req),
-    clearSessionCookie: () => clearSessionCookie(res),
+    setRTCookie: (token: string) => setRTCookie(res, token),
+    getRTCookie: () => getRTCookie(req),
+    rmRTCookie: () => rmRTCookie(res),
+    getAT: () => req.headers.authorization?.replace(/^Bearer /, '') ?? null,
     t: req.t,
   });
 };

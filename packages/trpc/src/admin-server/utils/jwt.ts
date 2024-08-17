@@ -1,61 +1,28 @@
 import jwt from 'jsonwebtoken';
-import { TRPCError } from '@trpc/server';
-import { Session } from '../context.js';
 import { env } from '../env.js';
+import { Session } from '../context.js';
 
-// Interface for the JWT payload
-interface JwtPayload {
-  sub: string; // Employee ID
+export function signTokens(payload: Session) {
+  return {
+    accessToken: jwt.sign(payload, env.ADMIN_SERVER_JWT_AT_SECRET!, {
+      expiresIn: '10m',
+    }),
+    refreshToken: jwt.sign(payload, env.ADMIN_SERVER_JWT_RT_SECRET!, {
+      expiresIn: '1d',
+    }),
+  };
 }
 
-// Converts the JWT payload to a session object
-const payloadToSession = (payload: JwtPayload): Session => {
-  return {
-    id: parseInt(payload.sub),
-  };
-};
+export function verifyAT(token: string) {
+  return jwt.verify(
+    token,
+    env.ADMIN_SERVER_JWT_AT_SECRET!,
+  ) as unknown as Session;
+}
 
-// Signs a JWT token using the provided session
-export const signJwt = (session: Session) => {
-  const payload: JwtPayload = {
-    sub: session.id.toString(),
-  };
-
-  return jwt.sign(payload, env.JWT_SECRET, {
-    expiresIn: '1h',
-  });
-};
-
-// Decodes a JWT token and returns the corresponding session
-export const decodeJwt = (token: string): Session => {
-  try {
-    const payload = jwt.decode(token) as JwtPayload | null;
-    if (!payload) {
-      throw new TRPCError({
-        code: 'UNAUTHORIZED',
-        message: 'Invalid token',
-      });
-    }
-
-    return payloadToSession(payload);
-  } catch {
-    throw new TRPCError({
-      code: 'UNAUTHORIZED',
-      message: 'Invalid token',
-    });
-  }
-};
-
-// Verifies a JWT token and returns the corresponding session
-export const verifyJwt = (token: string): Session => {
-  try {
-    const payload = jwt.verify(token, env.JWT_SECRET) as JwtPayload;
-
-    return payloadToSession(payload);
-  } catch {
-    throw new TRPCError({
-      code: 'UNAUTHORIZED',
-      message: 'Invalid token',
-    });
-  }
-};
+export function verifyRT(token: string) {
+  return jwt.verify(
+    token,
+    env.ADMIN_SERVER_JWT_RT_SECRET!,
+  ) as unknown as Session;
+}

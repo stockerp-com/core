@@ -6,7 +6,8 @@
     "404": "Not Found",
     "408": "Request Timeout",
     "429": "Too Many Requests",
-    "500": "Internal Server Error"
+    "500": "Internal Server Error",
+    "other": "Oops! Something went wrong."
   },
   "validation": {
     "required": "This field is required",
