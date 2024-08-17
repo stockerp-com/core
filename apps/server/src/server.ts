@@ -53,7 +53,7 @@ export const server = async (): Promise<Express> => {
     });
   });
 
-  app.use('/trpc', createExpressTrpcMiddleware(db, redis, s3));
+  app.use('/erp/trpc', createExpressTrpcMiddleware(db, redis, s3));
 
   return app;
 };
