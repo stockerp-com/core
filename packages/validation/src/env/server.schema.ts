@@ -7,6 +7,7 @@ export const serverSchema = z.object({
   PORT: z.coerce.number().default(3000),
   JWT_AT_SECRET: z.string(),
   JWT_RT_SECRET: z.string(),
+  WORKER_URL: z.string().default('http://localhost:8787'),
 });
 
 export type ServerEnv = z.infer<typeof serverSchema>;
