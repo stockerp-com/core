@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import {
   SignInInput,
   signInSchema,
-} from '@retailify/validation/server/auth/sign-in.schema';
+} from '@retailify/validation/erp/auth/sign-in.schema';
 import {
   Form,
   FormControl,

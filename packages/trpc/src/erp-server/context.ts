@@ -1,21 +1,14 @@
 import { Db } from '@retailify/db';
 import { Redis } from '@retailify/redis';
-import { CreateExpressContextOptions } from '@trpc/server/adapters/express';
 import { TRPCError } from '@trpc/server';
 import { type TFunction } from 'i18next';
 import { S3 } from '@retailify/s3';
+import { CreateExpressContextOptions } from '@trpc/server/adapters/express';
+import { EmployeeSession } from '../types/erp/auth/session.js';
 import { getRTCookie, rmRTCookie, setRTCookie } from './utils/cookie.js';
 
-export interface Session {
-  id: number;
-  organization: {
-    id: number;
-    role: 'ADMIN';
-  } | null;
-}
-
 interface CreateContextInnerOpts {
-  session: Session | null;
+  session: EmployeeSession | null;
   db: Db;
   redis: Redis;
   s3: S3;

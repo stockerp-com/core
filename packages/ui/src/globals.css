@@ -63,51 +63,67 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   h1 {
     @apply scroll-m-20 text-4xl font-extrabold tracking-tight;
   }
+
   h2 {
     @apply scroll-m-20 text-3xl font-semibold tracking-tight;
   }
+
   h3 {
     @apply scroll-m-20 text-2xl font-semibold tracking-tight;
   }
+
   h4 {
     @apply scroll-m-20 text-xl font-semibold tracking-tight;
   }
+
   p {
     @apply leading-7;
   }
+
   blockquote {
     @apply border-l-2 pl-6 italic;
   }
+
   table {
     @apply w-full;
   }
+
   tr {
     @apply m-0 border-t p-0 even:bg-muted;
   }
+
   th {
     @apply border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right;
   }
+
   td {
     @apply border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right;
   }
+
   code {
     @apply relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold;
   }
+
   .lead {
     @apply relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold;
   }
+
   .large {
     @apply text-lg font-semibold;
   }
+
   small {
     @apply text-sm font-medium leading-none;
   }
+
   .muted {
     @apply text-sm text-muted-foreground;
   }

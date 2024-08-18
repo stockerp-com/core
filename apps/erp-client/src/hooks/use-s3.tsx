@@ -1,4 +1,4 @@
-import { PresignPutUrlInput } from '@retailify/validation/server/s3/presign-put-url.schema';
+import { PresignPutUrlInput } from '@retailify/validation/erp/s3/presign-put-url.schema';
 import { trpc } from '../utils/trpc';
 import { useTranslation } from 'react-i18next';
 

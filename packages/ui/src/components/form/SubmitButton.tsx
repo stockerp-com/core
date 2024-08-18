@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button } from '../ui/button.js';
 import { cn } from '@retailify/ui/lib/utils';
 import { IconType } from 'react-icons';

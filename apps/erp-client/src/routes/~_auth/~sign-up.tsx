@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import {
   SignUpInput,
   signUpSchema,
-} from '@retailify/validation/server/auth/sign-up.schema';
+} from '@retailify/validation/erp/auth/sign-up.schema';
 import {
   Form,
   FormField,

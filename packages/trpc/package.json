@@ -4,7 +4,10 @@
   "license": "MIT",
   "type": "module",
   "exports": {
-    "./*": "./src/*.ts"
+    "./*": [
+      "./src/*.ts",
+      "./src/*.d.ts"
+    ]
   },
   "scripts": {
     "lint": "eslint ./src --fix"

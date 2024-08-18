@@ -45,7 +45,7 @@ import { useForm } from 'react-hook-form';
 import {
   ChangePasswordInput,
   changePasswordSchema,
-} from '@retailify/validation/server/auth/change-password.schema';
+} from '@retailify/validation/erp/auth/change-password.schema';
 import {
   Form,
   FormControl,
@@ -59,7 +59,7 @@ import { PasswordInput } from '@retailify/ui/components/form/PasswordInput';
 import {
   EditProfileInput,
   editProfileSchema,
-} from '@retailify/validation/server/account/edit-profile.schema';
+} from '@retailify/validation/erp/account/edit-profile.schema';
 import { Input } from '@retailify/ui/components/ui/input';
 import useS3 from '../../hooks/use-s3';
 import { Label } from '@retailify/ui/components/ui/label';
