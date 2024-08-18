@@ -19,3 +19,7 @@ compatibility_date = "2024-08-17"
 
 # [ai]
 # binding = "AI"
+
+[[r2_buckets]]
+binding = "MY_BUCKET"
+bucket_name = "retailify"
