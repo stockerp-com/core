@@ -71,10 +71,14 @@ import {
   CommandItem,
   CommandList,
 } from '@retailify/ui/components/ui/command';
+import { useAuth } from '../../hooks/use-auth';
 
 export default function SettingsMenu(props: { isCollapsed: boolean }) {
+  const { session } = useAuth();
   const { t } = useTranslation();
-  const { data } = trpc.employee.findMe.useQuery();
+  const { data } = trpc.employee.findOne.useQuery({
+    id: session?.id as unknown as number,
+  });
   const [isOpened, setIsOpened] = useState(false);
   const [isSignOutDialogOpened, setIsSignOutDialogOpened] = useState(false);
   const [isChangePasswordDialogOpened, setIsChangePasswordDialogOpened] =
@@ -159,6 +163,7 @@ function EditProfileDialog(props: {
   setIsOpened: (isOpened: boolean) => void;
 }) {
   const { t } = useTranslation();
+  const authCtx = useAuth();
 
   const form = useForm<EditProfileInput>({
     resolver: zodResolver(editProfileSchema),
@@ -174,13 +179,17 @@ function EditProfileDialog(props: {
     onSuccess: ({ message }) => {
       props.setIsOpened(false);
       toast.success(message);
-      utils.employee.findMe.invalidate();
+      utils.employee.findOne.invalidate({
+        id: authCtx.session?.id,
+      });
     },
     onError: ({ message }) => {
       toast.error(message);
     },
   });
-  const { data } = trpc.employee.findMe.useQuery();
+  const { data } = trpc.employee.findOne.useQuery({
+    id: authCtx.session?.id as unknown as number,
+  });
 
   useEffect(() => {
     if (data) {

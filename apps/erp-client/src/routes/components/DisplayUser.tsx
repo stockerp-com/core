@@ -6,9 +6,13 @@ import {
 import { trpc } from '../../utils/trpc';
 import { getNameShorthand } from '../../utils/ui';
 import { Skeleton } from '@retailify/ui/components/ui/skeleton';
+import { useAuth } from '../../hooks/use-auth';
 
 export default function DisplayUser(props: { isCollapsed: boolean }) {
-  const { data, isLoading, isError } = trpc.employee.findMe.useQuery();
+  const { session } = useAuth();
+  const { data, isLoading, isError } = trpc.employee.findOne.useQuery({
+    id: session?.id as unknown as number,
+  });
 
   return (
     <div className="flex items-center gap-2">

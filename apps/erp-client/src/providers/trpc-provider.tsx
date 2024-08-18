@@ -1,4 +1,4 @@
-import { ReactNode, Suspense, useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { trpc } from '../utils/trpc';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { httpBatchLink } from '@trpc/client';
@@ -8,7 +8,7 @@ import { fetcher } from '../utils/fetcher';
 
 export default function TrpcProvider(props: { children: ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());
-  const auth = useAuth();
+  const authCtx = useAuth();
 
   const [trpcClient] = useState(() =>
     trpc.createClient({
@@ -17,8 +17,8 @@ export default function TrpcProvider(props: { children: ReactNode }) {
           url: import.meta.env.VITE_API_URL as string,
           headers() {
             return {
-              authorization: auth?.accessToken
-                ? `Bearer ${auth.accessToken}`
+              authorization: authCtx?.accessToken
+                ? `Bearer ${authCtx.accessToken}`
                 : '',
             };
           },
@@ -27,7 +27,9 @@ export default function TrpcProvider(props: { children: ReactNode }) {
             return fetcher(
               url,
               options,
-              auth?.accessToken ?? null,
+              authCtx?.accessToken ?? null,
+              authCtx?.setAccessToken ?? (() => {}),
+              authCtx?.setSession ?? (() => {}),
               import.meta.env.VITE_API_URL as string,
             );
           },
@@ -39,7 +41,7 @@ export default function TrpcProvider(props: { children: ReactNode }) {
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
-        <Suspense fallback="loading...">{props.children}</Suspense>
+        {props.children}
       </QueryClientProvider>
     </trpc.Provider>
   );

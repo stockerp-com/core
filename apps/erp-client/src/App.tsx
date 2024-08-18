@@ -6,7 +6,7 @@ import { TooltipProvider } from '@retailify/ui/components/ui/tooltip';
 import { routeTree } from './routeTree.gen';
 import { AuthProvider } from './providers/auth-provider';
 
-const router = createRouter({ routeTree });
+const router = createRouter({ routeTree, context: { auth: null } });
 
 declare module '@tanstack/react-router' {
   interface Register {

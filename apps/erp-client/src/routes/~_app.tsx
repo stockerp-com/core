@@ -7,29 +7,29 @@ import {
 import { ScrollArea } from '@retailify/ui/components/ui/scroll-area';
 import Topbar from './components/Topbar';
 import Sidebar from './components/Sidebar';
+import { authStore } from '../utils/auth-store';
+import { refreshTokens } from '../utils/refresh-tokens';
+import { jwtDecode } from 'jwt-decode';
+import { EmployeeSession } from '@retailify/trpc/types/erp/auth/session.d';
 
 export const Route = createFileRoute('/_app')({
   component: AppComponent,
-  beforeLoad: async ({ location }) => {
-    try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/auth.verify`, {
-        credentials: 'include',
-      }).then((res) => res.json());
-
-      if (res.result.data.json.ok !== true) {
+  beforeLoad: async () => {
+    const { session } = authStore.getState();
+    if (!session?.id) {
+      const newAccessToken = await refreshTokens(import.meta.env.VITE_API_URL);
+      if (!newAccessToken) {
         throw redirect({
           to: '/sign-in',
           search: {
-            location: location.href,
+            redirect: location.href,
           },
         });
       }
-    } catch (e) {
-      throw redirect({
-        to: '/sign-in',
-        search: {
-          location: location.href,
-        },
+
+      authStore.setState({
+        accessToken: newAccessToken,
+        session: jwtDecode(newAccessToken) as unknown as EmployeeSession,
       });
     }
   },

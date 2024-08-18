@@ -21,6 +21,9 @@ import { PasswordInput } from '@retailify/ui/components/form/PasswordInput';
 import { Input } from '@retailify/ui/components/ui/input';
 import { toast } from '@retailify/ui/lib/toast';
 import { PiSignIn } from 'react-icons/pi';
+import { EmployeeSession } from '@retailify/trpc/types/erp/auth/session.d';
+import { useAuth } from '../../hooks/use-auth';
+import { jwtDecode } from 'jwt-decode';
 
 export const Route = createFileRoute('/_auth/sign-up')({
   component: SignUpComponent,
@@ -41,10 +44,15 @@ function SignUpComponent() {
 }
 
 function SignUpForm() {
+  const authCtx = useAuth();
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const { mutate, isPending } = trpc.auth.signUp.useMutation({
-    onSuccess({ message }) {
+    onSuccess({ message, accessToken }) {
+      const session = jwtDecode(accessToken) as unknown as EmployeeSession;
+      authCtx.setAccessToken(accessToken);
+      authCtx.setSession(session);
+
       toast.success(message);
       navigate({
         to: '/',

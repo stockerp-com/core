@@ -1,4 +1,5 @@
-import { Context, Session } from '../context.js';
+import { EmployeeSession } from '../../types/erp/auth/session.js';
+import { Context } from '../context.js';
 import { signTokens, verifyRT } from './jwt.js';
 
 async function getValidRefreshTokens(redis: Context['redis'], id?: number) {
@@ -7,7 +8,21 @@ async function getValidRefreshTokens(redis: Context['redis'], id?: number) {
   const res = await redis?.get(`admin:${id}`);
   if (!res) return null;
 
-  return JSON.parse(res) as unknown as string[];
+  const tokens = JSON.parse(res) as unknown as string[];
+
+  const validTokens = [];
+
+  for (const token of tokens) {
+    try {
+      if (verifyRT(token)) {
+        validTokens.push(token);
+      }
+    } catch {
+      // invalid token
+    }
+  }
+
+  return validTokens;
 }
 
 async function setValidRefreshTokens(
@@ -20,19 +35,20 @@ async function setValidRefreshTokens(
 
 export async function generateSession(
   ctx: Context,
-  sessionData: Session,
+  sessionData: EmployeeSession,
   prevRt?: string,
 ) {
-  const { accessToken, refreshToken } = signTokens(sessionData);
+  const { accessToken, refreshToken } = signTokens({
+    id: sessionData.id,
+    organization: sessionData.organization,
+  });
 
-  await setValidRefreshTokens(
-    ctx.redis,
-    sessionData.id,
-    [
-      ...((await getValidRefreshTokens(ctx.redis, sessionData.id)) ?? []),
-      refreshToken,
-    ].filter((rt) => rt !== prevRt),
-  );
+  const refreshTokens = [
+    ...((await getValidRefreshTokens(ctx.redis, sessionData.id)) ?? []),
+  ].filter((rt) => rt !== prevRt);
+  refreshTokens.push(refreshToken);
+
+  await setValidRefreshTokens(ctx.redis, sessionData.id, refreshTokens);
 
   ctx.setRTCookie?.(refreshToken);
 
@@ -64,6 +80,7 @@ export async function refreshSession(ctx: Context) {
 
     const refreshTokens =
       (await getValidRefreshTokens(ctx.redis, session.id)) ?? [];
+
     if (!refreshTokens.includes(rt)) return null;
 
     return generateSession(ctx, session, rt);

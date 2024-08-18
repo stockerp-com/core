@@ -1,9 +1,13 @@
+import { EmployeeSession } from '@retailify/trpc/types/erp/auth/session.d';
 import { refreshTokens } from './refresh-tokens';
+import { jwtDecode } from 'jwt-decode';
 
 export async function fetcher(
   url: RequestInfo | URL,
   options: RequestInit | undefined,
   accessToken: string | null,
+  setAccessToken: (accessToken: string) => void,
+  setSession: (session: EmployeeSession | null) => void,
   apiBaseUrl: string,
 ) {
   const response = await fetch(url, {
@@ -22,6 +26,9 @@ export async function fetcher(
         window.location.href = '/sign-in';
         return response;
       }
+
+      setAccessToken(newAccessToken);
+      setSession(jwtDecode(newAccessToken) as unknown as EmployeeSession);
 
       return await fetch(url, {
         ...options,
