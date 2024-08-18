@@ -10,7 +10,7 @@ export interface Session {
   id: number;
   organization: {
     id: number;
-    role: 'ORGANIZATION_ADMIN';
+    role: 'ADMIN';
   } | null;
 }
 

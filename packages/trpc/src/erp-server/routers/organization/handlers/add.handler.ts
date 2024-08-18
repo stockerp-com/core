@@ -11,7 +11,7 @@ export const addHandler = authenticatedProcedure
         staff: {
           create: {
             employeeId: ctx.session!.id,
-            role: 'ORGANIZATION_ADMIN',
+            role: 'ADMIN',
           },
         },
       },
