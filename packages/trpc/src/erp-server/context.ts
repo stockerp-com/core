@@ -2,7 +2,6 @@ import { Db } from '@retailify/db';
 import { Redis } from '@retailify/redis';
 import { TRPCError } from '@trpc/server';
 import { type TFunction } from 'i18next';
-import { S3 } from '@retailify/s3';
 import { CreateExpressContextOptions } from '@trpc/server/adapters/express';
 import { EmployeeSession } from '../types/erp/auth/session.js';
 import { getRTCookie, rmRTCookie, setRTCookie } from './utils/cookie.js';
@@ -11,7 +10,6 @@ interface CreateContextInnerOpts {
   session: EmployeeSession | null;
   db: Db;
   redis: Redis;
-  s3: S3;
   t: TFunction;
   // eslint-disable-next-line no-unused-vars
   setRTCookie: (token: string) => void;
@@ -29,7 +27,6 @@ export const createContextInner = (opts?: CreateContextInnerOpts) => ({
   db: opts?.db,
   redis: opts?.redis,
   t: opts?.t,
-  s3: opts?.s3,
 });
 
 interface CreateContextOpts {
@@ -41,7 +38,6 @@ interface CreateContextOpts {
   };
   db: Db;
   redis: Redis;
-  s3: S3;
 }
 
 export const createContext = (opts?: CreateContextOpts) => {
@@ -60,7 +56,6 @@ export const createContext = (opts?: CreateContextOpts) => {
     session,
     db: opts?.db,
     redis: opts?.redis,
-    s3: opts?.s3,
     setRTCookie: (token: string) => setRTCookie(res, token),
     getRTCookie: () => getRTCookie(req),
     rmRTCookie: () => rmRTCookie(res),

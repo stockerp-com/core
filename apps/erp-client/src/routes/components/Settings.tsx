@@ -61,7 +61,6 @@ import {
   editProfileSchema,
 } from '@retailify/validation/erp/account/edit-profile.schema';
 import { Input } from '@retailify/ui/components/ui/input';
-import useS3 from '../../hooks/use-s3';
 import { Label } from '@retailify/ui/components/ui/label';
 import { DropzoneFileInput } from '@retailify/ui/components/ui/file-select';
 import {
@@ -182,7 +181,6 @@ function EditProfileDialog(props: {
     },
   });
   const { data } = trpc.employee.findMe.useQuery();
-  const { upload } = useS3();
 
   useEffect(() => {
     if (data) {
@@ -278,8 +276,8 @@ function EditProfileDialog(props: {
                 maxSize={1 * 1024 * 1024}
                 contentType="image"
                 callback={async (files) => {
-                  const { data } = await upload(files[0], 'Profile_Pictures');
-                  form.setValue('picture', data);
+                  // const { data } = await upload(files[0], 'Profile_Pictures');
+                  // form.setValue('picture', data);
                 }}
                 uploadedFiles={[form.watch('picture')]}
                 cdnUrl={import.meta.env.VITE_CDN_URL}

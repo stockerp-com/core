@@ -14,7 +14,6 @@
     "apps:erp-client",
     "packages:ui",
     "packages:i18n",
-    "packages:s3",
     "apps:worker"
   ],
   "editor.fontFamily": "JetBrains Mono",

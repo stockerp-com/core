@@ -1,8 +1,6 @@
 import { editProfileSchema } from '@retailify/validation/erp/account/edit-profile.schema';
 import { authenticatedProcedure } from '../../../procedures/authenticated.js';
 import { TRPCError } from '@trpc/server';
-import { env } from '../../../env.js';
-import { DeleteObjectCommand } from '@aws-sdk/client-s3';
 
 export const editProfileHandler = authenticatedProcedure
   .input(editProfileSchema)
@@ -47,12 +45,6 @@ export const editProfileHandler = authenticatedProcedure
 
     if (hasUserChangedPicture || hasUserRemovedPicture) {
       await Promise.all([
-        ctx.s3?.send(
-          new DeleteObjectCommand({
-            Bucket: env.AWS_S3_BUCKET!,
-            Key: employee.picture?.key,
-          }),
-        ),
         ctx.db?.file.delete({
           where: {
             key: employee.picture?.key,
