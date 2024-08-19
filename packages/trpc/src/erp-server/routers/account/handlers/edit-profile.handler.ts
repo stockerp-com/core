@@ -1,6 +1,7 @@
 import { editProfileSchema } from '@retailify/validation/erp/account/edit-profile.schema';
 import { authenticatedProcedure } from '../../../procedures/authenticated.js';
 import { TRPCError } from '@trpc/server';
+import { deleteObject } from '../../../utils/worker.js';
 
 export const editProfileHandler = authenticatedProcedure
   .input(editProfileSchema)
@@ -44,13 +45,15 @@ export const editProfileHandler = authenticatedProcedure
     const hasUserRemovedPicture = !input.picture && employee.picture?.key;
 
     if (hasUserChangedPicture || hasUserRemovedPicture) {
-      await Promise.all([
-        ctx.db?.file.delete({
+      const accessToken = ctx.getAT?.();
+      if (accessToken && employee.picture?.key) {
+        await deleteObject(accessToken, employee.picture?.key);
+        await ctx.db?.file.delete({
           where: {
             key: employee.picture?.key,
           },
-        }),
-      ]);
+        });
+      }
     }
 
     await ctx.db?.employee.update({

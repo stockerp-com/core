@@ -19,7 +19,11 @@ export default function DisplayUser(props: { isCollapsed: boolean }) {
       <Avatar className="h-9 w-9 flex rounded-md">
         <AvatarImage
           className="rounded-md"
-          src={`${import.meta.env.VITE_CDN_URL}/${data?.employee?.picture?.key}`}
+          src={
+            data?.employee?.picture?.key
+              ? `${import.meta.env.VITE_WORKER_URL}/r2/${data?.employee?.picture?.key}`
+              : undefined
+          }
         />
         <AvatarFallback className="text-muted-foreground rounded-md">
           {data?.employee?.fullName &&

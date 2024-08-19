@@ -32,6 +32,10 @@
       "not_found": "Employee with id \"{{id}}\" not found"
     }
   },
+  "upload": {
+    "success": "Successfully uploaded file",
+    "failed": "Failed to upload file {{filename}}"
+  },
   "account": {
     "edit_profile": {
       "success": "Successfully updated profile",

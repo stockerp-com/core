@@ -72,6 +72,7 @@ import {
   CommandList,
 } from '@retailify/ui/components/ui/command';
 import { useAuth } from '../../hooks/use-auth';
+import useUpload from '../../hooks/use-upload';
 
 export default function SettingsMenu(props: { isCollapsed: boolean }) {
   const { session } = useAuth();
@@ -208,6 +209,8 @@ function EditProfileDialog(props: {
     }
   }, [data, form]);
 
+  const { uploadOne } = useUpload();
+
   async function onSubmit(values: EditProfileInput) {
     mutate(values);
   }
@@ -285,11 +288,27 @@ function EditProfileDialog(props: {
                 maxSize={1 * 1024 * 1024}
                 contentType="image"
                 callback={async (files) => {
-                  // const { data } = await upload(files[0], 'Profile_Pictures');
-                  // form.setValue('picture', data);
+                  if (authCtx.accessToken && authCtx.session && files[0]) {
+                    const key = await uploadOne({
+                      file: files[0],
+                      directory: 'profile',
+                      accessToken: authCtx.accessToken,
+                      path: 'employees',
+                      session: authCtx.session,
+                    });
+
+                    if (key) {
+                      form.setValue('picture', {
+                        key,
+                        name: files[0].name,
+                        size: files[0].size,
+                        type: files[0].type,
+                      });
+                    }
+                  }
                 }}
                 uploadedFiles={[form.watch('picture')]}
-                cdnUrl={import.meta.env.VITE_CDN_URL}
+                baseImgUrl={`${import.meta.env.VITE_WORKER_URL}/r2`}
               />
             </div>
           </form>

@@ -20,7 +20,7 @@ export function DropzoneFileInput(props: {
     size: number;
     type: string;
   } | null)[];
-  cdnUrl: string;
+  baseImgUrl: string;
   removeFile: (key: string) => void;
 }) {
   const accept =
@@ -78,7 +78,7 @@ export function DropzoneFileInput(props: {
             <div key={file.key} className="flex items-center w-full gap-2">
               <img
                 alt={file.name}
-                src={`${props.cdnUrl}/${file.key}`}
+                src={`${props.baseImgUrl}/${file.key}`}
                 className="h-9 w-9 rounded-md border border-input object-cover"
               />
               <div className="flex flex-col">
