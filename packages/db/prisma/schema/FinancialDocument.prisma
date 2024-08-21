@@ -1,0 +1,49 @@
+// Represents any document related to financial transactions.
+model FinancialDocument {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  date               DateTime @default(now())
+  bankAccountAmount  Decimal  @default(0) @db.Decimal(12, 2) // The amount of money that was transferred to the bank account.
+  cashRegisterAmount Decimal  @default(0) @db.Decimal(12, 2) // The amount of money that was transferred to the cash register.
+  currency           Currency
+  note               String?
+
+  bankAccount        BusinessBankAccount? @relation(fields: [bankAccountId], references: [id])
+  counterparty       Counterparty?        @relation(fields: [counterpartyId], references: [id])
+  cashRegister       CashRegister?        @relation(fields: [stockpointId, cashierId], references: [stockpointId, cashierId])
+  goodsReceipt       GoodsReceipt?        @relation(fields: [goodsReceiptId], references: [id])
+  goodsSale          GoodsSale?           @relation(fields: [goodsSaleId], references: [id])
+  goodsSaleReturn    GoodsSaleReturn?     @relation(fields: [goodsSaleReturnId], references: [id])
+  goodsReceiptReturn GoodsReceiptReturn?  @relation(fields: [goodsReceiptReturnId], references: [id])
+
+  bankAccountId        Int?
+  counterpartyId       Int?
+  stockpointId         Int?
+  cashierId            Int?
+  goodsReceiptId       Int?
+  goodsSaleId          Int?
+  goodsSaleReturnId    Int?
+  goodsReceiptReturnId Int?
+
+  @@index([id])
+  @@index([date])
+  @@index([currency])
+  @@index([bankAccountId])
+  @@index([counterpartyId])
+}
+
+enum Currency {
+  USD // United States Dollar
+  EUR // Euro
+  GBP // British Pound Sterling
+  UAH // Ukrainian Hryvnia
+  RUB // Russian Ruble
+  JPY // Japanese Yen
+  CNY // Chinese Yuan
+  INR // Indian Rupee
+  AUD // Australian Dollar
+  CAD // Canadian Dollar
+  CHF // Swiss Franc
+}

@@ -1,0 +1,59 @@
+// A group of goods that share a vast majority of their characteristics.
+model GoodsGroup {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sku        String
+  isArchived Boolean @default(false)
+
+  goods           Good[]
+  localizations   GoodsGroupLocalization[]
+  characteristics Characteristic[]
+  media           GoodsGroupMedia[]
+  brand           Brand?                   @relation(fields: [brandId], references: [id])
+
+  brandId Int?
+
+  @@index([id])
+  @@index([sku])
+}
+
+model GoodsGroupLocalization {
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  language          String
+  name              String
+  description       String   @db.Text
+  metaTitle         String
+  metaDesc          String   @db.Text
+  slug              String
+  focusKeyword      String
+  secondaryKeywords String[]
+
+  group GoodsGroup @relation(fields: [groupId], references: [id])
+
+  groupId Int
+
+  @@id([groupId, language])
+  @@index([groupId, language])
+  @@index([groupId])
+  @@index([language])
+}
+
+model GoodsGroupMedia {
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  file  File       @relation(fields: [fileId], references: [id])
+  group GoodsGroup @relation(fields: [goodsGroupId], references: [id])
+
+  fileId       Int
+  goodsGroupId Int
+
+  @@id([fileId, goodsGroupId])
+  @@index([fileId, goodsGroupId])
+  @@index([fileId])
+  @@index([goodsGroupId])
+}

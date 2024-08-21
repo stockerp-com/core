@@ -1,0 +1,48 @@
+// Place where goods are stored and/or sold.
+// It can be a warehouse, a store, a market, etc.
+model Stockpoint {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name        String
+  description String?
+  address     String?
+  phone       String?
+  email       String?
+  website     String?
+  latitude    Float?
+  longitude   Float?
+
+  goods                     Stock[]
+  cashRegisters             CashRegister[]
+  organization              Organization            @relation(fields: [organizationId], references: [id])
+  goodsWriteOffs            GoodsWriteOff[]
+  goodsTransferInternalFrom GoodsTransferInternal[] @relation("FromStockpoint")
+  goodsTransferInternalTo   GoodsTransferInternal[] @relation("ToStockpoint")
+
+  organizationId Int
+
+  @@index([id])
+  @@index([organizationId])
+}
+
+// Quantity of a good stored in a specific stockpoint.
+model Stock {
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  quantity Int
+
+  stockpoint Stockpoint          @relation(fields: [stockpointId], references: [id])
+  good       Good                @relation(fields: [goodId], references: [id])
+  documents  GoodsDocumentGood[]
+
+  stockpointId Int
+  goodId       Int
+
+  @@id([stockpointId, goodId])
+  @@index([stockpointId, goodId])
+  @@index([stockpointId])
+  @@index([goodId])
+}

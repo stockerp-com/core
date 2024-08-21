@@ -1,0 +1,24 @@
+// A model for an internal user of the ERP system.
+model Employee {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  fullName          String
+  email             String @unique
+  pwHash            String
+  preferredLanguage String
+
+  organizations EmployeeToOrganization[]
+  bankAccounts  BusinessBankAccount[]
+  cashRegister  CashRegister?
+  picture       File?                    @relation(fields: [pictureId], references: [id])
+
+  currentOrganizationId Int?
+  pictureId             Int?
+
+  @@index([id])
+  @@index([fullName])
+  @@index([email])
+  @@index([currentOrganizationId])
+}

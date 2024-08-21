@@ -1,0 +1,23 @@
+model Export {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  status      ExportStatus
+  destination ExportDestination
+
+  file File? @relation(fields: [fileId], references: [id])
+
+  fileId Int?
+}
+
+enum ExportStatus {
+  PENDING
+  PROCESSING
+  PROCESSED
+  FAILED
+}
+
+enum ExportDestination {
+  ROZETKA
+}

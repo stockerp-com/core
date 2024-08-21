@@ -1,0 +1,66 @@
+// Something that defines a variant of a goods group.
+// It can be a color, a size, a material, etc.
+model Attribute {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  groups        AttributeGroup[]
+  localizations AttributeLocalization[]
+
+  @@index([id])
+}
+
+model AttributeLocalization {
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  language String
+  name     String
+
+  attribute Attribute @relation(fields: [attributeId], references: [id])
+
+  attributeId Int
+
+  @@id([attributeId, language])
+  @@index([attributeId, language])
+  @@index([attributeId])
+  @@index([language])
+}
+
+// Value of the attribute.
+model AttributeValue {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  dataType      AttributeValueDataType
+  localizations AttributeValueLocalization[]
+  goods         Good[]
+
+  @@index([id])
+}
+
+enum AttributeValueDataType {
+  STRING
+  NUMBER
+  BOOLEAN
+  DATE
+}
+
+model AttributeValueLocalization {
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  language String
+  data     Json
+
+  value AttributeValue @relation(fields: [valueId], references: [id])
+
+  valueId Int
+
+  @@id([valueId, language])
+  @@index([valueId, language])
+  @@index([valueId])
+  @@index([language])
+}

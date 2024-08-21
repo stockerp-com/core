@@ -5,27 +5,28 @@ model Organization {
 
   name        String
   description String?
+
   staff       EmployeeToOrganization[]
+  stockpoints Stockpoint[]
 
   @@index([id])
-  @@index([name])
 }
 
 model EmployeeToOrganization {
-  id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  organization   Organization @relation(fields: [organizationId], references: [id])
+  role         EmployeeRole
+  organization Organization @relation(fields: [organizationId], references: [id])
+  employee     Employee     @relation(fields: [employeeId], references: [id])
+
   organizationId Int
+  employeeId     Int
 
-  employee   Employee @relation(fields: [employeeId], references: [id])
-  employeeId Int
-
-  role EmployeeRole
-
-  @@unique([organizationId, employeeId])
+  @@id([organizationId, employeeId])
   @@index([organizationId, employeeId])
+  @@index([organizationId])
+  @@index([employeeId])
 }
 
 enum EmployeeRole {

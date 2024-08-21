@@ -1,0 +1,15 @@
+model GoodsWriteOff {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  date DateTime @default(now())
+  note String?
+
+  goodsDocuments GoodsDocument[]
+  stockpoint     Stockpoint?     @relation(fields: [stockpointId], references: [id])
+
+  stockpointId Int?
+
+  @@index([id])
+}

@@ -1,0 +1,22 @@
+model BusinessBankAccount {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  bankName      String
+  accountNumber String // Account number at the bank
+  accountHolder String // Name of the person or company that owns the account
+  iban          String // International Bank Account Number
+  lei           String // Legal Entity Identifier
+  balance       Decimal @db.Decimal(12, 2)
+  note          String?
+
+  currency           Currency
+  financialDocuments FinancialDocument[]
+  employee           Employee            @relation(fields: [employeeId], references: [id])
+
+  employeeId Int
+
+  @@index([id])
+  @@index([employeeId])
+}

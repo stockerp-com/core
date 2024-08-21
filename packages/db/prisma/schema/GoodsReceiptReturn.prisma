@@ -1,0 +1,18 @@
+model GoodsReceiptReturn {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  date DateTime @default(now())
+  note String?
+
+  supplier           Supplier?           @relation(fields: [counterpartyId], references: [coutnerpartyId])
+  goodsReceipt       GoodsReceipt?       @relation(fields: [goodsReceiptId], references: [id])
+  goodsDocuments     GoodsDocument[]
+  financialDocuments FinancialDocument[]
+
+  counterpartyId Int?
+  goodsReceiptId Int?
+
+  @@index([id])
+}

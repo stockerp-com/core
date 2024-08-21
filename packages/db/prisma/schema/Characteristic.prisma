@@ -1,0 +1,60 @@
+// Something that characterizes a goods group.
+model Characteristic {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  groups        CharacteristicGroup[]
+  localizations CharacteristicLocalization[]
+  goodsGroups   GoodsGroup[]
+}
+
+model CharacteristicLocalization {
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  language String
+  name     String
+
+  characteristic Characteristic @relation(fields: [characteristicId], references: [id])
+
+  characteristicId Int
+
+  @@id([characteristicId, language])
+  @@index([characteristicId, language])
+  @@index([characteristicId])
+  @@index([language])
+}
+
+model CharacteristicValue {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  dataType      CharacteristicValueDataType
+  localizations CharacteristicValueLocalization[]
+}
+
+enum CharacteristicValueDataType {
+  STRING
+  NUMBER
+  BOOLEAN
+  DATE
+}
+
+model CharacteristicValueLocalization {
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  language String
+  data     Json
+
+  value CharacteristicValue @relation(fields: [characteristicValueId], references: [id])
+
+  characteristicValueId Int
+
+  @@id([characteristicValueId, language])
+  @@index([characteristicValueId, language])
+  @@index([characteristicValueId])
+  @@index([language])
+}

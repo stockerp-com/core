@@ -1,0 +1,15 @@
+// Categorizes related characteristics
+// For instance, "Shoe Characteristics" (style, lace type, sole material).
+// FOR INTERNAL USE ONLY, DO NOT EXPOSE TO THE CUSTOMER.
+model CharacteristicGroup {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name        String
+  description String?
+
+  characteristics Characteristic[]
+
+  @@index([id])
+}

@@ -1,0 +1,17 @@
+model GoodsTransferInternal {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  date DateTime @default(now())
+  note String?
+
+  fromStockpoint Stockpoint      @relation("FromStockpoint", fields: [fromStockpointId], references: [id])
+  toStockpoint   Stockpoint      @relation("ToStockpoint", fields: [toStockpointId], references: [id])
+  goodsDocuments GoodsDocument[]
+
+  fromStockpointId Int
+  toStockpointId   Int
+
+  @@index([id])
+}

@@ -1,0 +1,51 @@
+// Represents any counterparty that may be somehow involved in the system.
+// Can be a person, a company, a bank, etc.
+model Counterparty {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name  String
+  phone String  @unique
+  email String? @unique
+
+  netBalance Decimal @default(0) @db.Decimal(12, 2) // The amount of money that the counterparty owes to the company. Positive value means that the counterparty owes money to the company, negative value means that the company owes money to the counterparty.
+
+  financialDocuments FinancialDocument[]
+  supplier           Supplier?
+  customer           Customer?
+
+  @@index([id])
+}
+
+model Supplier {
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  counterparty  Counterparty         @relation(fields: [coutnerpartyId], references: [id])
+  goodsReceipts GoodsReceipt[]
+  returns       GoodsReceiptReturn[]
+
+  coutnerpartyId Int @unique
+
+  @@id([coutnerpartyId])
+  @@index([coutnerpartyId])
+}
+
+model Customer {
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  cumulativeDiscount Decimal @default(0) @db.Decimal(5, 2) // Percentage
+  fixedDiscount      Decimal @default(0) @db.Decimal(5, 2) // Percentage
+  bonusDiscount      Decimal @default(0) @db.Decimal(10, 2) // Money amount
+
+  counterparty     Counterparty      @relation(fields: [coutnerpartyId], references: [id])
+  goodsSales       GoodsSale[]
+  goodsSaleReturns GoodsSaleReturn[]
+
+  coutnerpartyId Int @unique
+
+  @@id([coutnerpartyId])
+  @@index([coutnerpartyId])
+}

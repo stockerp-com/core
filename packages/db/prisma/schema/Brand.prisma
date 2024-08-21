@@ -1,18 +1,12 @@
-model File {
+model Brand {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   name String
+  note String?
 
-  // Metadata
-  key  String @unique
-  size Int
-  type String
-
-  // For profile pictures
-  employees Employee[]
+  goodsGroups GoodsGroup[]
 
   @@index([id])
-  @@index([name])
 }

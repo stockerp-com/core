@@ -1,0 +1,15 @@
+// Categorizes related attributes
+// For instance, "Physical Attributes" (color, size, material).
+// FOR INTERNAL USE ONLY, DO NOT EXPOSE TO THE CUSTOMER.
+model AttributeGroup {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name        String
+  description String?
+
+  attributes Attribute[]
+
+  @@index([id])
+}

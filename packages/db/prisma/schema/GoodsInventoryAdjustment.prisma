@@ -1,0 +1,12 @@
+model GoodsInventoryAdjustment {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  date DateTime @default(now())
+  note String?
+
+  goodsDocuments GoodsDocument[]
+
+  @@index([id])
+}

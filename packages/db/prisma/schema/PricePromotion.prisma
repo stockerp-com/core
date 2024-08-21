@@ -1,0 +1,18 @@
+model PricePromotion {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  fixed     Decimal  @default(0) @db.Decimal(10, 2)
+  percent   Decimal  @default(0) @db.Decimal(5, 2)
+  dateStart DateTime
+  dateEnd   DateTime
+  note      String?
+
+  goods Good[]
+
+  @@index([id])
+  @@index([dateStart, dateEnd])
+  @@index([dateStart])
+  @@index([dateEnd])
+}

@@ -1,0 +1,72 @@
+// Represents any document related to goods movements.
+model GoodsDocument {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  type   GoodsDocumentType
+  reason GoodsDocumentReason
+  date   DateTime            @default(now())
+  note   String?
+
+  goods                    GoodsDocumentGood[]
+  goodsReceipt             GoodsReceipt?             @relation(fields: [goodsReceiptId], references: [id])
+  goodsSale                GoodsSale?                @relation(fields: [goodsSaleId], references: [id])
+  goodsSaleReturn          GoodsSaleReturn?          @relation(fields: [goodsSaleReturnId], references: [id])
+  goodsReceiptReturn       GoodsReceiptReturn?       @relation(fields: [goodsReceiptReturnId], references: [id])
+  goodsWriteOff            GoodsWriteOff?            @relation(fields: [goodsWriteOffId], references: [id])
+  goodsTransferInternal    GoodsTransferInternal?    @relation(fields: [goodsTransferInternalId], references: [id])
+  goodsInventoryAdjustment GoodsInventoryAdjustment? @relation(fields: [goodsInventoryAdjustmentId], references: [id])
+
+  goodsReceiptId             Int?
+  goodsSaleId                Int?
+  goodsSaleReturnId          Int?
+  goodsReceiptReturnId       Int?
+  goodsWriteOffId            Int?
+  goodsTransferInternalId    Int?
+  goodsInventoryAdjustmentId Int?
+
+  @@index([id])
+  @@index([date])
+}
+
+model GoodsDocumentGood {
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  quantity Int
+
+  document GoodsDocument @relation(fields: [documentId], references: [id])
+  stock    Stock         @relation(fields: [stockpointId, goodId], references: [stockpointId, goodId])
+
+  documentId   Int
+  stockpointId Int
+  goodId       Int
+
+  @@id([documentId, stockpointId, goodId])
+  @@index([documentId])
+  @@index([stockpointId, goodId])
+  @@index([stockpointId])
+  @@index([goodId])
+}
+
+enum GoodsDocumentType {
+  INBOUND
+  OUTBOUND
+  INTERNAL
+}
+
+enum GoodsDocumentReason {
+  // Inbound
+  GOODS_RECEIPT
+  GOODS_SALE_RETURN
+
+  // Outbound
+  GOODS_SALE
+  GOODS_RECEIPT_RETURN
+  GOODS_WRITE_OFF
+
+  // Internal
+  GOODS_TRANSFER_INTERNAL
+  GOODS_INVENTORY_ADJUSTMENT
+}

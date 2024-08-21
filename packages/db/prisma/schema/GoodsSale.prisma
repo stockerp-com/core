@@ -1,0 +1,17 @@
+model GoodsSale {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  date DateTime @default(now())
+  note String?
+
+  customer           Customer?           @relation(fields: [counterpartyId], references: [coutnerpartyId])
+  goodsDocuments     GoodsDocument[]
+  financialDocuments FinancialDocument[]
+  returns            GoodsSaleReturn[]
+
+  counterpartyId Int?
+
+  @@index([id])
+}

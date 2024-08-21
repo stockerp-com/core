@@ -1,0 +1,21 @@
+model CashRegister {
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name        String
+  description String?
+  balance     Decimal @db.Decimal(12, 2)
+  note        String?
+
+  financialDocuments FinancialDocument[]
+  stockpoint         Stockpoint          @relation(fields: [stockpointId], references: [id])
+  cashier            Employee            @relation(fields: [cashierId], references: [id])
+
+  stockpointId Int
+  cashierId    Int @unique
+
+  @@id([stockpointId, cashierId])
+  @@index([stockpointId, cashierId])
+  @@index([stockpointId])
+  @@index([cashierId])
+}
