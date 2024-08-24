@@ -6,9 +6,10 @@ import cookieParser from 'cookie-parser';
 import { createExpressTrpcMiddleware } from '@retailify/trpc/erp-server/middleware/express';
 import { redis } from '@retailify/redis';
 import logger from '@retailify/logger';
-import { db } from '@retailify/db';
+import { prismaManager } from '@retailify/db';
 import * as i18nextMiddleware from 'i18next-http-middleware';
 import { initI18n } from './utils/i18n.js';
+import { cwd } from 'process';
 
 export const server = async (): Promise<Express> => {
   const app = express();
@@ -52,7 +53,9 @@ export const server = async (): Promise<Express> => {
     });
   });
 
-  app.use('/erp/trpc', createExpressTrpcMiddleware(db, redis));
+  console.log(cwd());
+
+  app.use('/erp/trpc', createExpressTrpcMiddleware(redis, prismaManager));
 
   return app;
 };

@@ -6,14 +6,15 @@ import { deleteObject } from '../../../utils/worker.js';
 export const editProfileHandler = authenticatedProcedure
   .input(editProfileSchema)
   .mutation(async ({ ctx, input }) => {
-    const employee = await ctx.db?.employee.findUnique({
-      where: {
-        id: ctx.session?.id,
-      },
-      include: {
-        picture: true,
-      },
-    });
+    const employee =
+      await ctx.prismaManager?.rootPrismaClient.employee.findUnique({
+        where: {
+          id: ctx.session?.id,
+        },
+        include: {
+          picture: true,
+        },
+      });
     if (!employee) {
       throw new TRPCError({
         code: 'NOT_FOUND',
@@ -22,11 +23,12 @@ export const editProfileHandler = authenticatedProcedure
     }
 
     if (input.email !== employee.email) {
-      const existingEmployee = await ctx.db?.employee.findUnique({
-        where: {
-          email: input.email,
-        },
-      });
+      const existingEmployee =
+        await ctx.prismaManager?.rootPrismaClient.employee.findUnique({
+          where: {
+            email: input.email,
+          },
+        });
 
       if (existingEmployee) {
         throw new TRPCError({
@@ -48,7 +50,7 @@ export const editProfileHandler = authenticatedProcedure
       const accessToken = ctx.getAT?.();
       if (accessToken && employee.picture?.key) {
         await deleteObject(accessToken, employee.picture?.key);
-        await ctx.db?.file.delete({
+        await ctx.prismaManager?.rootPrismaClient.file.delete({
           where: {
             key: employee.picture?.key,
           },
@@ -56,7 +58,7 @@ export const editProfileHandler = authenticatedProcedure
       }
     }
 
-    await ctx.db?.employee.update({
+    await ctx.prismaManager?.rootPrismaClient.employee.update({
       where: {
         id: ctx.session?.id,
       },

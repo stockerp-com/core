@@ -1,4 +1,4 @@
-name: "retailify-dev"
+name: 'retailify-dev'
 
 services:
   postgresql:
@@ -6,9 +6,9 @@ services:
     ports:
       - 5433:5432
     environment:
-      - POSTGRES_USER=dev
-      - POSTGRES_PASSWORD=dev
-      - POSTGRES_DB=dev
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
     volumes:
       - postgresql-data:/var/lib/postgresql/data
 
@@ -20,14 +20,14 @@ services:
       - REDIS_PASSWORD=dev
     command:
       [
-        "redis-server",
-        "--requirepass",
-        "dev",
-        "--user",
-        "dev",
-        "on",
-        ">dev",
-        "~*"
+        'redis-server',
+        '--requirepass',
+        'dev',
+        '--user',
+        'dev',
+        'on',
+        '>dev',
+        '~*',
       ]
     volumes:
       - redis-data:/data

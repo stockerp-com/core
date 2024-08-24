@@ -4,11 +4,12 @@ import { authenticatedProcedure } from '../../../procedures/authenticated.js';
 export const findOneHandler = authenticatedProcedure
   .input(findOneSchema)
   .query(async ({ ctx, input }) => {
-    const organization = await ctx.db?.organization.findUnique({
-      where: {
-        id: input.id,
-      },
-    });
+    const organization =
+      await ctx.prismaManager?.rootPrismaClient.organization.findUnique({
+        where: {
+          id: input.id,
+        },
+      });
     if (!organization) {
       return {
         error: {

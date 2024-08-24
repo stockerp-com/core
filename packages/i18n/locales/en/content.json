@@ -16,7 +16,8 @@
           "label": "Password",
           "placeholder": "••••••••"
         }
-      }
+      },
+      "sign_in_message": "Already have an account?"
     },
     "forgot_password": {
       "title": "Forgot password",
@@ -59,7 +60,9 @@
           "label": "Password",
           "placeholder": "••••••••••••"
         }
-      }
+      },
+      "sign_up_message": "Don't have an account yet?",
+      "forgot_password": "Forgot my password"
     },
     "sign_out": {
       "title": "Sign out",
@@ -83,6 +86,22 @@
           "label": "Profile picture",
           "placeholder": "Drag and drop your picture here or click to browse",
           "dragging": "Drop your picture here..."
+        }
+      }
+    }
+  },
+  "organization": {
+    "add": {
+      "title": "Add organization",
+      "subtitle": "Create a new organization",
+      "form_fields": {
+        "name": {
+          "label": "Organization name",
+          "placeholder": "Acme Inc."
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Acme Inc. is a company that..."
         }
       }
     }

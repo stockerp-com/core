@@ -3,14 +3,15 @@ import { publicProcedure } from '../../../procedures/public.js';
 import { compare } from 'bcrypt';
 import { signInSchema } from '@retailify/validation/erp/auth/sign-in.schema';
 import { generateSession } from '../../../utils/session.js';
-import { Context, Session } from '../../../context.js';
+import { Context } from '../../../context.js';
 import { Employee } from '@retailify/db';
+import { EmployeeSession } from '../../../../types/erp/auth/session.js';
 
 // Helper function to generate session and return response
 const generateResponse = async (
   ctx: Context,
   employee: Employee,
-  organization: Session['organization'],
+  organization: EmployeeSession['organization'],
 ) => {
   const { accessToken } = await generateSession(ctx, {
     id: employee.id,
@@ -29,11 +30,12 @@ export const signInHandler = publicProcedure
   .input(signInSchema)
   .mutation(async ({ ctx, input }) => {
     // Find employee by email
-    const employee = await ctx.db?.employee.findUnique({
-      where: {
-        email: input.email,
-      },
-    });
+    const employee =
+      await ctx.prismaManager?.rootPrismaClient?.employee.findUnique({
+        where: {
+          email: input.email,
+        },
+      });
 
     // If employee not found, throw error
     if (!employee) {
@@ -56,14 +58,17 @@ export const signInHandler = publicProcedure
 
     // Check if employee has a current organization
     if (employee.currentOrganizationId) {
-      const member = await ctx.db?.employeeToOrganization.findUnique({
-        where: {
-          organizationId_employeeId: {
-            organizationId: employee.currentOrganizationId,
-            employeeId: ctx.session!.id,
+      const member =
+        await ctx.prismaManager?.rootPrismaClient?.employeeToOrganization.findUnique(
+          {
+            where: {
+              organizationId_employeeId: {
+                organizationId: employee.currentOrganizationId,
+                employeeId: ctx.session!.id,
+              },
+            },
           },
-        },
-      });
+        );
 
       // If employee is not a member of the organization, generate session without organization
       if (!member) {

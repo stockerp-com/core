@@ -6,8 +6,7 @@ model Organization {
   name        String
   description String?
 
-  staff       EmployeeToOrganization[]
-  stockpoints Stockpoint[]
+  staff EmployeeToOrganization[]
 
   @@index([id])
 }

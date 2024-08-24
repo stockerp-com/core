@@ -2,18 +2,18 @@
 import { createExpressMiddleware } from '@trpc/server/adapters/express';
 import { appRouter } from '../routers/app.router.js';
 import { createContext } from '../context.js';
-import { Db } from '@retailify/db';
+import { PrismaManager } from '@retailify/db';
 import { Redis } from '@retailify/redis';
 import { TFunction } from 'i18next';
 
 export type CreateExpressTrpcMiddleware = (
-  db: Db,
   redis: Redis,
+  prismaManager: PrismaManager,
 ) => ReturnType<typeof createExpressMiddleware>;
 
 export const createExpressTrpcMiddleware: CreateExpressTrpcMiddleware = (
-  db: Db,
   redis: Redis,
+  prismaManager: PrismaManager,
 ) =>
   createExpressMiddleware({
     router: appRouter,
@@ -22,7 +22,7 @@ export const createExpressTrpcMiddleware: CreateExpressTrpcMiddleware = (
         expressContextOpts: opts as unknown as typeof opts & {
           req: { t: TFunction<'translation', undefined> };
         },
-        db,
         redis,
+        prismaManager,
       }),
   });

@@ -8,11 +8,12 @@ export const signUpHandler = publicProcedure
   .input(signUpSchema)
   .mutation(async ({ ctx, input }) => {
     // Check if user with the same email already exists
-    const existingUser = await ctx.db?.employee.findUnique({
-      where: {
-        email: input.email,
-      },
-    });
+    const existingUser =
+      await ctx.prismaManager?.rootPrismaClient.employee.findUnique({
+        where: {
+          email: input.email,
+        },
+      });
 
     if (existingUser) {
       // Throw an error if email is already taken
@@ -25,7 +26,7 @@ export const signUpHandler = publicProcedure
     }
 
     // Create a new employee record
-    const employee = await ctx.db?.employee.create({
+    const employee = await ctx.prismaManager?.rootPrismaClient.employee.create({
       data: {
         fullName: input.fullName,
         email: input.email,

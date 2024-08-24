@@ -4,14 +4,15 @@ import { findOneSchema } from '@retailify/validation/erp/employee/find-one.schem
 export const findOneHandler = authenticatedProcedure
   .input(findOneSchema)
   .query(async ({ ctx, input }) => {
-    const employee = await ctx.db?.employee.findUnique({
-      where: {
-        id: input.id,
-      },
-      include: {
-        picture: true,
-      },
-    });
+    const employee =
+      await ctx.prismaManager?.rootPrismaClient.employee.findUnique({
+        where: {
+          id: input.id,
+        },
+        include: {
+          picture: true,
+        },
+      });
     if (!employee) {
       return {
         error: {

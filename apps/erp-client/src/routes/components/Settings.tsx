@@ -211,7 +211,7 @@ function EditProfileDialog(props: {
 
   const { uploadOne } = useUpload();
 
-  async function onSubmit(values: EditProfileInput) {
+  function onSubmit(values: EditProfileInput) {
     mutate(values);
   }
 

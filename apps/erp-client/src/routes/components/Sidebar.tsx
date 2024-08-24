@@ -3,6 +3,7 @@ import { cn } from '@retailify/ui/lib/utils';
 import { useState } from 'react';
 import DisplayUser from './DisplayUser';
 import SettingsMenu from './Settings';
+import OrgCombobox from './OrgCombobox';
 
 export default function Sidebar() {
   const [isCollapsed, setIsCollapsed] = useState(
@@ -45,7 +46,11 @@ export default function Sidebar() {
 }
 
 function SidebarOrganization() {
-  return <></>;
+  return (
+    <div className="p-2.5 flex items-center justify-center">
+      <OrgCombobox />
+    </div>
+  );
 }
 
 function SidebarNavigation(props: { isCollapsed: boolean }) {

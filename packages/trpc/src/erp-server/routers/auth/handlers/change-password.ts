@@ -6,11 +6,12 @@ import { hash } from 'bcrypt';
 export const changePasswordHandler = authenticatedProcedure
   .input(changePasswordSchema)
   .mutation(async ({ ctx, input }) => {
-    const employee = await ctx.db?.employee.findUnique({
-      where: {
-        id: ctx.session?.id,
-      },
-    });
+    const employee =
+      await ctx.prismaManager?.rootPrismaClient.employee.findUnique({
+        where: {
+          id: ctx.session?.id,
+        },
+      });
     if (!employee) {
       throw new TRPCError({
         code: 'NOT_FOUND',
@@ -18,7 +19,7 @@ export const changePasswordHandler = authenticatedProcedure
       });
     }
 
-    await ctx.db?.employee.update({
+    await ctx.prismaManager?.rootPrismaClient.employee.update({
       where: {
         id: ctx.session?.id,
       },

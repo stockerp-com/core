@@ -16,15 +16,11 @@ model Stockpoint {
 
   goods                     Stock[]
   cashRegisters             CashRegister[]
-  organization              Organization            @relation(fields: [organizationId], references: [id])
   goodsWriteOffs            GoodsWriteOff[]
   goodsTransferInternalFrom GoodsTransferInternal[] @relation("FromStockpoint")
   goodsTransferInternalTo   GoodsTransferInternal[] @relation("ToStockpoint")
 
-  organizationId Int
-
   @@index([id])
-  @@index([organizationId])
 }
 
 // Quantity of a good stored in a specific stockpoint.

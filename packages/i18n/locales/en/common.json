@@ -13,13 +13,21 @@
     "search": "Search",
     "clear": "Clear",
     "reset": "Reset",
+    "leave": "Leave",
     "sign_up": "Sign up",
     "sign_in": "Sign in",
     "sign_out": "Sign out",
     "reset_password": "Reset password",
     "change_password": "Change password",
     "hide_password": "Hide password",
-    "show_password": "Show password"
+    "show_password": "Show password",
+    "click_here": "Click here"
+  },
+  "form": {
+    "unsaved_changes": {
+      "title": "Unsaved changes",
+      "message": "You have unsaved changes. Are you sure you want to leave without saving?"
+    }
   },
   "settings": {
     "my_account": "My account",

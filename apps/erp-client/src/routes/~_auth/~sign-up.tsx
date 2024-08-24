@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import AuthTitle from './components/AuthTitle';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -78,80 +78,87 @@ function SignUpForm() {
   }
 
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-4"
-      >
-        <FormField
-          control={form.control}
-          name="fullName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel required>
-                {t('content:auth.sign_up.form_fields.full_name.label')}
-              </FormLabel>
-              <FormControl>
-                <Input
-                  placeholder={t(
-                    'content:auth.sign_up.form_fields.full_name.placeholder',
-                  )}
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage t={t} />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel required>
-                {t('content:auth.sign_up.form_fields.email.label')}
-              </FormLabel>
-              <FormControl>
-                <Input
-                  type="email"
-                  placeholder={t(
-                    'content:auth.sign_up.form_fields.email.placeholder',
-                  )}
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage t={t} />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel required>
-                {t('content:auth.sign_up.form_fields.password.label')}
-              </FormLabel>
-              <FormControl>
-                <PasswordInput
-                  placeholder={t(
-                    'content:auth.sign_up.form_fields.password.placeholder',
-                  )}
-                  t={t}
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage t={t} />
-            </FormItem>
-          )}
-        />
-        <SubmitButton
-          addMt
-          loading={isPending}
-          text={t('common:actions.sign_up')}
-          icon={PiSignIn}
-        />
-      </form>
-    </Form>
+    <div className="flex flex-col gap-8">
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-4"
+        >
+          <FormField
+            control={form.control}
+            name="fullName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel required>
+                  {t('content:auth.sign_up.form_fields.full_name.label')}
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder={t(
+                      'content:auth.sign_up.form_fields.full_name.placeholder',
+                    )}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage t={t} />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel required>
+                  {t('content:auth.sign_up.form_fields.email.label')}
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    type="email"
+                    placeholder={t(
+                      'content:auth.sign_up.form_fields.email.placeholder',
+                    )}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage t={t} />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel required>
+                  {t('content:auth.sign_up.form_fields.password.label')}
+                </FormLabel>
+                <FormControl>
+                  <PasswordInput
+                    placeholder={t(
+                      'content:auth.sign_up.form_fields.password.placeholder',
+                    )}
+                    t={t}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage t={t} />
+              </FormItem>
+            )}
+          />
+          <SubmitButton
+            addMt
+            loading={isPending}
+            text={t('common:actions.sign_up')}
+            icon={PiSignIn}
+          />
+        </form>
+      </Form>
+      <div className="flex w-full items-center justify-center">
+        <Link to="/sign-in" className="underline text-muted-foreground">
+          {t('content:auth.sign_up.sign_in_message')}
+        </Link>
+      </div>
+    </div>
   );
 }
