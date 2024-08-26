@@ -5,21 +5,27 @@ import SpinnerIcon from '../ui/spinner-icon.js';
 
 export default function SubmitButton(props: {
   disabled?: boolean;
+  pending?: boolean;
   loading?: boolean;
   addMt?: boolean;
   text: string;
   icon: IconType;
+  className?: string;
+  onClick?: () => void;
 }) {
   return (
     <Button
+      type="button"
+      onClick={props.onClick}
       className={cn(
         'flex items-center justify-center gap-2',
         props.addMt ? 'mt-8' : undefined,
-        props.loading ? 'cursor-wait' : undefined,
+        props.pending ? 'cursor-wait' : undefined,
+        props.className,
       )}
-      disabled={props.disabled || props.loading}
+      disabled={props.disabled || props.pending || props.loading}
     >
-      {props.loading ? <SpinnerIcon /> : <props.icon className="h-4 w-4" />}
+      {props.pending ? <SpinnerIcon /> : <props.icon className="h-4 w-4" />}
       {props.text}
     </Button>
   );

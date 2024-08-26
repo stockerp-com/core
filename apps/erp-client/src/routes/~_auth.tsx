@@ -11,7 +11,7 @@ function AuthComponent() {
 
   return (
     <div className="h-[100dvh] w-[100dvw] grid grid-cols-1 lg:grid-cols-2">
-      <div className="flex bg-paper items-center justify-center w-full lg:border-r lg:border-input">
+      <div className="flex bg-white dark:bg-zinc-950 items-center justify-center w-full lg:border-r lg:border-input">
         <main className="w-full flex flex-col container max-w-screen-sm">
           <Outlet />
         </main>

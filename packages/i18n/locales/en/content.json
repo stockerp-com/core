@@ -90,6 +90,40 @@
       }
     }
   },
+  "settings": {
+    "title": "Settings",
+    "general": {
+      "title": "General",
+      "subtitle": "Manage your general settings",
+      "profile": {
+        "title": "Profile",
+        "subtitle": "Edit your personal information"
+      },
+      "appearance": {
+        "title": "Appearance",
+        "subtitle": "Customize the look of the app",
+        "theme": {
+          "label": "Theme",
+          "placeholder": "Select theme",
+          "options": {
+            "light": "Light",
+            "dark": "Dark",
+            "system": "System"
+          }
+        },
+        "language": {
+          "label": "Language",
+          "placeholder": "Select language",
+          "empty": "No language found",
+          "options": {
+            "en": "English",
+            "ru": "Русский",
+            "uk-UA": "Українська"
+          }
+        }
+      }
+    }
+  },
   "organization": {
     "add": {
       "title": "Add organization",

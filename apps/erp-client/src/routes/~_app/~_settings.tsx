@@ -8,7 +8,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { IconType } from 'react-icons';
 import { ValidRoutes } from '../../App';
-import { PiBuildingOffice, PiUser, PiWrench } from 'react-icons/pi';
+import { PiWrench } from 'react-icons/pi';
 
 export const Route = createFileRoute('/_app/_settings')({
   component: Component,
@@ -16,7 +16,7 @@ export const Route = createFileRoute('/_app/_settings')({
 
 function Component() {
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex h-full w-full flex-col gap-8">
       <SettingsNavbar />
       <Outlet />
     </div>
@@ -31,19 +31,9 @@ type SettingsRoute = {
 
 const settingsRoutes: SettingsRoute[] = [
   {
-    text: 'erp:settings.pages.general.title',
+    text: 'content:settings.general.title',
     icon: PiWrench,
     route: '/settings/general',
-  },
-  {
-    text: 'erp:settings.pages.account.title',
-    icon: PiUser,
-    route: '/settings/account',
-  },
-  {
-    text: 'erp:settings.pages.organizations.title',
-    icon: PiBuildingOffice,
-    route: '/settings/organizations',
   },
 ];
 

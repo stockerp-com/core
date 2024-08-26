@@ -35,7 +35,7 @@ export default function Sidebar() {
       onCollapse={() => handleCollapse()}
       onResize={(size) => handleResize(size)}
       className={cn(
-        'border-r bg-zinc-50/25 dark:bg-zinc-900/25 backdrop-blur-md z-10 border-r-input lg:flex flex-col items-center hidden',
+        'border-r bg-card backdrop-blur-md z-10 border-r-input lg:flex flex-col items-center hidden',
         isCollapsed && 'min-w-14 transition-all duration-300 ease-in-out',
       )}
     >
@@ -71,7 +71,7 @@ function SidebarNavigation(props: { isCollapsed: boolean }) {
         >
           <Link to="/settings/general">
             <PiGearSix className="h-4 w-4" />
-            {!props.isCollapsed && t('erp:settings.title')}
+            {!props.isCollapsed && t('content:settings.title')}
           </Link>
         </Button>
       </div>

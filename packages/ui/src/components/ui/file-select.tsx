@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { PiTrash, PiUpload } from 'react-icons/pi';
 import { Button } from './button.js';
+import { Skeleton } from './skeleton.js';
 
 const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif'];
 const ALLOWED_VIDEO_TYPES = ['video/mp4'];
@@ -14,6 +15,7 @@ export function DropzoneFileInput(props: {
   maxSize: number;
   callback: (files: File[]) => void;
   labelHtmlFor: string;
+  isLoading?: boolean;
   uploadedFiles?: ({
     name: string;
     key: string;
@@ -72,32 +74,44 @@ export function DropzoneFileInput(props: {
           )}
         </div>
       </div>
-      {props.uploadedFiles?.map(
-        (file) =>
-          file && (
-            <div key={file.key} className="flex items-center w-full gap-2">
-              <img
-                alt={file.name}
-                src={`${props.baseImgUrl}/${file.key}`}
-                className="h-9 w-9 rounded-md border border-input object-cover"
-              />
-              <div className="flex flex-col">
-                <p className="text-sm">{file.name}</p>
-                <span className="text-xs text-muted-foreground">
-                  {(file.size / 1024).toFixed(1)} KB
-                </span>
+      {props.isLoading ? (
+        props.multiple ? (
+          <>
+            <Skeleton className="h-9" />
+            <Skeleton className="h-9" />
+            <Skeleton className="h-9" />
+          </>
+        ) : (
+          <Skeleton className="h-9" />
+        )
+      ) : (
+        props.uploadedFiles?.map(
+          (file) =>
+            file && (
+              <div key={file.key} className="flex items-center w-full gap-2">
+                <img
+                  alt={file.name}
+                  src={`${props.baseImgUrl}/${file.key}`}
+                  className="h-9 w-9 rounded-md border border-input object-cover"
+                />
+                <div className="flex flex-col">
+                  <p className="text-sm">{file.name}</p>
+                  <span className="text-xs text-muted-foreground">
+                    {(file.size / 1024).toFixed(1)} KB
+                  </span>
+                </div>
+                <Button
+                  type="button"
+                  size="icon"
+                  variant="ghost"
+                  className="ml-auto"
+                  onClick={() => props.removeFile(file.key)}
+                >
+                  <PiTrash className="h-4 w-4" />
+                </Button>
               </div>
-              <Button
-                type="button"
-                size="icon"
-                variant="ghost"
-                className="ml-auto"
-                onClick={() => props.removeFile(file.key)}
-              >
-                <PiTrash className="h-4 w-4" />
-              </Button>
-            </div>
-          ),
+            ),
+        )
       )}
     </div>
   );

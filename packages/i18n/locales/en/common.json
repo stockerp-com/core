@@ -28,25 +28,5 @@
       "title": "Unsaved changes",
       "message": "You have unsaved changes. Are you sure you want to leave without saving?"
     }
-  },
-  "settings": {
-    "my_account": "My account",
-    "theme": "Theme",
-    "theme_options": {
-      "light": "Light",
-      "dark": "Dark",
-      "system": "System"
-    },
-    "settings": "Settings",
-    "language": {
-      "label": "Language",
-      "placeholder": "Select language",
-      "empty": "No language found",
-      "options": {
-        "en": "English",
-        "ru": "Русский",
-        "uk-UA": "Українська"
-      }
-    }
   }
 }

@@ -53,15 +53,14 @@ function Wrapper(props: { children: React.ReactNode }) {
 
 function Layout(props: { children: React.ReactNode }) {
   return (
-    <ResizablePanelGroup
-      direction="horizontal"
-      className="h-full items-stretch"
-    >
+    <ResizablePanelGroup direction="horizontal">
       <Sidebar />
       <ResizableHandle withHandle className="hidden lg:flex bg-transparent" />
-      <ResizablePanel minSize={50}>
+      <ResizablePanel minSize={50} className="flex flex-col h-full">
         <Topbar />
-        <ScrollArea className="h-full w-full p-6">{props.children}</ScrollArea>
+        <ScrollArea className="flex h-full w-full">
+          <div className="flex h-full w-full p-6">{props.children}</div>
+        </ScrollArea>
       </ResizablePanel>
     </ResizablePanelGroup>
   );

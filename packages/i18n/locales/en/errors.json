@@ -18,5 +18,11 @@
     "max_one": "This field must be at most {{count}} character",
     "max_other": "This field must be at most {{count}} characters",
     "file_too_large": "Max file size is {{size}} MB, yours is {{user_size}} MB."
+  },
+  "not_found": {
+    "title": "Oops! This page does not exist.",
+    "subtitle": "The page you are looking for does not exist. You've probably mistyped the URL or followed an invalid link. If you think this is a mistake, please contact us.",
+    "go_home": "Go to the home page",
+    "go_back": "Go to the previous page"
   }
 }

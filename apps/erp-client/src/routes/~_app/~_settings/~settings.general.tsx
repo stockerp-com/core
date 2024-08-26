@@ -1,7 +1,7 @@
 import { Label } from '@retailify/ui/components/ui/label';
 import { createFileRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import { PiLaptop, PiMoon, PiSun } from 'react-icons/pi';
+import { PiCheck, PiLaptop, PiMoon, PiSun } from 'react-icons/pi';
 import {
   RadioGroup,
   RadioGroupItem,
@@ -15,6 +15,38 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@retailify/ui/components/ui/select';
+import { useAuth } from '../../../hooks/use-auth';
+import { useForm } from 'react-hook-form';
+import {
+  EditProfileInput,
+  editProfileSchema,
+} from '@retailify/validation/erp/account/edit-profile.schema';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { trpc } from '../../../utils/trpc';
+import { toast } from '@retailify/ui/lib/toast';
+import { useEffect } from 'react';
+import useUpload from '../../../hooks/use-upload';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@retailify/ui/components/ui/form';
+import { Input } from '@retailify/ui/components/ui/input';
+import { DropzoneFileInput } from '@retailify/ui/components/ui/file-select';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@retailify/ui/components/ui/card';
+import SubmitButton from '@retailify/ui/components/form/SubmitButton';
+import { IconType } from 'react-icons';
+import { Skeleton } from '@retailify/ui/components/ui/skeleton';
 
 export const Route = createFileRoute('/_app/_settings/settings/general')({
   component: Component,
@@ -24,10 +56,10 @@ function Component() {
   const { t } = useTranslation();
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-2">
-        <h1>{t('erp:settings.pages.general.title')}</h1>
-        <p className="muted">{t('erp:settings.pages.general.subtitle')}</p>
+        <h1>{t('content:settings.general.title')}</h1>
+        <p className="muted">{t('content:settings.general.subtitle')}</p>
       </div>
       <Profile />
       <Other />
@@ -37,11 +69,174 @@ function Component() {
 
 function Profile() {
   const { t } = useTranslation();
+  const authCtx = useAuth();
+
+  const form = useForm<EditProfileInput>({
+    resolver: zodResolver(editProfileSchema),
+    defaultValues: {
+      email: '',
+      fullName: '',
+    },
+  });
+
+  const utils = trpc.useUtils();
+
+  const { mutate, isPending } = trpc.account.editProfile.useMutation({
+    onSuccess: ({ message }) => {
+      toast.success(message);
+      utils.employee.findOne.invalidate({
+        id: authCtx.session?.id,
+      });
+    },
+    onError: ({ message }) => {
+      toast.error(message);
+    },
+  });
+  const { data, isLoading } = trpc.employee.findOne.useQuery({
+    id: authCtx.session?.id as unknown as number,
+  });
+
+  useEffect(() => {
+    if (data) {
+      form.reset({
+        email: data.employee?.email ?? '',
+        fullName: data.employee?.fullName ?? '',
+        picture: data.employee?.picture
+          ? {
+              key: data.employee.picture.key,
+              name: data.employee.picture.name,
+              size: data.employee.picture.size,
+              type: data.employee.picture.type,
+            }
+          : null,
+      });
+    }
+  }, [data, form]);
+
+  const { uploadOne } = useUpload();
+
+  function onSubmit(values: EditProfileInput) {
+    mutate(values);
+  }
 
   return (
-    <div className="flex flex-col gap-4">
-      <h2>{t('erp:settings.pages.general.profile.title')}</h2>
-    </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>{t('content:settings.general.profile.title')}</CardTitle>
+        <CardDescription>
+          {t('content:settings.general.profile.subtitle')}
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col gap-4"
+          >
+            <FormField
+              control={form.control}
+              name="fullName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel required>
+                    {t(
+                      'content:account.edit_profile.form_fields.full_name.label',
+                    )}
+                  </FormLabel>
+                  <FormControl>
+                    {isLoading ? (
+                      <Skeleton className="h-9" />
+                    ) : (
+                      <Input
+                        placeholder={t(
+                          'content:account.edit_profile.form_fields.full_name.placeholder',
+                        )}
+                        {...field}
+                      />
+                    )}
+                  </FormControl>
+                  <FormMessage t={t} />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel required>
+                    {t('content:account.edit_profile.form_fields.email.label')}
+                  </FormLabel>
+                  <FormControl>
+                    {isLoading ? (
+                      <Skeleton className="h-9" />
+                    ) : (
+                      <Input
+                        type="email"
+                        placeholder={t(
+                          'content:account.edit_profile.form_fields.email.placeholder',
+                        )}
+                        {...field}
+                      />
+                    )}
+                  </FormControl>
+                  <FormMessage t={t} />
+                </FormItem>
+              )}
+            />
+            <div className="space-y-2">
+              <Label htmlFor="edit_profile_picture">
+                {t('content:account.edit_profile.form_fields.picture.label')}
+              </Label>
+              <DropzoneFileInput
+                removeFile={() => form.setValue('picture', null)}
+                labelHtmlFor="edit_profile_picture"
+                placeholder={t(
+                  'content:account.edit_profile.form_fields.picture.placeholder',
+                )}
+                placeholderDragging={t(
+                  'content:account.edit_profile.form_fields.picture.dragging',
+                )}
+                isLoading={isLoading}
+                maxSize={1 * 1024 * 1024}
+                contentType="image"
+                callback={async (files) => {
+                  if (authCtx.accessToken && authCtx.session && files[0]) {
+                    const key = await uploadOne({
+                      file: files[0],
+                      directory: 'profile',
+                      accessToken: authCtx.accessToken,
+                      path: 'employees',
+                      session: authCtx.session,
+                    });
+
+                    if (key) {
+                      form.setValue('picture', {
+                        key,
+                        name: files[0].name,
+                        size: files[0].size,
+                        type: files[0].type,
+                      });
+                    }
+                  }
+                }}
+                uploadedFiles={[form.watch('picture')]}
+                baseImgUrl={`${import.meta.env.VITE_WORKER_URL}/r2`}
+              />
+            </div>
+          </form>
+        </Form>
+      </CardContent>
+      <CardFooter>
+        <SubmitButton
+          onClick={form.handleSubmit(onSubmit)}
+          icon={PiCheck}
+          text={t('common:actions.save')}
+          pending={isPending}
+          className="ml-auto"
+        />
+      </CardFooter>
+    </Card>
   );
 }
 
@@ -49,31 +244,36 @@ function Other() {
   const { t } = useTranslation();
 
   return (
-    <div className="flex flex-col gap-4">
-      <h2>{t('erp:settings.pages.general.appearance.title')}</h2>
-      <LanguageField />
-      <ThemeField />
-    </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>{t('content:settings.general.appearance.title')}</CardTitle>
+        <CardDescription></CardDescription>
+      </CardHeader>
+      <CardContent className="flex flex-col gap-4">
+        <LanguageField />
+        <ThemeField />
+      </CardContent>
+    </Card>
   );
 }
 
-const languages = ['en', 'uk', 'ru'];
+const languages = ['en', 'uk-UA', 'ru'];
 function LanguageField() {
   const { t, i18n } = useTranslation();
 
   return (
     <div className="space-y-2">
       <Label htmlFor="language">
-        {t('erp:settings.pages.general.appearance.language.title')}
+        {t('content:settings.general.appearance.language.label')}
       </Label>
       <Select
         defaultValue={i18n.language}
         onValueChange={(value) => i18n.changeLanguage(value)}
       >
-        <SelectTrigger className="flex w-full lg:max-w-96">
+        <SelectTrigger className="flex" id="language">
           <SelectValue
             placeholder={t(
-              'erp:settings.pages.general.appearance.language.subtitle',
+              'content:settings.general.appearance.language.placeholder',
             )}
           />
         </SelectTrigger>
@@ -81,7 +281,7 @@ function LanguageField() {
           {languages.map((language) => (
             <SelectItem key={language} value={language}>
               {t(
-                `erp:settings.pages.general.appearance.language.options.${language}`,
+                `content:settings.general.appearance.language.options.${language}`,
               )}
             </SelectItem>
           ))}
@@ -91,6 +291,23 @@ function LanguageField() {
   );
 }
 
+const themes = [
+  {
+    text: 'content:settings.general.appearance.theme.options.light',
+    value: 'light',
+    icon: PiSun,
+  },
+  {
+    text: 'content:settings.general.appearance.theme.options.dark',
+    value: 'dark',
+    icon: PiMoon,
+  },
+  {
+    text: 'content:settings.general.appearance.theme.options.system',
+    value: 'system',
+    icon: PiLaptop,
+  },
+];
 function ThemeField() {
   const { t } = useTranslation();
   const { theme, setTheme } = useTheme();
@@ -98,54 +315,51 @@ function ThemeField() {
   return (
     <div className="space-y-2">
       <Label htmlFor="theme">
-        {t('erp:settings.pages.general.appearance.theme.title')}
+        {t('content:settings.general.appearance.theme.label')}
       </Label>
       <RadioGroup
         defaultValue={theme}
         onValueChange={(value) => setTheme(value as typeof theme)}
         id="theme"
-        className="flex flex-col lg:flex-row items-center gap-2 w-full lg:max-w-96"
+        className="flex flex-col lg:flex-row items-center gap-2"
       >
-        <div className="flex items-center w-full">
-          <RadioGroupItem value="light" id="light" className="peer sr-only" />
-          <Label
-            htmlFor="light"
-            className={cn(
-              'flex w-full p-4 items-center gap-2 rounded-md shadow-sm border bg-paper cursor-pointer',
-              theme === 'light' ? 'border-primary' : 'border-input',
-            )}
-          >
-            <PiSun className="h-4 w-4" />
-            {t('erp:settings.pages.general.appearance.theme.options.light')}
-          </Label>
-        </div>
-        <div className="flex items-center w-full">
-          <RadioGroupItem value="dark" id="dark" className="peer sr-only" />
-          <Label
-            htmlFor="dark"
-            className={cn(
-              'flex w-full p-4 items-center gap-2 rounded-md shadow-sm border bg-paper cursor-pointer',
-              theme === 'dark' ? 'border-primary' : 'border-input',
-            )}
-          >
-            <PiMoon className="h-4 w-4" />
-            {t('erp:settings.pages.general.appearance.theme.options.dark')}
-          </Label>
-        </div>
-        <div className="flex items-center w-full">
-          <RadioGroupItem value="system" id="system" className="peer sr-only" />
-          <Label
-            htmlFor="system"
-            className={cn(
-              'flex w-full p-4 items-center gap-2 rounded-md shadow-sm border bg-paper cursor-pointer',
-              theme === 'system' ? 'border-primary' : 'border-input',
-            )}
-          >
-            <PiLaptop className="h-4 w-4" />
-            {t('erp:settings.pages.general.appearance.theme.options.system')}
-          </Label>
-        </div>
+        {themes.map(({ icon, text, value }) => (
+          <ThemeItem
+            key={value}
+            theme={theme}
+            text={t(text)}
+            value={value}
+            icon={icon}
+          />
+        ))}
       </RadioGroup>
+    </div>
+  );
+}
+
+function ThemeItem(props: {
+  theme: string;
+  text: string;
+  value: string;
+  icon: IconType;
+}) {
+  return (
+    <div className="flex items-center w-full">
+      <RadioGroupItem
+        value={props.value}
+        id={props.value}
+        className="peer sr-only"
+      />
+      <Label
+        htmlFor={props.value}
+        className={cn(
+          'flex w-full p-4 items-center gap-2 rounded-md shadow-sm border cursor-pointer',
+          props.theme === props.value ? 'border-primary' : 'border-input',
+        )}
+      >
+        <props.icon className="h-4 w-4" />
+        {props.text}
+      </Label>
     </div>
   );
 }
