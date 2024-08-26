@@ -121,6 +121,18 @@
             "uk-UA": "Українська"
           }
         }
+      },
+      "sign_out": {
+        "title": "Sign out",
+        "subtitle": "Sign out of your account"
+      }
+    },
+    "security": {
+      "title": "Security",
+      "subtitle": "Manage your security settings",
+      "change_password": {
+        "title": "Change password",
+        "subtitle": "Change your password"
       }
     }
   },

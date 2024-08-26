@@ -1,7 +1,7 @@
 import { Label } from '@retailify/ui/components/ui/label';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import { PiCheck, PiLaptop, PiMoon, PiSun } from 'react-icons/pi';
+import { PiCheck, PiLaptop, PiMoon, PiSignOut, PiSun } from 'react-icons/pi';
 import {
   RadioGroup,
   RadioGroupItem,
@@ -24,7 +24,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { trpc } from '../../../utils/trpc';
 import { toast } from '@retailify/ui/lib/toast';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useUpload from '../../../hooks/use-upload';
 import {
   Form,
@@ -47,6 +47,17 @@ import {
 import SubmitButton from '@retailify/ui/components/form/SubmitButton';
 import { IconType } from 'react-icons';
 import { Skeleton } from '@retailify/ui/components/ui/skeleton';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@retailify/ui/components/ui/dialog';
+import { Button } from '@retailify/ui/components/ui/button';
+import SpinnerIcon from '@retailify/ui/components/ui/spinner-icon';
 
 export const Route = createFileRoute('/_app/_settings/settings/general')({
   component: Component,
@@ -62,7 +73,8 @@ function Component() {
         <p className="muted">{t('content:settings.general.subtitle')}</p>
       </div>
       <Profile />
-      <Other />
+      <Appearance />
+      <SignOut />
     </div>
   );
 }
@@ -240,14 +252,16 @@ function Profile() {
   );
 }
 
-function Other() {
+function Appearance() {
   const { t } = useTranslation();
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>{t('content:settings.general.appearance.title')}</CardTitle>
-        <CardDescription></CardDescription>
+        <CardDescription>
+          {t('content:settings.general.appearance.subtitle')}
+        </CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
         <LanguageField />
@@ -361,5 +375,70 @@ function ThemeItem(props: {
         {props.text}
       </Label>
     </div>
+  );
+}
+
+function SignOut() {
+  const [isOpened, setIsOpened] = useState(false);
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+  const { mutate, isPending } = trpc.auth.signOut.useMutation({
+    onSuccess: ({ message }) => {
+      setIsOpened(false);
+      toast.info(message);
+      navigate({
+        to: '/sign-in',
+      });
+    },
+    onError: ({ message }) => {
+      toast.error(message);
+    },
+  });
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>{t('content:settings.general.sign_out.title')}</CardTitle>
+        <CardDescription>
+          {t('content:settings.general.sign_out.subtitle')}
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Dialog open={isOpened} onOpenChange={setIsOpened}>
+          <DialogTrigger asChild>
+            <Button variant="destructive" onClick={() => setIsOpened(true)}>
+              <PiSignOut className="h-4 w-4 mr-2" />
+              {t('content:auth.sign_out.title')}
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>{t('content:auth.sign_out.title')}</DialogTitle>
+              <DialogDescription>
+                {t('content:auth.sign_out.subtitle')}
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <Button variant="secondary" onClick={() => setIsOpened(false)}>
+                {t('common:actions.cancel')}
+              </Button>
+              <Button
+                variant="destructive"
+                className="flex items-center gap-2"
+                onClick={() => mutate()}
+                disabled={isPending}
+              >
+                {isPending ? (
+                  <SpinnerIcon />
+                ) : (
+                  <PiSignOut className="h-4 w-4" />
+                )}
+                {t('common:actions.sign_out')}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      </CardContent>
+    </Card>
   );
 }

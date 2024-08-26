@@ -147,8 +147,9 @@ function SignUpForm() {
             )}
           />
           <SubmitButton
+            onClick={form.handleSubmit(onSubmit)}
             addMt
-            loading={isPending}
+            pending={isPending}
             text={t('common:actions.sign_up')}
             icon={PiSignIn}
           />

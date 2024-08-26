@@ -8,7 +8,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { IconType } from 'react-icons';
 import { ValidRoutes } from '../../App';
-import { PiWrench } from 'react-icons/pi';
+import { PiFingerprintSimple, PiWrench } from 'react-icons/pi';
 
 export const Route = createFileRoute('/_app/_settings')({
   component: Component,
@@ -16,9 +16,11 @@ export const Route = createFileRoute('/_app/_settings')({
 
 function Component() {
   return (
-    <div className="flex h-full w-full flex-col gap-8">
-      <SettingsNavbar />
-      <Outlet />
+    <div className="flex h-full w-full justify-center">
+      <div className="flex w-full h-full flex-col gap-8 max-w-screen-lg">
+        <SettingsNavbar />
+        <Outlet />
+      </div>
     </div>
   );
 }
@@ -34,6 +36,11 @@ const settingsRoutes: SettingsRoute[] = [
     text: 'content:settings.general.title',
     icon: PiWrench,
     route: '/settings/general',
+  },
+  {
+    text: 'content:settings.security.title',
+    icon: PiFingerprintSimple,
+    route: '/settings/security',
   },
 ];
 

@@ -17,6 +17,7 @@ import { Route as AuthSignUpImport } from './routes/~_auth/~sign-up'
 import { Route as AuthSignInImport } from './routes/~_auth/~sign-in'
 import { Route as AppSettingsImport } from './routes/~_app/~_settings'
 import { Route as AppIndexImport } from './routes/~_app/~index'
+import { Route as AppSettingsSettingsSecurityImport } from './routes/~_app/~_settings/~settings.security'
 import { Route as AppSettingsSettingsGeneralImport } from './routes/~_app/~_settings/~settings.general'
 
 // Create/Update Routes
@@ -50,6 +51,12 @@ const AppIndexRoute = AppIndexImport.update({
   path: '/',
   getParentRoute: () => AppRoute,
 } as any)
+
+const AppSettingsSettingsSecurityRoute =
+  AppSettingsSettingsSecurityImport.update({
+    path: '/settings/security',
+    getParentRoute: () => AppSettingsRoute,
+  } as any)
 
 const AppSettingsSettingsGeneralRoute = AppSettingsSettingsGeneralImport.update(
   {
@@ -111,6 +118,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppSettingsSettingsGeneralImport
       parentRoute: typeof AppSettingsImport
     }
+    '/_app/_settings/settings/security': {
+      id: '/_app/_settings/settings/security'
+      path: '/settings/security'
+      fullPath: '/settings/security'
+      preLoaderRoute: typeof AppSettingsSettingsSecurityImport
+      parentRoute: typeof AppSettingsImport
+    }
   }
 }
 
@@ -121,6 +135,7 @@ export const routeTree = rootRoute.addChildren({
     AppIndexRoute,
     AppSettingsRoute: AppSettingsRoute.addChildren({
       AppSettingsSettingsGeneralRoute,
+      AppSettingsSettingsSecurityRoute,
     }),
   }),
   AuthRoute: AuthRoute.addChildren({ AuthSignInRoute, AuthSignUpRoute }),
@@ -160,7 +175,8 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "~_app/~_settings.tsx",
       "parent": "/_app",
       "children": [
-        "/_app/_settings/settings/general"
+        "/_app/_settings/settings/general",
+        "/_app/_settings/settings/security"
       ]
     },
     "/_auth/sign-in": {
@@ -173,6 +189,10 @@ export const routeTree = rootRoute.addChildren({
     },
     "/_app/_settings/settings/general": {
       "filePath": "~_app/~_settings/~settings.general.tsx",
+      "parent": "/_app/_settings"
+    },
+    "/_app/_settings/settings/security": {
+      "filePath": "~_app/~_settings/~settings.security.tsx",
       "parent": "/_app/_settings"
     }
   }

@@ -12,7 +12,6 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -131,8 +130,9 @@ function SignInForm() {
             )}
           />
           <SubmitButton
+            onClick={form.handleSubmit(onSubmit)}
             addMt
-            loading={isPending}
+            pending={isPending}
             text={t('common:actions.sign_in')}
             icon={PiSignIn}
           />
