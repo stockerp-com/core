@@ -109,9 +109,14 @@ function SignInForm() {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel required>
-                  {t('content:auth.sign_in.form_fields.password.label')}
-                </FormLabel>
+                <div className="flex items-center justify-between w-full">
+                  <FormLabel required>
+                    {t('content:auth.sign_in.form_fields.password.label')}
+                  </FormLabel>
+                  <Link className="text-muted-foreground hover:underline text-xs">
+                    {t('content:auth.sign_in.forgot_password')}
+                  </Link>
+                </div>
                 <FormControl>
                   <PasswordInput
                     placeholder={t(
@@ -121,11 +126,6 @@ function SignInForm() {
                     {...field}
                   />
                 </FormControl>
-                <FormDescription>
-                  <Link className="text-muted-foreground hover:underline">
-                    {t('content:auth.sign_in.forgot_password')}
-                  </Link>
-                </FormDescription>
                 <FormMessage t={t} />
               </FormItem>
             )}

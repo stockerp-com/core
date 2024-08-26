@@ -28,16 +28,83 @@ import { Button } from '@retailify/ui/components/ui/button';
 import { Textarea } from '@retailify/ui/components/ui/textarea';
 import { useState } from 'react';
 import SpinnerIcon from '@retailify/ui/components/ui/spinner-icon';
-import { PiCheck } from 'react-icons/pi';
+import {
+  PiBuildingOffice,
+  PiCheck,
+  PiListMagnifyingGlass,
+} from 'react-icons/pi';
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '@retailify/ui/components/ui/command';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@retailify/ui/components/ui/popover';
 
-export default function OrgCombobox() {
+export default function OrgCombobox(props: { isCollapsed: boolean }) {
+  const { t } = useTranslation();
   const [isOpened, setIsOpened] = useState(false);
+  const { data } = trpc.organization.findAllInfinite.useInfiniteQuery(
+    {
+      limit: 10,
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+    },
+  );
 
   return (
-    <>
-      <Button onClick={() => setIsOpened(true)}>open</Button>
-      <CreateOrgDialog isOpened={isOpened} setIsOpened={setIsOpened} />
-    </>
+    <Popover open={isOpened} onOpenChange={setIsOpened}>
+      <PopoverTrigger asChild>
+        {props.isCollapsed ? (
+          <Button
+            variant="outline"
+            role="combobox"
+            aria-expanded={isOpened}
+            size="icon"
+          >
+            <PiBuildingOffice className="h-4 w-4" />
+          </Button>
+        ) : (
+          <Button
+            variant="outline"
+            role="combobox"
+            aria-expanded={isOpened}
+            className="w-full justify-between"
+          >
+            <span className="line-clamp-1">
+              {t('content:organization.find_all.not_selected')}
+            </span>
+            <PiListMagnifyingGlass className="h-4 w-4 ml-auto" />
+          </Button>
+        )}
+      </PopoverTrigger>
+      <PopoverContent className="p-0">
+        <Command>
+          <CommandInput
+            placeholder={t('content:organization.find_all.search.placeholder')}
+          />
+          <CommandList>
+            <CommandEmpty>
+              {t('content:organization.find_all.search.no_results')}
+            </CommandEmpty>
+            <CommandGroup>
+              {data?.pages?.map((page) =>
+                page?.items?.map((org) => (
+                  <CommandItem key={org.id}>{org.name}</CommandItem>
+                )),
+              )}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
   );
 }
 

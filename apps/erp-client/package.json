@@ -18,6 +18,7 @@
     "@tanstack/react-router": "^1.46.8",
     "@trpc/client": "^11.0.0-rc.477",
     "@trpc/react-query": "^11.0.0-rc.477",
+    "framer-motion": "^11.3.30",
     "i18next": "^23.12.2",
     "i18next-browser-languagedetector": "^8.0.0",
     "i18next-resources-to-backend": "^1.2.1",

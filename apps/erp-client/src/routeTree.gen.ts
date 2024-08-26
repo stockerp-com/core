@@ -15,7 +15,11 @@ import { Route as AuthImport } from './routes/~_auth'
 import { Route as AppImport } from './routes/~_app'
 import { Route as AuthSignUpImport } from './routes/~_auth/~sign-up'
 import { Route as AuthSignInImport } from './routes/~_auth/~sign-in'
+import { Route as AppSettingsImport } from './routes/~_app/~_settings'
 import { Route as AppIndexImport } from './routes/~_app/~index'
+import { Route as AppSettingsSettingsOrganizationsImport } from './routes/~_app/~_settings/~settings.organizations'
+import { Route as AppSettingsSettingsGeneralImport } from './routes/~_app/~_settings/~settings.general'
+import { Route as AppSettingsSettingsAccountImport } from './routes/~_app/~_settings/~settings.account'
 
 // Create/Update Routes
 
@@ -39,10 +43,35 @@ const AuthSignInRoute = AuthSignInImport.update({
   getParentRoute: () => AuthRoute,
 } as any)
 
+const AppSettingsRoute = AppSettingsImport.update({
+  id: '/_settings',
+  getParentRoute: () => AppRoute,
+} as any)
+
 const AppIndexRoute = AppIndexImport.update({
   path: '/',
   getParentRoute: () => AppRoute,
 } as any)
+
+const AppSettingsSettingsOrganizationsRoute =
+  AppSettingsSettingsOrganizationsImport.update({
+    path: '/settings/organizations',
+    getParentRoute: () => AppSettingsRoute,
+  } as any)
+
+const AppSettingsSettingsGeneralRoute = AppSettingsSettingsGeneralImport.update(
+  {
+    path: '/settings/general',
+    getParentRoute: () => AppSettingsRoute,
+  } as any,
+)
+
+const AppSettingsSettingsAccountRoute = AppSettingsSettingsAccountImport.update(
+  {
+    path: '/settings/account',
+    getParentRoute: () => AppSettingsRoute,
+  } as any,
+)
 
 // Populate the FileRoutesByPath interface
 
@@ -69,6 +98,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexImport
       parentRoute: typeof AppImport
     }
+    '/_app/_settings': {
+      id: '/_app/_settings'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AppSettingsImport
+      parentRoute: typeof AppImport
+    }
     '/_auth/sign-in': {
       id: '/_auth/sign-in'
       path: '/sign-in'
@@ -83,13 +119,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignUpImport
       parentRoute: typeof AuthImport
     }
+    '/_app/_settings/settings/account': {
+      id: '/_app/_settings/settings/account'
+      path: '/settings/account'
+      fullPath: '/settings/account'
+      preLoaderRoute: typeof AppSettingsSettingsAccountImport
+      parentRoute: typeof AppSettingsImport
+    }
+    '/_app/_settings/settings/general': {
+      id: '/_app/_settings/settings/general'
+      path: '/settings/general'
+      fullPath: '/settings/general'
+      preLoaderRoute: typeof AppSettingsSettingsGeneralImport
+      parentRoute: typeof AppSettingsImport
+    }
+    '/_app/_settings/settings/organizations': {
+      id: '/_app/_settings/settings/organizations'
+      path: '/settings/organizations'
+      fullPath: '/settings/organizations'
+      preLoaderRoute: typeof AppSettingsSettingsOrganizationsImport
+      parentRoute: typeof AppSettingsImport
+    }
   }
 }
 
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren({
-  AppRoute: AppRoute.addChildren({ AppIndexRoute }),
+  AppRoute: AppRoute.addChildren({
+    AppIndexRoute,
+    AppSettingsRoute: AppSettingsRoute.addChildren({
+      AppSettingsSettingsAccountRoute,
+      AppSettingsSettingsGeneralRoute,
+      AppSettingsSettingsOrganizationsRoute,
+    }),
+  }),
   AuthRoute: AuthRoute.addChildren({ AuthSignInRoute, AuthSignUpRoute }),
 })
 
@@ -108,7 +172,8 @@ export const routeTree = rootRoute.addChildren({
     "/_app": {
       "filePath": "~_app.tsx",
       "children": [
-        "/_app/"
+        "/_app/",
+        "/_app/_settings"
       ]
     },
     "/_auth": {
@@ -122,6 +187,15 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "~_app/~index.tsx",
       "parent": "/_app"
     },
+    "/_app/_settings": {
+      "filePath": "~_app/~_settings.tsx",
+      "parent": "/_app",
+      "children": [
+        "/_app/_settings/settings/account",
+        "/_app/_settings/settings/general",
+        "/_app/_settings/settings/organizations"
+      ]
+    },
     "/_auth/sign-in": {
       "filePath": "~_auth/~sign-in.tsx",
       "parent": "/_auth"
@@ -129,6 +203,18 @@ export const routeTree = rootRoute.addChildren({
     "/_auth/sign-up": {
       "filePath": "~_auth/~sign-up.tsx",
       "parent": "/_auth"
+    },
+    "/_app/_settings/settings/account": {
+      "filePath": "~_app/~_settings/~settings.account.tsx",
+      "parent": "/_app/_settings"
+    },
+    "/_app/_settings/settings/general": {
+      "filePath": "~_app/~_settings/~settings.general.tsx",
+      "parent": "/_app/_settings"
+    },
+    "/_app/_settings/settings/organizations": {
+      "filePath": "~_app/~_settings/~settings.organizations.tsx",
+      "parent": "/_app/_settings"
     }
   }
 }

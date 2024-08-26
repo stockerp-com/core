@@ -104,6 +104,15 @@
           "placeholder": "Acme Inc. is a company that..."
         }
       }
+    },
+    "find_all": {
+      "title": "Organizations",
+      "subtitle": "List of all organizations",
+      "not_selected": "No organization selected",
+      "search": {
+        "placeholder": "Search organizations...",
+        "no_results": "No organizations found"
+      }
     }
   }
 }

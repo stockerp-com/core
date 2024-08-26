@@ -1,4 +1,8 @@
-import { createRouter, RouterProvider } from '@tanstack/react-router';
+import {
+  createRouter,
+  ParseRoute,
+  RouterProvider,
+} from '@tanstack/react-router';
 import ThemeProvider from './providers/theme-provider';
 import { Toaster } from '@retailify/ui/components/ui/sonner';
 import TrpcProvider from './providers/trpc-provider';
@@ -6,7 +10,8 @@ import { TooltipProvider } from '@retailify/ui/components/ui/tooltip';
 import { routeTree } from './routeTree.gen';
 import { AuthProvider } from './providers/auth-provider';
 
-const router = createRouter({ routeTree, context: { auth: null } });
+const router = createRouter({ routeTree });
+export type ValidRoutes = ParseRoute<typeof routeTree>['fullPath'];
 
 declare module '@tanstack/react-router' {
   interface Register {

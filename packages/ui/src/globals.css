@@ -69,23 +69,23 @@
   }
 
   h1 {
-    @apply scroll-m-20 text-4xl font-extrabold tracking-tight;
+    @apply scroll-m-20 text-3xl font-extrabold tracking-tight;
   }
 
   h2 {
-    @apply scroll-m-20 text-3xl font-semibold tracking-tight;
-  }
-
-  h3 {
     @apply scroll-m-20 text-2xl font-semibold tracking-tight;
   }
 
-  h4 {
+  h3 {
     @apply scroll-m-20 text-xl font-semibold tracking-tight;
   }
 
+  h4 {
+    @apply scroll-m-20 text-lg font-semibold tracking-tight;
+  }
+
   p {
-    @apply leading-7;
+    @apply leading-7 text-pretty;
   }
 
   blockquote {
@@ -126,5 +126,9 @@
 
   .muted {
     @apply text-sm text-muted-foreground;
+  }
+
+  .bg-paper {
+    @apply bg-zinc-50/40 dark:bg-zinc-900/40 backdrop-blur-md
   }
 }

@@ -16,9 +16,72 @@
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Retailify ERP</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .preload-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100dvh;
+        width: 100dvw;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+      }
+
+      .preload-container.fade-in {
+        opacity: 1;
+      }
+
+      .bg-light {
+        background-color: hsl(0 0% 100);
+      }
+
+      .bg-dark {
+        background-color: hsl(240 10% 3.9%);
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div class="preload-container"></div>
+    </div>
+
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      (() => {
+        const loader = document.querySelector('.preload-container');
+        const selectedTheme = localStorage.getItem('retailify-erp-theme');
+        let theme = 'bg-light';
+        if (selectedTheme) {
+          if (selectedTheme === 'light' || selectedTheme === 'dark') {
+            theme = selectedTheme === 'light' ? 'bg-light' : 'bg-dark';
+          }
+        } else if (
+          window.matchMedia &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches
+        ) {
+          theme = 'bg-dark';
+        }
+        loader.classList.add(theme);
+
+        const preloadContainer = document.querySelector('.preload-container');
+        const loaderImg = document.createElement('img');
+        loaderImg.src =
+          theme === 'bg-light' ? '/icon-black.svg' : '/icon-white.svg';
+        loaderImg.style.width = '6rem';
+        loaderImg.style.height = '6rem';
+        preloadContainer.appendChild(loaderImg);
+
+        // Add fade-in animation
+        setTimeout(() => {
+          preloadContainer.classList.add('fade-in');
+        }, 100);
+      })();
+    </script>
   </body>
 </html>

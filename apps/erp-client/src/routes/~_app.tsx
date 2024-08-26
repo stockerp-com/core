@@ -58,11 +58,8 @@ function Layout(props: { children: React.ReactNode }) {
       className="h-full items-stretch"
     >
       <Sidebar />
-      <ResizableHandle
-        withHandle
-        className="bg-zinc-50 dark:bg-zinc-900 hidden lg:flex"
-      />
-      <ResizablePanel minSize={50} className="bg-zinc-50 dark:bg-zinc-900">
+      <ResizableHandle withHandle className="hidden lg:flex bg-transparent" />
+      <ResizablePanel minSize={50}>
         <Topbar />
         <ScrollArea className="h-full w-full p-6">{props.children}</ScrollArea>
       </ResizablePanel>
