@@ -7,8 +7,8 @@ import {
 } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { IconType } from 'react-icons';
-import { ValidRoutes } from '../../App';
 import { PiFingerprintSimple, PiWrench } from 'react-icons/pi';
+import { ValidRoutes } from '../../router';
 
 export const Route = createFileRoute('/_app/_settings')({
   component: Component,
@@ -70,8 +70,8 @@ function SettingsNavbarButton(
   return (
     <Button
       variant={props.currentRoute === props.route ? 'default' : 'outline'}
-      size="sm"
       className="rounded-full flex items-center gap-2"
+      size="sm"
       asChild
     >
       <Link to={props.route}>

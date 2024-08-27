@@ -55,10 +55,10 @@ export function DropzoneFileInput(props: {
   });
 
   return (
-    <div className="flex flex-col gap-4 w-full p-3 border border-input rounded-md shadow-sm">
+    <div className="flex flex-col gap-4 w-full p-3 border border-input rounded-md bg-background">
       <div
         {...getRootProps()}
-        className="flex items-center justify-center w-full p-3 border border-dashed border-input rounded-md cursor-pointer hover:text-primary transition-colors text-muted-foreground"
+        className="flex items-center justify-center w-full p-3 border border-dashed border-muted-foreground/50 hover:border-primary rounded-md cursor-pointer hover:text-primary transition-colors text-muted-foreground"
       >
         <input
           {...getInputProps({ accept: Object.keys(accept).join(',') })}
@@ -77,12 +77,12 @@ export function DropzoneFileInput(props: {
       {props.isLoading ? (
         props.multiple ? (
           <>
-            <Skeleton className="h-9" />
-            <Skeleton className="h-9" />
-            <Skeleton className="h-9" />
+            <Skeleton className="h-10" />
+            <Skeleton className="h-10" />
+            <Skeleton className="h-10" />
           </>
         ) : (
-          <Skeleton className="h-9" />
+          <Skeleton className="h-10" />
         )
       ) : (
         props.uploadedFiles?.map(
@@ -92,7 +92,7 @@ export function DropzoneFileInput(props: {
                 <img
                   alt={file.name}
                   src={`${props.baseImgUrl}/${file.key}`}
-                  className="h-9 w-9 rounded-md border border-input object-cover"
+                  className="h-10 w-10 rounded-md border border-input object-cover"
                 />
                 <div className="flex flex-col">
                   <p className="text-sm">{file.name}</p>

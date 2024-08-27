@@ -1,7 +1,6 @@
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import AuthTitle from './components/AuthTitle';
-import { trpc } from '../../utils/trpc';
 import { toast } from '@retailify/ui/lib/toast';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -23,7 +22,8 @@ import SubmitButton from '@retailify/ui/components/form/SubmitButton';
 import { PiSignIn } from 'react-icons/pi';
 import { useAuth } from '../../hooks/use-auth';
 import { jwtDecode } from 'jwt-decode';
-import { EmployeeSession } from '@retailify/trpc/types/erp/auth/session.d';
+import { trpc } from '../../router';
+import { EmployeeSession } from '@retailify/constants';
 
 export const Route = createFileRoute('/_auth/sign-in')({
   component: SignInComponent,

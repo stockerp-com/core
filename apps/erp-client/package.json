@@ -15,6 +15,7 @@
     "@retailify/ui": "*",
     "@retailify/validation": "*",
     "@tanstack/react-query": "^5.51.23",
+    "@tanstack/react-query-devtools": "^5.52.2",
     "@tanstack/react-router": "^1.46.8",
     "@trpc/client": "^11.0.0-rc.477",
     "@trpc/react-query": "^11.0.0-rc.477",
@@ -32,7 +33,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@tanstack/router-devtools": "^1.46.9",
+    "@tanstack/router-devtools": "^1.51.0",
     "@tanstack/router-plugin": "^1.47.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",

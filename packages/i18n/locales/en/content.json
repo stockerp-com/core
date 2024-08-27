@@ -127,6 +127,10 @@
         "subtitle": "Sign out of your account"
       }
     },
+    "organizations": {
+      "title": "Organizations",
+      "subtitle": "Manage your organizations"
+    },
     "security": {
       "title": "Security",
       "subtitle": "Manage your security settings",

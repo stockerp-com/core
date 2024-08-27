@@ -53,8 +53,6 @@ export const server = async (): Promise<Express> => {
     });
   });
 
-  console.log(cwd());
-
   app.use('/erp/trpc', createExpressTrpcMiddleware(redis, prismaManager));
 
   return app;

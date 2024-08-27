@@ -1,6 +1,6 @@
 import { CreateExpressContextOptions } from '@trpc/server/adapters/express';
 
-const RT_COOKIE_NAME = 'admin:rt';
+const RT_COOKIE_NAME = 'erp:rt';
 
 export function setRTCookie(
   res: CreateExpressContextOptions['res'],

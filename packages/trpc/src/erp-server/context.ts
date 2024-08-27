@@ -3,8 +3,9 @@ import { Redis } from '@retailify/redis';
 import { TRPCError } from '@trpc/server';
 import { type TFunction } from 'i18next';
 import { CreateExpressContextOptions } from '@trpc/server/adapters/express';
-import { EmployeeSession } from '../types/erp/auth/session.js';
 import { getRTCookie, rmRTCookie, setRTCookie } from './utils/cookie.js';
+import { EmployeeSession } from '@retailify/constants';
+import { refreshSession } from './utils/session.js';
 
 interface CreateContextInnerOpts {
   session: EmployeeSession | null;
@@ -40,7 +41,7 @@ interface CreateContextOpts {
   redis: Redis;
 }
 
-export const createContext = (opts?: CreateContextOpts) => {
+export const createContext = async (opts?: CreateContextOpts) => {
   if (!opts?.expressContextOpts) {
     throw new TRPCError({
       code: 'INTERNAL_SERVER_ERROR',
@@ -50,10 +51,8 @@ export const createContext = (opts?: CreateContextOpts) => {
 
   const { req, res } = opts.expressContextOpts;
 
-  const session = null;
-
   return createContextInner({
-    session,
+    session: null,
     redis: opts?.redis,
     setRTCookie: (token: string) => setRTCookie(res, token),
     getRTCookie: () => getRTCookie(req),

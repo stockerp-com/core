@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { env } from '../env.js';
-import { EmployeeSession } from '../../types/erp/auth/session.js';
+import { EmployeeSession } from '@retailify/constants';
 
 export function signTokens(payload: EmployeeSession) {
   return {

@@ -1,13 +1,9 @@
 import { z } from 'zod';
+import { crudString } from '../../create-edit-preset.schema.js';
 
-export const addSchema = z.object({
-  name: z
-    .string({
-      required_error: 'errors:validation.required',
-    })
-    .min(1, 'errors:validation.min?count=1')
-    .max(250, 'errors:validation.max?count=255'),
+export const addOrganizationSchema = z.object({
+  name: crudString,
   description: z.string().optional(),
 });
 
-export type AddInput = z.infer<typeof addSchema>;
+export type AddOrganizationSchema = z.infer<typeof addOrganizationSchema>;

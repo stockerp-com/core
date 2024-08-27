@@ -1,21 +1,62 @@
 import { Button } from '@retailify/ui/components/ui/button';
-import { Link } from '@tanstack/react-router';
-import { createRootRoute, Outlet } from '@tanstack/react-router';
+import {
+  createRootRouteWithContext,
+  Link,
+  useRouterState,
+} from '@tanstack/react-router';
+import { Outlet } from '@tanstack/react-router';
 import { ScrollRestoration } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import { PiHouse } from 'react-icons/pi';
+import {
+  PiCheckCircle,
+  PiHouse,
+  PiInfo,
+  PiWarning,
+  PiWarningCircle,
+} from 'react-icons/pi';
+import { trpcQueryUtils } from '../router';
+import ThemeProvider from '../providers/theme-provider';
+import { TooltipProvider } from '@retailify/ui/components/ui/tooltip';
+import { Toaster } from '@retailify/ui/components/ui/sonner';
+import { AuthProvider } from '../providers/auth-provider';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 
-export const Route = createRootRoute({
+export interface RouterAppContext {
+  trpcQueryUtils: typeof trpcQueryUtils;
+}
+
+export const Route = createRootRouteWithContext<RouterAppContext>()({
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
 });
 
 function RootComponent() {
+  const isFetching = useRouterState({ select: (s) => s.isLoading });
+
   return (
-    <>
-      <Outlet />
-      <ScrollRestoration />
-    </>
+    <AuthProvider>
+      <ThemeProvider>
+        <TooltipProvider delayDuration={350}>
+          <Outlet />
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              className: 'bg-card border shadow-lg rounded-md text-foreground',
+            }}
+            icons={{
+              success: <PiCheckCircle className="h-5 w-5 text-green-500" />,
+              info: <PiInfo className="h-5 w-5 text-blue-500" />,
+              error: <PiWarningCircle className="h-5 w-5 text-red-500" />,
+              warning: <PiWarning className="h-5 w-5 text-orange-500" />,
+            }}
+          />
+          <ScrollRestoration />
+          <TanStackRouterDevtools position="bottom-left" />
+          <ReactQueryDevtools position="bottom" buttonPosition="bottom-right" />
+        </TooltipProvider>
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
 

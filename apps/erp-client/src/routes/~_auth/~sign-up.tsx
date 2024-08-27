@@ -16,14 +16,14 @@ import {
   FormMessage,
 } from '@retailify/ui/components/ui/form';
 import SubmitButton from '@retailify/ui/components/form/SubmitButton';
-import { trpc } from '../../utils/trpc';
 import { PasswordInput } from '@retailify/ui/components/form/PasswordInput';
 import { Input } from '@retailify/ui/components/ui/input';
 import { toast } from '@retailify/ui/lib/toast';
 import { PiSignIn } from 'react-icons/pi';
-import { EmployeeSession } from '@retailify/trpc/types/erp/auth/session.d';
 import { useAuth } from '../../hooks/use-auth';
 import { jwtDecode } from 'jwt-decode';
+import { trpc } from '../../router';
+import { EmployeeSession } from '@retailify/constants';
 
 export const Route = createFileRoute('/_auth/sign-up')({
   component: SignUpComponent,

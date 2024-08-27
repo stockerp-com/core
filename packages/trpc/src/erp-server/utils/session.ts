@@ -1,11 +1,11 @@
-import { EmployeeSession } from '../../types/erp/auth/session.js';
+import { EmployeeSession } from '@retailify/constants';
 import { Context } from '../context.js';
 import { signTokens, verifyRT } from './jwt.js';
 
 async function getValidRefreshTokens(redis: Context['redis'], id?: number) {
   if (!id) return null;
 
-  const res = await redis?.get(`admin:${id}`);
+  const res = await redis?.get(`erp:${id}`);
   if (!res) return null;
 
   const tokens = JSON.parse(res) as unknown as string[];
@@ -30,7 +30,7 @@ async function setValidRefreshTokens(
   id: number,
   tokens: string[],
 ) {
-  await redis?.set(`admin:${id}`, JSON.stringify(tokens));
+  await redis?.set(`erp:${id}`, JSON.stringify(tokens));
 }
 
 export async function generateSession(
@@ -40,7 +40,7 @@ export async function generateSession(
 ) {
   const { accessToken, refreshToken } = signTokens({
     id: sessionData.id,
-    organization: sessionData.organization,
+    currentOrganization: sessionData.currentOrganization,
   });
 
   const refreshTokens = [

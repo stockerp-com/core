@@ -1,10 +1,9 @@
 'use client';
 
 import * as ResizablePrimitive from 'react-resizable-panels';
-import React from 'react';
 
 import { cn } from '@retailify/ui/lib/utils';
-import { RxDragHandleDots2 } from 'react-icons/rx';
+import { PiDotsSixVertical, PiDotsThreeVertical } from 'react-icons/pi';
 
 const ResizablePanelGroup = ({
   className,
@@ -37,7 +36,7 @@ const ResizableHandle = ({
   >
     {withHandle && (
       <div className="z-10 flex h-4 w-3 items-center justify-center rounded-sm border bg-border">
-        <RxDragHandleDots2 className="h-2.5 w-2.5" />
+        <PiDotsSixVertical className="h-2.5 w-2.5" />
       </div>
     )}
   </ResizablePrimitive.PanelResizeHandle>

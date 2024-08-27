@@ -48,11 +48,17 @@
       "success": "Successfully added organization \"{{name}}\"",
       "failed": "Failed to add organization"
     },
-    "use": {
-      "success": "Successfully switched to organization \"{{name}}\"",
+    "edit": {
+      "success": "Successfully updated organization \"{{name}}\"",
       "not_found": "Organization with id \"{{id}}\" not found",
-      "not_member": "You are not a member of organization \"{{name}}\"",
-      "failed": "Failed to switch to organization"
+      "forbidden": "You are not allowed to update this organization",
+      "failed": "Failed to update organization"
+    },
+    "delete": {
+      "success": "Successfully deleted organization with id \"{{id}}\"",
+      "not_found": "Organization with id \"{{id}}\" not found",
+      "forbidden": "You are not allowed to delete this organization",
+      "failed": "Failed to delete organization"
     },
     "find_one": {
       "success": "Successfully found organization with id \"{{id}}\"",

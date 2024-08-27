@@ -1,8 +1,11 @@
 import { authenticatedProcedure } from '../../../procedures/authenticated.js';
-import { findAllInfiniteSchema } from '@retailify/validation/erp/organization/find-all.schema';
+import {
+  findManyInfiniteOrganizationsSchema,
+  findManyOrganizationsSchema,
+} from '@retailify/validation/erp/organization/find-many.schema';
 
-export const findAllInfiniteHandler = authenticatedProcedure
-  .input(findAllInfiniteSchema)
+export const findManyInfiniteHandler = authenticatedProcedure
+  .input(findManyInfiniteOrganizationsSchema)
   .query(async ({ ctx, input }) => {
     const items =
       await ctx.prismaManager?.rootPrismaClient.organization.findMany({
@@ -27,5 +30,26 @@ export const findAllInfiniteHandler = authenticatedProcedure
     return {
       items,
       nextCursor,
+    };
+  });
+
+export const findManyHandler = authenticatedProcedure
+  .input(findManyOrganizationsSchema)
+  .query(async ({ ctx, input }) => {
+    const items =
+      await ctx.prismaManager?.rootPrismaClient.organization.findMany({
+        where: {
+          name: { search: input.search },
+          staff: {
+            some: {
+              employeeId: { equals: ctx.session!.id },
+            },
+          },
+        },
+        orderBy: input.orderBy,
+      });
+
+    return {
+      items,
     };
   });

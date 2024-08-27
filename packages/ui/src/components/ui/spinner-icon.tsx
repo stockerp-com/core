@@ -1,5 +1,8 @@
-import { PiSpinner } from 'react-icons/pi';
+import { cn } from '../../lib/utils.js';
+import { PiSpinnerGap } from 'react-icons/pi';
 
-export default function SpinnerIcon() {
-  return <PiSpinner className="h-4 w-4 animate-spin" />;
+export default function SpinnerIcon(props: { className?: string }) {
+  return (
+    <PiSpinnerGap className={cn('h-4 w-4 animate-spin', props.className)} />
+  );
 }

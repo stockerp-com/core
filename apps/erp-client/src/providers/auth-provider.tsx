@@ -1,6 +1,6 @@
-import { EmployeeSession } from '@retailify/trpc/types/erp/auth/session.d';
 import { createContext, ReactNode, useEffect, useState } from 'react';
 import { authStore } from '../utils/auth-store';
+import { EmployeeSession } from '@retailify/constants';
 
 export interface AuthContext {
   accessToken: string | null;

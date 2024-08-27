@@ -58,7 +58,7 @@ function checkUser(c: Context, verifyRole = true) {
   const role = jwtPayload.organization?.role;
 
   if (verifyRole) {
-    if (!role || !['ADMIN'].includes(role)) {
+    if (!role || !['ADMIN', 'OWNER'].includes(role)) {
       return {
         ok: false,
         status: 403 as StatusCode,

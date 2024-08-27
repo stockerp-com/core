@@ -26,6 +26,7 @@
     "@retailify/logger": "*",
     "@retailify/redis": "*",
     "@retailify/validation": "*",
+    "@retailify/constants": "*",
     "@trpc/client": "^11.0.0-rc.477",
     "@trpc/server": "^11.0.0-rc.477",
     "bcrypt": "^5.1.1",

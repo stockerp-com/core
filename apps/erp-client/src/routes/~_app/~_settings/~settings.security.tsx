@@ -16,7 +16,6 @@ import {
   ChangePasswordInput,
   changePasswordSchema,
 } from '@retailify/validation/erp/auth/change-password.schema';
-import { trpc } from '../../../utils/trpc';
 import { toast } from '@retailify/ui/lib/toast';
 import {
   Form,
@@ -28,6 +27,7 @@ import {
   FormMessage,
 } from '@retailify/ui/components/ui/form';
 import { PasswordInput } from '@retailify/ui/components/form/PasswordInput';
+import { trpc } from '../../../router';
 
 export const Route = createFileRoute('/_app/_settings/settings/security')({
   component: Component,

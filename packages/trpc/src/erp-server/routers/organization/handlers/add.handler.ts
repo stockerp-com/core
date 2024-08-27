@@ -1,10 +1,10 @@
 import { TRPCError } from '@trpc/server';
 import { authenticatedProcedure } from '../../../procedures/authenticated.js';
-import { addSchema } from '@retailify/validation/erp/organization/add.schema';
+import { addOrganizationSchema } from '@retailify/validation/erp/organization/add.schema';
 import { generateSession } from '../../../utils/session.js';
 
 export const addHandler = authenticatedProcedure
-  .input(addSchema)
+  .input(addOrganizationSchema)
   .mutation(async ({ ctx, input }) => {
     const organization =
       await ctx.prismaManager?.rootPrismaClient.organization.create({
@@ -14,7 +14,7 @@ export const addHandler = authenticatedProcedure
           staff: {
             create: {
               employeeId: ctx.session!.id,
-              role: 'ADMIN',
+              role: ['OWNER'],
             },
           },
         },
@@ -44,9 +44,9 @@ export const addHandler = authenticatedProcedure
 
     const { accessToken } = await generateSession(ctx, {
       id: ctx.session.id!,
-      organization: {
+      currentOrganization: {
         id: orgId,
-        role: 'ADMIN',
+        role: ['OWNER'],
       },
     });
 

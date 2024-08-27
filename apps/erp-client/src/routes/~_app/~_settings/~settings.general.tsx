@@ -22,7 +22,6 @@ import {
   editProfileSchema,
 } from '@retailify/validation/erp/account/edit-profile.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { trpc } from '../../../utils/trpc';
 import { toast } from '@retailify/ui/lib/toast';
 import { useEffect, useState } from 'react';
 import useUpload from '../../../hooks/use-upload';
@@ -58,6 +57,7 @@ import {
 } from '@retailify/ui/components/ui/dialog';
 import { Button } from '@retailify/ui/components/ui/button';
 import SpinnerIcon from '@retailify/ui/components/ui/spinner-icon';
+import { trpc, trpcQueryUtils } from '../../../router';
 
 export const Route = createFileRoute('/_app/_settings/settings/general')({
   component: Component,
@@ -91,12 +91,10 @@ function Profile() {
     },
   });
 
-  const utils = trpc.useUtils();
-
   const { mutate, isPending } = trpc.account.editProfile.useMutation({
     onSuccess: ({ message }) => {
       toast.success(message);
-      utils.employee.findOne.invalidate({
+      trpcQueryUtils.employee.findOne.invalidate({
         id: authCtx.session?.id,
       });
     },
@@ -157,7 +155,7 @@ function Profile() {
                   </FormLabel>
                   <FormControl>
                     {isLoading ? (
-                      <Skeleton className="h-9" />
+                      <Skeleton className="h-10" />
                     ) : (
                       <Input
                         placeholder={t(
@@ -181,7 +179,7 @@ function Profile() {
                   </FormLabel>
                   <FormControl>
                     {isLoading ? (
-                      <Skeleton className="h-9" />
+                      <Skeleton className="h-10" />
                     ) : (
                       <Input
                         type="email"
@@ -367,7 +365,7 @@ function ThemeItem(props: {
       <Label
         htmlFor={props.value}
         className={cn(
-          'flex w-full p-4 items-center gap-2 rounded-md shadow-sm border cursor-pointer',
+          'flex w-full p-4 items-center gap-2 rounded-md  border cursor-pointer bg-background',
           props.theme === props.value ? 'border-primary' : 'border-input',
         )}
       >

@@ -1,7 +1,6 @@
 import { ResizablePanel } from '@retailify/ui/components/ui/resizable';
 import { cn } from '@retailify/ui/lib/utils';
 import { useState } from 'react';
-import OrgCombobox from './OrgCombobox';
 import { Button } from '@retailify/ui/components/ui/button';
 import { Link } from '@tanstack/react-router';
 import { PiGearSix } from 'react-icons/pi';
@@ -35,31 +34,23 @@ export default function Sidebar() {
       onCollapse={() => handleCollapse()}
       onResize={(size) => handleResize(size)}
       className={cn(
-        'border-r bg-card backdrop-blur-md z-10 border-r-input lg:flex flex-col items-center hidden',
-        isCollapsed && 'min-w-14 transition-all duration-300 ease-in-out',
+        'border-r bg-card backdrop-blur-md z-10 lg:flex flex-col items-center hidden',
+        isCollapsed && 'min-w-16 transition-all duration-300 ease-in-out',
       )}
     >
-      <div className="w-full h-14 shrink-0 border-b border-b-input">
-        <SidebarOrganization isCollapsed={isCollapsed} />
+      <div className="w-full h-16 shrink-0 border-b">
+        {/* <SidebarOrganization isCollapsed={isCollapsed} /> */}
       </div>
       <SidebarNavigation isCollapsed={isCollapsed} />
     </ResizablePanel>
   );
 }
 
-function SidebarOrganization(props: { isCollapsed: boolean }) {
-  return (
-    <div className="p-2.5 flex items-center justify-center">
-      <OrgCombobox isCollapsed={props.isCollapsed} />
-    </div>
-  );
-}
-
 function SidebarNavigation(props: { isCollapsed: boolean }) {
   return (
     <div className="flex flex-col justify-between h-full w-full">
-      <div className="flex h-full p-2.5"></div>
-      <div className="flex flex-col gap-2 p-2.5 border-t border-t-input">
+      <div className="flex h-full p-3"></div>
+      <div className="flex flex-col gap-2 p-3 border-t">
         <Button
           asChild
           variant="ghost"

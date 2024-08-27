@@ -15,6 +15,8 @@ import {
 import { cn } from '@retailify/ui/lib/utils';
 import { Label } from '@retailify/ui/components/ui/label';
 
+import { TranslateFunc } from '@retailify/ui/lib/types';
+
 const Form = FormProvider;
 
 type FormFieldContextValue<
@@ -103,7 +105,6 @@ const FormLabel = React.forwardRef<
         className,
       )}
       htmlFor={formItemId}
-      aria-required={required ?? false}
       {...props}
     />
   );
@@ -143,7 +144,7 @@ const FormDescription = React.forwardRef<
     <p
       ref={ref}
       id={formDescriptionId}
-      className={cn('text-[0.8rem] text-muted-foreground', className)}
+      className={cn('text-sm text-muted-foreground', className)}
       {...props}
     />
   );
@@ -162,9 +163,7 @@ const parseErrorString = (errorString: string) => {
 
 const FormMessage = React.forwardRef<
   HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement> & {
-    t: (key: string, options?: Record<string, string | number>) => string;
-  }
+  React.HTMLAttributes<HTMLParagraphElement> & { t: TranslateFunc }
 >(({ className, children, t, ...props }, ref) => {
   const { error, formMessageId } = useFormField();
   const errorMessage = error ? String(error?.message) : '';
@@ -182,10 +181,7 @@ const FormMessage = React.forwardRef<
     <p
       ref={ref}
       id={formMessageId}
-      className={cn(
-        'text-[0.8rem] font-medium text-destructive leading-4',
-        className,
-      )}
+      className={cn('text-sm font-medium text-destructive', className)}
       {...props}
     >
       {body}

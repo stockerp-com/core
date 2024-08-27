@@ -1,6 +1,7 @@
 {
   "roles": {
-    "admin": "Administrator"
+    "admin": "Administrator",
+    "owner": "Owner"
   },
   "actions": {
     "submit": "Submit",

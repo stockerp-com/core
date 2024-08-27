@@ -20,6 +20,7 @@
     "@retailify/logger": "*",
     "@retailify/redis": "*",
     "@retailify/trpc": "*",
+    "@retailify/constants": "*",
     "@retailify/validation": "*",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",

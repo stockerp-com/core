@@ -10,7 +10,7 @@ import Sidebar from './components/Sidebar';
 import { authStore } from '../utils/auth-store';
 import { refreshTokens } from '../utils/refresh-tokens';
 import { jwtDecode } from 'jwt-decode';
-import { EmployeeSession } from '@retailify/trpc/types/erp/auth/session.d';
+import { EmployeeSession } from '@retailify/constants';
 
 export const Route = createFileRoute('/_app')({
   component: AppComponent,
@@ -59,7 +59,7 @@ function Layout(props: { children: React.ReactNode }) {
       <ResizablePanel minSize={50} className="flex flex-col h-full">
         <Topbar />
         <ScrollArea className="flex h-full w-full">
-          <div className="flex h-full w-full p-6">{props.children}</div>
+          <div className="flex h-full w-full p-4">{props.children}</div>
         </ScrollArea>
       </ResizablePanel>
     </ResizablePanelGroup>

@@ -1,4 +1,4 @@
-import { EmployeeSession } from '@retailify/trpc/types/erp/auth/session.d';
+import { EmployeeSession } from '@retailify/constants';
 import { toast } from '@retailify/ui/lib/toast';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
