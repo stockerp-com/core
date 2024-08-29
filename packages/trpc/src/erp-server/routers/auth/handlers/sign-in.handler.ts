@@ -5,17 +5,18 @@ import { signInSchema } from '@retailify/validation/erp/auth/sign-in.schema';
 import { generateSession } from '../../../utils/session.js';
 import { Context } from '../../../context.js';
 import { Employee } from '@retailify/db';
-import { EmployeeSession } from '../../../../types/erp/auth/session.js';
+import { EmployeeSession } from '@retailify/constants';
+import logger from '@retailify/logger';
 
 // Helper function to generate session and return response
 const generateResponse = async (
   ctx: Context,
   employee: Employee,
-  organization: EmployeeSession['organization'],
+  currentOrganization: EmployeeSession['currentOrganization'],
 ) => {
   const { accessToken } = await generateSession(ctx, {
     id: employee.id,
-    organization,
+    currentOrganization,
   });
 
   return {
@@ -72,9 +73,21 @@ export const signInHandler = publicProcedure
 
       // If employee is not a member of the organization, generate session without organization
       if (!member) {
+        logger.info(
+          { employeeId: employee.id, organizationId: null },
+          'Employee signed in',
+        );
         return generateResponse(ctx, employee, null);
       }
 
+      logger.info(
+        {
+          employeeId: employee.id,
+          organizationId: employee.currentOrganizationId,
+          role: member.role,
+        },
+        'Employee signed in',
+      );
       // Generate session with organization details
       return generateResponse(ctx, employee, {
         id: employee.currentOrganizationId,

@@ -21,9 +21,7 @@ import { PasswordInput } from '@retailify/ui/components/form/PasswordInput';
 import SubmitButton from '@retailify/ui/components/form/SubmitButton';
 import { PiSignIn } from 'react-icons/pi';
 import { useAuth } from '../../hooks/use-auth';
-import { jwtDecode } from 'jwt-decode';
 import { trpc } from '../../router';
-import { EmployeeSession } from '@retailify/constants';
 
 export const Route = createFileRoute('/_auth/sign-in')({
   component: SignInComponent,
@@ -49,9 +47,7 @@ function SignInForm() {
   const { t } = useTranslation();
   const { mutate, isPending } = trpc.auth.signIn.useMutation({
     onSuccess({ message, accessToken }) {
-      const session = jwtDecode(accessToken) as unknown as EmployeeSession;
-      authCtx.setAccessToken(accessToken);
-      authCtx.setSession(session);
+      authCtx.setAuth(accessToken);
 
       toast.success(message);
       navigate({

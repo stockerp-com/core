@@ -1,5 +1,6 @@
 import { router } from '../../trpc.js';
-import { addHandler } from './handlers/add.handler.js';
+import { addHandler, onAddHandler } from './handlers/add.handler.js';
+import { deleteHandler } from './handlers/delete.handler.js';
 import { editHandler } from './handlers/edit.handler.js';
 import {
   findManyHandler,
@@ -9,8 +10,10 @@ import { findOneHandler } from './handlers/find-one.handler.js';
 
 export const organizationRouter = router({
   add: addHandler,
-  edit: editHandler,
+  onAdd: onAddHandler,
   findManyInfinite: findManyInfiniteHandler,
   findMany: findManyHandler,
   findOne: findOneHandler,
+  edit: editHandler,
+  delete: deleteHandler,
 });

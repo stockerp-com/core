@@ -1,11 +1,11 @@
 import logger from '@retailify/logger';
 import env from './utils/env.js';
-import { server } from './server.js';
+import { serverFactory } from './server.js';
 
 const main = async () => {
-  const app = await server();
+  const server = await serverFactory();
 
-  app.listen(env?.PORT, () => {
+  server.listen(env?.PORT, () => {
     logger.info(`Server is running on http://localhost:${env?.PORT}`);
   });
 };

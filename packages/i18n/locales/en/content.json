@@ -143,7 +143,9 @@
   "organization": {
     "add": {
       "title": "Add organization",
-      "subtitle": "Create a new organization",
+      "subtitle": "Add your organization to the Retailify platform.",
+      "adding": "Adding organization...",
+      "adding_subtitle": "Please wait while we add your organization.",
       "form_fields": {
         "name": {
           "label": "Organization name",
@@ -155,13 +157,41 @@
         }
       }
     },
-    "find_all": {
+    "edit": {
+      "title": "Edit organization",
+      "subtitle": "Edit the general information about your organization.",
+      "form_fields": {
+        "name": {
+          "label": "Organization name",
+          "placeholder": "Acme Inc."
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Acme Inc. is a company that..."
+        }
+      }
+    },
+    "delete": {
+      "title": "Delete organization",
+      "subtitle": "Are you totally sure you want to delete this organization? This action cannot be undone, it will completely erase the organization and all its data.",
+      "deleting": "Deleting organization..."
+    },
+    "find_many": {
       "title": "Organizations",
       "subtitle": "List of all organizations",
       "not_selected": "No organization selected",
       "search": {
         "placeholder": "Search organizations...",
         "no_results": "No organizations found"
+      },
+      "empty": "It looks like there are no organizations yet.",
+      "columns": {
+        "id": "ID",
+        "name": "Name",
+        "description": "Description",
+        "staff": {
+          "_count": "Staff count"
+        }
       }
     }
   }

@@ -21,9 +21,7 @@ import { Input } from '@retailify/ui/components/ui/input';
 import { toast } from '@retailify/ui/lib/toast';
 import { PiSignIn } from 'react-icons/pi';
 import { useAuth } from '../../hooks/use-auth';
-import { jwtDecode } from 'jwt-decode';
 import { trpc } from '../../router';
-import { EmployeeSession } from '@retailify/constants';
 
 export const Route = createFileRoute('/_auth/sign-up')({
   component: SignUpComponent,
@@ -49,9 +47,7 @@ function SignUpForm() {
   const { t, i18n } = useTranslation();
   const { mutate, isPending } = trpc.auth.signUp.useMutation({
     onSuccess({ message, accessToken }) {
-      const session = jwtDecode(accessToken) as unknown as EmployeeSession;
-      authCtx.setAccessToken(accessToken);
-      authCtx.setSession(session);
+      authCtx.setAuth(accessToken);
 
       toast.success(message);
       navigate({

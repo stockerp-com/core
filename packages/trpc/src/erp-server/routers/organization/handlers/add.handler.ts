@@ -2,10 +2,13 @@ import { TRPCError } from '@trpc/server';
 import { authenticatedProcedure } from '../../../procedures/authenticated.js';
 import { addOrganizationSchema } from '@retailify/validation/erp/organization/add.schema';
 import { generateSession } from '../../../utils/session.js';
+import logger from '@retailify/logger';
+import { observable } from '@trpc/server/observable';
 
 export const addHandler = authenticatedProcedure
   .input(addOrganizationSchema)
   .mutation(async ({ ctx, input }) => {
+    ctx.redis?.emit('erp:organization:add_progress', { progress: 0 });
     const organization =
       await ctx.prismaManager?.rootPrismaClient.organization.create({
         data: {
@@ -19,6 +22,7 @@ export const addHandler = authenticatedProcedure
           },
         },
       });
+    ctx.redis?.emit('erp:organization:add_progress', { progress: 0.25 });
 
     const orgId = organization?.id;
 
@@ -30,6 +34,7 @@ export const addHandler = authenticatedProcedure
     }
 
     await ctx.prismaManager?.createTenantSchema(orgId);
+    ctx.redis?.emit('erp:organization:add_progress', { progress: 0.5 });
     if (process.env.NODE_ENV === 'production') {
       await ctx.prismaManager?.prodMigrate(
         `tenant_${orgId}`,
@@ -41,6 +46,7 @@ export const addHandler = authenticatedProcedure
         '../../packages/db/prisma/schema',
       );
     }
+    ctx.redis?.emit('erp:organization:add_progress', { progress: 0.75 });
 
     const { accessToken } = await generateSession(ctx, {
       id: ctx.session.id!,
@@ -49,7 +55,9 @@ export const addHandler = authenticatedProcedure
         role: ['OWNER'],
       },
     });
+    ctx.redis?.emit('erp:organization:add_progress', { progress: 1 });
 
+    logger.info({ organizationId: orgId }, 'Organization added');
     return {
       message: ctx.t?.('res:organization.add.success', {
         name: organization?.name,
@@ -57,3 +65,21 @@ export const addHandler = authenticatedProcedure
       accessToken,
     };
   });
+
+type OnAddData = {
+  progress: number;
+};
+
+export const onAddHandler = authenticatedProcedure.subscription(({ ctx }) =>
+  observable<OnAddData>((emit) => {
+    const onAdd = (data: OnAddData) => {
+      emit.next(data);
+    };
+
+    ctx.redis?.on('erp:organization:add_progress', onAdd);
+
+    return () => {
+      ctx.redis?.off('erp:organization:add_progress', onAdd);
+    };
+  }),
+);

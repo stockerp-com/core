@@ -1,24 +1,28 @@
 import { z } from 'zod';
 import {
+  orderByField,
   presetfindManyInfiniteSchema,
   presetfindManySchema,
-  presetOrderBySchema,
 } from '../../find-all-preset.schema.js';
-
-const orderBy = presetOrderBySchema([
-  'id',
-  'name',
-  'staff._count',
-  'createdAt',
-  'updatedAt',
-]);
 
 export const findManyInfiniteOrganizationsSchema = z.object({
   ...presetfindManyInfiniteSchema.shape,
 });
 export const findManyOrganizationsSchema = z.object({
   ...presetfindManySchema.shape,
-  orderBy,
+  orderBy: z
+    .object({
+      createdAt: orderByField,
+      updatedAt: orderByField,
+      id: orderByField,
+      name: orderByField,
+      staff: z
+        .object({
+          _count: orderByField,
+        })
+        .optional(),
+    })
+    .optional(),
 });
 
 export type findManyInfiniteOrganizationsInput = z.infer<

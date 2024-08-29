@@ -1,4 +1,4 @@
-import express, { type Express } from 'express';
+import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
@@ -9,11 +9,12 @@ import logger from '@retailify/logger';
 import { prismaManager } from '@retailify/db';
 import * as i18nextMiddleware from 'i18next-http-middleware';
 import { initI18n } from './utils/i18n.js';
-import { cwd } from 'process';
+import http from 'http';
+import { WebSocketServer } from 'ws';
+import { createWSSHandler } from '@retailify/trpc/erp-server/middleware/websocket';
+import env from './utils/env.js';
 
-export const server = async (): Promise<Express> => {
-  const app = express();
-
+export const serverFactory = async () => {
   await (async () => {
     redis.on('error', (err) => {
       logger.fatal('Redis Client Error', err);
@@ -27,6 +28,9 @@ export const server = async (): Promise<Express> => {
 
   const i18n = await initI18n();
 
+  const app = express();
+  const server = http.createServer(app);
+
   app
     .use(express.json())
     .use(express.urlencoded({ extended: true }))
@@ -34,7 +38,11 @@ export const server = async (): Promise<Express> => {
     .use(helmet())
     .use(
       cors({
-        origin: 'http://localhost:5173',
+        origin: [
+          env?.ERP_CLIENT_URL ?? '',
+          env?.POS_CLIENT_URL ?? '',
+          env?.STOREFRONT_CLIENT_URL ?? '',
+        ],
         credentials: true,
       }),
     )
@@ -55,5 +63,33 @@ export const server = async (): Promise<Express> => {
 
   app.use('/erp/trpc', createExpressTrpcMiddleware(redis, prismaManager));
 
-  return app;
+  const wss = new WebSocketServer({ server });
+  const wssHandlerErp = createWSSHandler({
+    wss,
+    t: i18n.t,
+    prismaManager,
+    redis,
+  });
+
+  wss.on('connection', (ws) => {
+    logger.info(
+      { connections: wss.clients.size },
+      'New Connection to WebSocket',
+    );
+    ws.once('close', () => {
+      logger.info(
+        { connections: wss.clients.size },
+        'Disconnected from WebSocket',
+      );
+    });
+  });
+
+  process.on('SIGTERM', () => {
+    console.log('SIGTERM');
+    wssHandlerErp.broadcastReconnectNotification();
+    wss.close();
+    process.exit(0);
+  });
+
+  return server;
 };

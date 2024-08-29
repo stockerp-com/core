@@ -1,0 +1,189 @@
+<Prompt>
+    <Request>
+        <Title>Create WebSockets Integration with tRPC Server in Express.js</Title>
+        <Description>
+            I am working on an Express.js project where I use tRPC for building APIs. My current setup includes Express.js, Redis, Prisma, and internationalization (i18next). I want to integrate WebSockets into this setup to handle real-time communication. Below are the key files in my project:
+
+            1. **Context Configuration**:
+               - The context is created in a file that sets up Prisma, Redis, and other middlewares. The context is used by tRPC for API request handling.
+               - The code snippet for the context is provided below:
+                 <Code>
+                   <![CDATA[
+                   import { PrismaManager } from '@retailify/db';
+                   import { Redis } from '@retailify/redis';
+                   import { TRPCError } from '@trpc/server';
+                   import { type TFunction } from 'i18next';
+                   import { CreateExpressContextOptions } from '@trpc/server/adapters/express';
+                   import { getRTCookie, rmRTCookie, setRTCookie } from './utils/cookie.js';
+                   import { EmployeeSession } from '@retailify/constants';
+
+                   interface CreateContextInnerOpts {
+                     session: EmployeeSession | null;
+                     prismaManager: PrismaManager;
+                     redis: Redis;
+                     t: TFunction;
+                     setRTCookie: (token: string) => void;
+                     getRTCookie: () => string | null;
+                     rmRTCookie: () => void;
+                     getAT: () => string | null;
+                   }
+
+                   export const createContextInner = (opts?: CreateContextInnerOpts) => ({
+                     session: opts?.session,
+                     setRTCookie: opts?.setRTCookie,
+                     getRTCookie: opts?.getRTCookie,
+                     rmRTCookie: opts?.rmRTCookie,
+                     getAT: opts?.getAT,
+                     redis: opts?.redis,
+                     prismaManager: opts?.prismaManager,
+                     t: opts?.t,
+                   });
+
+                   interface CreateContextOpts {
+                     expressContextOpts: {
+                       req: CreateExpressContextOptions['req'] & {
+                         t: TFunction;
+                       };
+                       res: CreateExpressContextOptions['res'];
+                     };
+                     prismaManager: PrismaManager;
+                     redis: Redis;
+                   }
+
+                   export const createContext = async (opts?: CreateContextOpts) => {
+                     if (!opts?.expressContextOpts) {
+                       throw new TRPCError({
+                         code: 'INTERNAL_SERVER_ERROR',
+                         message: 'Missing express context',
+                       });
+                     }
+
+                     const { req, res } = opts.expressContextOpts;
+
+                     return createContextInner({
+                       session: null,
+                       redis: opts?.redis,
+                       setRTCookie: (token: string) => setRTCookie(res, token),
+                       getRTCookie: () => getRTCookie(req),
+                       rmRTCookie: () => rmRTCookie(res),
+                       getAT: () => req.headers.authorization?.replace(/^Bearer /, '') ?? null,
+                       t: req.t,
+                       prismaManager: opts?.prismaManager,
+                     });
+                   };
+
+                   export type Context = Awaited<ReturnType<typeof createContext>>;
+                   ]]>
+                 </Code>
+
+            2. **Express Server Setup**:
+               - The server is set up using Express.js with various middlewares and a tRPC middleware for handling API routes.
+               - The code snippet for the server setup is provided below:
+                 <Code>
+                   <![CDATA[
+                   import express, { type Express } from 'express';
+                   import helmet from 'helmet';
+                   import cors from 'cors';
+                   import rateLimit from 'express-rate-limit';
+                   import cookieParser from 'cookie-parser';
+                   import { createExpressTrpcMiddleware } from '@retailify/trpc/erp-server/middleware/express';
+                   import { redis } from '@retailify/redis';
+                   import logger from '@retailify/logger';
+                   import { prismaManager } from '@retailify/db';
+                   import * as i18nextMiddleware from 'i18next-http-middleware';
+                   import { initI18n } from './utils/i18n.js';
+                   import ws from 'ws';
+                   import env from './utils/env.js';
+
+                   export const createExpressServer = async (): Promise<Express> => {
+                     const expressServer = express();
+
+                     await (async () => {
+                       redis.on('error', (err) => {
+                         logger.fatal('Redis Client Error', err);
+                       });
+                       redis.on('ready', () => logger.info('Redis Client Ready'));
+
+                       await redis.connect();
+
+                       await redis.ping();
+                     })();
+
+                     const i18n = await initI18n();
+
+                     expressServer
+                       .use(express.json())
+                       .use(express.urlencoded({ extended: true }))
+                       .use(cookieParser())
+                       .use(helmet())
+                       .use(
+                         cors({
+                           origin: 'http://localhost:5173',
+                           credentials: true,
+                         }),
+                       )
+                       .use(
+                         rateLimit({
+                           windowMs: 1000 * 60,
+                           limit: 100,
+                         }),
+                       )
+                       .use(i18nextMiddleware.handle(i18n));
+
+                     expressServer.get('/', (req, res) => {
+                       res.send({
+                         message: req.t('greeting'),
+                         your_locale: req.language,
+                       });
+                     });
+
+                     expressServer.use(
+                       '/erp/trpc',
+                       createExpressTrpcMiddleware(redis, prismaManager),
+                     );
+
+                     return expressServer;
+                   };
+
+                   export const createWebsocketServer = async () => {
+                     const wss = new ws.Server({
+                       port: env?.WEBSOCKET_PORT,
+                     });
+                   };
+                   ]]>
+                 </Code>
+
+            3. **Main Entry File**:
+               - The entry file initiates the Express server.
+               - The code snippet for the main file is provided below:
+                 <Code>
+                   <![CDATA[
+                   import logger from '@retailify/logger';
+                   import env from './utils/env.js';
+                   import { createExpressServer } from './server.js';
+
+                   const main = async () => {
+                     const expressServer = await createExpressServer();
+
+                     expressServer.listen(env?.EXPRESS_PORT, () => {
+                       logger.info(
+                         `Express server is running on http://localhost:${env?.EXPRESS_PORT}`,
+                       );
+                     });
+                   };
+
+                   main();
+                   ]]>
+                 </Code>
+
+            Based on this setup, I want to:
+            1. **Integrate WebSockets with my existing tRPC server** so that I can handle real-time communication.
+            2. **Use the existing context** (which includes Prisma, Redis, and other utilities) to manage WebSocket connections.
+            3. **Share the session and authentication data** between HTTP and WebSocket connections.
+            4. **Utilize my existing i18next setup** to handle internationalization in WebSocket connections.
+            5. **Utilize my existing Redis setup (and client that's already in the context) to act as an event emitter instead of the basic EventEmitter node.js module that's currently utilized.
+
+            Please provide a step-by-step guide and code examples on how to achieve this integration, ensuring compatibility with my current setup.
+        </Description>
+    </Request>
+</Prompt>

@@ -34,7 +34,7 @@ export default function Sidebar() {
       onCollapse={() => handleCollapse()}
       onResize={(size) => handleResize(size)}
       className={cn(
-        'border-r bg-card backdrop-blur-md z-10 lg:flex flex-col items-center hidden',
+        'border-r bg-card/50 backdrop-blur z-10 lg:flex flex-col items-center hidden',
         isCollapsed && 'min-w-16 transition-all duration-300 ease-in-out',
       )}
     >

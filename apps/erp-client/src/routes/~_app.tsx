@@ -4,20 +4,16 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from '@retailify/ui/components/ui/resizable';
-import { ScrollArea } from '@retailify/ui/components/ui/scroll-area';
 import Topbar from './components/Topbar';
 import Sidebar from './components/Sidebar';
 import { authStore } from '../utils/auth-store';
-import { refreshTokens } from '../utils/refresh-tokens';
-import { jwtDecode } from 'jwt-decode';
-import { EmployeeSession } from '@retailify/constants';
 
 export const Route = createFileRoute('/_app')({
   component: AppComponent,
   beforeLoad: async () => {
     const { session } = authStore.getState();
     if (!session?.id) {
-      const newAccessToken = await refreshTokens(import.meta.env.VITE_API_URL);
+      const newAccessToken = await authStore.refreshTokens();
       if (!newAccessToken) {
         throw redirect({
           to: '/sign-in',
@@ -26,11 +22,6 @@ export const Route = createFileRoute('/_app')({
           },
         });
       }
-
-      authStore.setState({
-        accessToken: newAccessToken,
-        session: jwtDecode(newAccessToken) as unknown as EmployeeSession,
-      });
     }
   },
 });
@@ -56,11 +47,13 @@ function Layout(props: { children: React.ReactNode }) {
     <ResizablePanelGroup direction="horizontal">
       <Sidebar />
       <ResizableHandle withHandle className="hidden lg:flex bg-transparent" />
-      <ResizablePanel minSize={50} className="flex flex-col h-full">
-        <Topbar />
-        <ScrollArea className="flex h-full w-full">
-          <div className="flex h-full w-full p-4">{props.children}</div>
-        </ScrollArea>
+      <ResizablePanel minSize={50} className="flex h-full w-full">
+        <div className="flex flex-1  flex-col h-full w-full overflow-auto">
+          <Topbar />
+          <div className="flex h-full w-full overflow-auto p-4">
+            {props.children}
+          </div>
+        </div>
       </ResizablePanel>
     </ResizablePanelGroup>
   );

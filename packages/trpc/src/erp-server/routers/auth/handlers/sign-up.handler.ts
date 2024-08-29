@@ -3,6 +3,7 @@ import { hash } from 'bcrypt';
 import { TRPCError } from '@trpc/server';
 import { signUpSchema } from '@retailify/validation/erp/auth/sign-up.schema';
 import { generateSession } from '../../../utils/session.js';
+import logger from '@retailify/logger';
 
 export const signUpHandler = publicProcedure
   .input(signUpSchema)
@@ -46,9 +47,10 @@ export const signUpHandler = publicProcedure
     // Generate a session for the newly created employee
     const { accessToken } = await generateSession(ctx, {
       id: employee.id,
-      organization: null,
+      currentOrganization: null,
     });
 
+    logger.info({ employeeId: employee.id }, 'Employee signed up');
     // Return success message and access token
     return {
       message: ctx.t?.('res:auth.sign_up.success', {

@@ -58,16 +58,23 @@ import {
 import { Button } from '@retailify/ui/components/ui/button';
 import SpinnerIcon from '@retailify/ui/components/ui/spinner-icon';
 import { trpc, trpcQueryUtils } from '../../../router';
+import { authStore } from '../../../utils/auth-store';
 
 export const Route = createFileRoute('/_app/_settings/settings/general')({
   component: Component,
+  loader: async ({ context: { trpcQueryUtils } }) => {
+    const { session } = authStore.getState();
+    await trpcQueryUtils.employee.findOne.ensureData({
+      id: session?.id as unknown as number,
+    });
+  },
 });
 
 function Component() {
   const { t } = useTranslation();
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex max-h-full flex-col gap-4">
       <div className="flex flex-col gap-2">
         <h1>{t('content:settings.general.title')}</h1>
         <p className="muted">{t('content:settings.general.subtitle')}</p>

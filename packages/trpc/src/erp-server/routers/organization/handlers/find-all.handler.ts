@@ -18,6 +18,10 @@ export const findManyInfiniteHandler = authenticatedProcedure
             },
           },
         },
+        select: {
+          id: true,
+          name: true,
+        },
         cursor: input.cursor ? { id: input.cursor } : undefined,
         orderBy: { id: 'asc' },
       });
@@ -38,6 +42,13 @@ export const findManyHandler = authenticatedProcedure
   .query(async ({ ctx, input }) => {
     const items =
       await ctx.prismaManager?.rootPrismaClient.organization.findMany({
+        include: {
+          _count: {
+            select: {
+              staff: true,
+            },
+          },
+        },
         where: {
           name: { search: input.search },
           staff: {

@@ -12,19 +12,7 @@ export const presetfindManyInfiniteSchema = z.object({
 export const presetfindManySchema = z.object({
   ...shared.shape,
 });
-export function presetOrderBySchema(fields: string[]) {
-  const shape = fields.reduce(
-    (acc: Record<string, z.ZodOptional<z.ZodEnum<['asc', 'desc']>>>, field) => {
-      acc[field] = z.enum(['asc', 'desc']).optional();
-      return acc;
-    },
-    {},
-  );
-
-  return z.object({
-    ...shape,
-  });
-}
+export const orderByField = z.enum(['asc', 'desc']).optional();
 
 export type PresetfindManyInfiniteInput = z.infer<
   typeof presetfindManyInfiniteSchema

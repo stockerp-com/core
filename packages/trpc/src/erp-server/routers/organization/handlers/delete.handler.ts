@@ -1,6 +1,7 @@
 import { deleteOrganizationSchema } from '@retailify/validation/erp/organization/delete.schema';
 import { authenticatedProcedure } from '../../../procedures/authenticated.js';
 import { TRPCError } from '@trpc/server';
+import logger from '@retailify/logger';
 
 export const deleteHandler = authenticatedProcedure
   .input(deleteOrganizationSchema)
@@ -44,6 +45,14 @@ export const deleteHandler = authenticatedProcedure
       });
     }
 
+    await ctx.prismaManager?.rootPrismaClient.employeeToOrganization.deleteMany(
+      {
+        where: {
+          organizationId: input.id,
+        },
+      },
+    );
+
     await Promise.all([
       ctx.prismaManager?.rootPrismaClient.organization.delete({
         where: {
@@ -53,6 +62,7 @@ export const deleteHandler = authenticatedProcedure
       ctx.prismaManager?.destroyTenantSchema(input.id),
     ]);
 
+    logger.info({ organizationId: input.id }, 'Organization deleted');
     return {
       message: ctx.t?.('res:organization.delete.success', {
         id: input.id,

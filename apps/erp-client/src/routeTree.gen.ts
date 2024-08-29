@@ -11,6 +11,7 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/~__root'
+import { Route as NewOrgImport } from './routes/~new-org'
 import { Route as AuthImport } from './routes/~_auth'
 import { Route as AppImport } from './routes/~_app'
 import { Route as AuthSignUpImport } from './routes/~_auth/~sign-up'
@@ -18,9 +19,15 @@ import { Route as AuthSignInImport } from './routes/~_auth/~sign-in'
 import { Route as AppSettingsImport } from './routes/~_app/~_settings'
 import { Route as AppIndexImport } from './routes/~_app/~index'
 import { Route as AppSettingsSettingsSecurityImport } from './routes/~_app/~_settings/~settings.security'
+import { Route as AppSettingsSettingsOrganizationsImport } from './routes/~_app/~_settings/~settings.organizations'
 import { Route as AppSettingsSettingsGeneralImport } from './routes/~_app/~_settings/~settings.general'
 
 // Create/Update Routes
+
+const NewOrgRoute = NewOrgImport.update({
+  path: '/new-org',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const AuthRoute = AuthImport.update({
   id: '/_auth',
@@ -58,6 +65,12 @@ const AppSettingsSettingsSecurityRoute =
     getParentRoute: () => AppSettingsRoute,
   } as any)
 
+const AppSettingsSettingsOrganizationsRoute =
+  AppSettingsSettingsOrganizationsImport.update({
+    path: '/settings/organizations',
+    getParentRoute: () => AppSettingsRoute,
+  } as any)
+
 const AppSettingsSettingsGeneralRoute = AppSettingsSettingsGeneralImport.update(
   {
     path: '/settings/general',
@@ -81,6 +94,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: ''
       preLoaderRoute: typeof AuthImport
+      parentRoute: typeof rootRoute
+    }
+    '/new-org': {
+      id: '/new-org'
+      path: '/new-org'
+      fullPath: '/new-org'
+      preLoaderRoute: typeof NewOrgImport
       parentRoute: typeof rootRoute
     }
     '/_app/': {
@@ -118,6 +138,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppSettingsSettingsGeneralImport
       parentRoute: typeof AppSettingsImport
     }
+    '/_app/_settings/settings/organizations': {
+      id: '/_app/_settings/settings/organizations'
+      path: '/settings/organizations'
+      fullPath: '/settings/organizations'
+      preLoaderRoute: typeof AppSettingsSettingsOrganizationsImport
+      parentRoute: typeof AppSettingsImport
+    }
     '/_app/_settings/settings/security': {
       id: '/_app/_settings/settings/security'
       path: '/settings/security'
@@ -135,10 +162,12 @@ export const routeTree = rootRoute.addChildren({
     AppIndexRoute,
     AppSettingsRoute: AppSettingsRoute.addChildren({
       AppSettingsSettingsGeneralRoute,
+      AppSettingsSettingsOrganizationsRoute,
       AppSettingsSettingsSecurityRoute,
     }),
   }),
   AuthRoute: AuthRoute.addChildren({ AuthSignInRoute, AuthSignUpRoute }),
+  NewOrgRoute,
 })
 
 /* prettier-ignore-end */
@@ -150,7 +179,8 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "~__root.tsx",
       "children": [
         "/_app",
-        "/_auth"
+        "/_auth",
+        "/new-org"
       ]
     },
     "/_app": {
@@ -167,6 +197,9 @@ export const routeTree = rootRoute.addChildren({
         "/_auth/sign-up"
       ]
     },
+    "/new-org": {
+      "filePath": "~new-org.tsx"
+    },
     "/_app/": {
       "filePath": "~_app/~index.tsx",
       "parent": "/_app"
@@ -176,6 +209,7 @@ export const routeTree = rootRoute.addChildren({
       "parent": "/_app",
       "children": [
         "/_app/_settings/settings/general",
+        "/_app/_settings/settings/organizations",
         "/_app/_settings/settings/security"
       ]
     },
@@ -189,6 +223,10 @@ export const routeTree = rootRoute.addChildren({
     },
     "/_app/_settings/settings/general": {
       "filePath": "~_app/~_settings/~settings.general.tsx",
+      "parent": "/_app/_settings"
+    },
+    "/_app/_settings/settings/organizations": {
+      "filePath": "~_app/~_settings/~settings.organizations.tsx",
       "parent": "/_app/_settings"
     },
     "/_app/_settings/settings/security": {

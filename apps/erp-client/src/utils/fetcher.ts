@@ -1,15 +1,11 @@
-import { EmployeeSession } from '@retailify/trpc/types/erp/auth/session.d';
-import { refreshTokens } from './refresh-tokens';
-import { jwtDecode } from 'jwt-decode';
+import { authStore } from './auth-store';
 
 export async function fetcher(
   url: RequestInfo | URL,
   options: RequestInit | undefined,
-  accessToken: string | null,
-  setAccessToken: (accessToken: string) => void,
-  setSession: (session: EmployeeSession | null) => void,
-  apiBaseUrl: string,
 ) {
+  const accessToken = authStore.getState().accessToken;
+
   const response = await fetch(url, {
     ...options,
     credentials: 'include',
@@ -21,14 +17,11 @@ export async function fetcher(
 
   try {
     if (response.status === 401) {
-      const newAccessToken = await refreshTokens(apiBaseUrl);
+      const newAccessToken = await authStore.refreshTokens();
       if (!newAccessToken) {
         window.location.href = '/sign-in';
         return response;
       }
-
-      setAccessToken(newAccessToken);
-      setSession(jwtDecode(newAccessToken) as unknown as EmployeeSession);
 
       return await fetch(url, {
         ...options,

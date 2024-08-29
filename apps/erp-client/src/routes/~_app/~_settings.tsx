@@ -7,7 +7,11 @@ import {
 } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { IconType } from 'react-icons';
-import { PiFingerprintSimple, PiWrench } from 'react-icons/pi';
+import {
+  PiBuildingOffice,
+  PiFingerprintSimple,
+  PiWrench,
+} from 'react-icons/pi';
 import { ValidRoutes } from '../../router';
 
 export const Route = createFileRoute('/_app/_settings')({
@@ -42,6 +46,11 @@ const settingsRoutes: SettingsRoute[] = [
     icon: PiFingerprintSimple,
     route: '/settings/security',
   },
+  {
+    text: 'content:settings.organizations.title',
+    icon: PiBuildingOffice,
+    route: '/settings/organizations',
+  },
 ];
 
 function SettingsNavbar() {
@@ -69,7 +78,7 @@ function SettingsNavbarButton(
 
   return (
     <Button
-      variant={props.currentRoute === props.route ? 'default' : 'outline'}
+      variant={props.currentRoute === props.route ? 'secondary' : 'outline'}
       className="rounded-full flex items-center gap-2"
       size="sm"
       asChild

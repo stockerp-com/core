@@ -1,11 +1,10 @@
-import { PrismaManager } from '@retailify/db';
-import { Redis } from '@retailify/redis';
+import { type PrismaManager } from '@retailify/db';
+import { type Redis } from '@retailify/redis';
 import { TRPCError } from '@trpc/server';
 import { type TFunction } from 'i18next';
-import { CreateExpressContextOptions } from '@trpc/server/adapters/express';
+import { type CreateExpressContextOptions } from '@trpc/server/adapters/express';
 import { getRTCookie, rmRTCookie, setRTCookie } from './utils/cookie.js';
-import { EmployeeSession } from '@retailify/constants';
-import { refreshSession } from './utils/session.js';
+import { type EmployeeSession } from '@retailify/constants';
 
 interface CreateContextInnerOpts {
   session: EmployeeSession | null;
@@ -13,10 +12,10 @@ interface CreateContextInnerOpts {
   redis: Redis;
   t: TFunction;
   // eslint-disable-next-line no-unused-vars
-  setRTCookie: (token: string) => void;
-  getRTCookie: () => string | null;
-  rmRTCookie: () => void;
-  getAT: () => string | null;
+  setRTCookie?: (token: string) => void;
+  getRTCookie?: () => string | null;
+  rmRTCookie?: () => void;
+  getAT?: () => string | null;
 }
 
 export const createContextInner = (opts?: CreateContextInnerOpts) => ({

@@ -4,9 +4,8 @@ import { EmployeeSession } from '@retailify/constants';
 
 export interface AuthContext {
   accessToken: string | null;
-  setAccessToken: (accessToken: string | null) => void;
   session: EmployeeSession | null;
-  setSession: (session: EmployeeSession | null) => void;
+  setAuth: (accessToken: string | null) => void;
 }
 
 export const AuthContext = createContext<AuthContext | null>(null);
@@ -20,16 +19,8 @@ export function AuthProvider(props: { children: ReactNode }) {
     });
   }, []);
 
-  const setAccessToken = (accessToken: string | null) => {
-    authStore.setState({ accessToken });
-  };
-
-  const setSession = (session: EmployeeSession | null) => {
-    authStore.setState({ session });
-  };
-
   return (
-    <AuthContext.Provider value={{ ...state, setAccessToken, setSession }}>
+    <AuthContext.Provider value={{ ...state, setAuth: authStore.setState }}>
       {props.children}
     </AuthContext.Provider>
   );

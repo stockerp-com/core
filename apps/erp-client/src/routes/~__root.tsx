@@ -29,6 +29,7 @@ export interface RouterAppContext {
 export const Route = createRootRouteWithContext<RouterAppContext>()({
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
+  errorComponent: ErrorComponent,
 });
 
 function RootComponent() {
@@ -37,7 +38,7 @@ function RootComponent() {
   return (
     <AuthProvider>
       <ThemeProvider>
-        <TooltipProvider delayDuration={350}>
+        <TooltipProvider>
           <Outlet />
           <Toaster
             position="top-right"
@@ -77,6 +78,21 @@ function NotFoundComponent() {
               {t('errors:not_found.go_home')}
             </Link>
           </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ErrorComponent() {
+  const { t } = useTranslation();
+
+  return (
+    <div className="h-[100dvh] w-[100dvw] flex items-center justify-center">
+      <div className="container max-w-screen-md flex flex-col gap-12 items-center justify-center text-center z-10">
+        <div className="flex flex-col gap-8">
+          <h1>{t('errors:unknown.title')}</h1>
+          <p>{t('errors:unknown.subtitle')}</p>
         </div>
       </div>
     </div>

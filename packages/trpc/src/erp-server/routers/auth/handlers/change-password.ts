@@ -2,6 +2,7 @@ import { changePasswordSchema } from '@retailify/validation/erp/auth/change-pass
 import { authenticatedProcedure } from '../../../procedures/authenticated.js';
 import { TRPCError } from '@trpc/server';
 import { hash } from 'bcrypt';
+import logger from '@retailify/logger';
 
 export const changePasswordHandler = authenticatedProcedure
   .input(changePasswordSchema)
@@ -28,6 +29,7 @@ export const changePasswordHandler = authenticatedProcedure
       },
     });
 
+    logger.info({ employeeId: ctx.session?.id }, 'Changed password');
     return {
       message: ctx.t?.('res:auth.change_password.success'),
     };
