@@ -3,7 +3,7 @@
 import * as React from 'react';
 import * as SelectPrimitive from '@radix-ui/react-select';
 
-import { cn } from '@retailify/ui/lib/utils';
+import { cn } from '@core/ui/lib/utils';
 import { PiCaretDown, PiCaretUp, PiCheck } from 'react-icons/pi';
 
 const Select = SelectPrimitive.Root;

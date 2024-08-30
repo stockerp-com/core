@@ -3,7 +3,7 @@
 import * as React from 'react';
 import * as MenubarPrimitive from '@radix-ui/react-menubar';
 
-import { cn } from '@retailify/ui/lib/utils';
+import { cn } from '@core/ui/lib/utils';
 import { PiCaretRight, PiCheck, PiCircle } from 'react-icons/pi';
 
 const MenubarMenu = MenubarPrimitive.Menu;

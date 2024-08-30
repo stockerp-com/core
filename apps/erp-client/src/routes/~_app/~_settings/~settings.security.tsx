@@ -1,4 +1,4 @@
-import SubmitButton from '@retailify/ui/components/form/SubmitButton';
+import SubmitButton from '@core/ui/components/form/SubmitButton';
 import {
   Card,
   CardContent,
@@ -6,7 +6,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@retailify/ui/components/ui/card';
+} from '@core/ui/components/ui/card';
 import { createFileRoute } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -15,8 +15,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
   ChangePasswordInput,
   changePasswordSchema,
-} from '@retailify/validation/erp/auth/change-password.schema';
-import { toast } from '@retailify/ui/lib/toast';
+} from '@core/validation/erp/auth/change-password.schema';
+import { toast } from '@core/ui/lib/toast';
 import {
   Form,
   FormControl,
@@ -25,8 +25,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@retailify/ui/components/ui/form';
-import { PasswordInput } from '@retailify/ui/components/form/PasswordInput';
+} from '@core/ui/components/ui/form';
+import { PasswordInput } from '@core/ui/components/form/PasswordInput';
 import { trpc } from '../../../router';
 
 export const Route = createFileRoute('/_app/_settings/settings/security')({

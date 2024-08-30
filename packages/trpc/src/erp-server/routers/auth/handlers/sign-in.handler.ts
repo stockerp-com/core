@@ -1,12 +1,12 @@
 import { TRPCError } from '@trpc/server';
 import { publicProcedure } from '../../../procedures/public.js';
 import { compare } from 'bcrypt';
-import { signInSchema } from '@retailify/validation/erp/auth/sign-in.schema';
+import { signInSchema } from '@core/validation/erp/auth/sign-in.schema';
 import { generateSession } from '../../../utils/session.js';
 import { Context } from '../../../context.js';
-import { Employee } from '@retailify/db';
-import { EmployeeSession } from '@retailify/constants';
-import logger from '@retailify/logger';
+import { Employee } from '@core/db';
+import { EmployeeSession } from '@core/constants';
+import logger from '@core/logger';
 
 // Helper function to generate session and return response
 const generateResponse = async (

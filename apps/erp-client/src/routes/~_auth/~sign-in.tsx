@@ -1,13 +1,13 @@
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import AuthTitle from './components/AuthTitle';
-import { toast } from '@retailify/ui/lib/toast';
+import { toast } from '@core/ui/lib/toast';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import {
   SignInInput,
   signInSchema,
-} from '@retailify/validation/erp/auth/sign-in.schema';
+} from '@core/validation/erp/auth/sign-in.schema';
 import {
   Form,
   FormControl,
@@ -15,10 +15,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@retailify/ui/components/ui/form';
-import { Input } from '@retailify/ui/components/ui/input';
-import { PasswordInput } from '@retailify/ui/components/form/PasswordInput';
-import SubmitButton from '@retailify/ui/components/form/SubmitButton';
+} from '@core/ui/components/ui/form';
+import { Input } from '@core/ui/components/ui/input';
+import { PasswordInput } from '@core/ui/components/form/PasswordInput';
+import SubmitButton from '@core/ui/components/form/SubmitButton';
 import { PiSignIn } from 'react-icons/pi';
 import { useAuth } from '../../hooks/use-auth';
 import { trpc } from '../../router';

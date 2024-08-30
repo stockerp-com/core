@@ -1,5 +1,5 @@
-import { EmployeeSession } from '@retailify/constants';
-import { toast } from '@retailify/ui/lib/toast';
+import { EmployeeSession } from '@core/constants';
+import { toast } from '@core/ui/lib/toast';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 

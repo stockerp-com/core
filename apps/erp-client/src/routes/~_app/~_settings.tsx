@@ -1,4 +1,4 @@
-import { Button } from '@retailify/ui/components/ui/button';
+import { Button } from '@core/ui/components/ui/button';
 import {
   createFileRoute,
   Link,

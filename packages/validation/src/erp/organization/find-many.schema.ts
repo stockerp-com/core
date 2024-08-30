@@ -1,15 +1,16 @@
 import { z } from 'zod';
 import {
+  findManyInfiniteSchema,
+  findManySchema,
   orderByField,
-  presetfindManyInfiniteSchema,
-  presetfindManySchema,
-} from '../../find-all-preset.schema.js';
+} from '../../utils/common.js';
 
 export const findManyInfiniteOrganizationsSchema = z.object({
-  ...presetfindManyInfiniteSchema.shape,
+  ...findManyInfiniteSchema.shape,
 });
+
 export const findManyOrganizationsSchema = z.object({
-  ...presetfindManySchema.shape,
+  ...findManySchema.shape,
   orderBy: z
     .object({
       createdAt: orderByField,
@@ -28,6 +29,7 @@ export const findManyOrganizationsSchema = z.object({
 export type findManyInfiniteOrganizationsInput = z.infer<
   typeof findManyInfiniteOrganizationsSchema
 >;
+
 export type findManyOrganizationsInput = z.infer<
   typeof findManyOrganizationsSchema
 >;

@@ -1,4 +1,4 @@
-import server from '@retailify/eslint-config/eslint.config.server.js';
+import server from '@core/eslint-config/eslint.config.server.js';
 import { resolve } from 'path';
 
 export default [

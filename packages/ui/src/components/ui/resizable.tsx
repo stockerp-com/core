@@ -2,7 +2,7 @@
 
 import * as ResizablePrimitive from 'react-resizable-panels';
 
-import { cn } from '@retailify/ui/lib/utils';
+import { cn } from '@core/ui/lib/utils';
 import { PiDotsSixVertical, PiDotsThreeVertical } from 'react-icons/pi';
 
 const ResizablePanelGroup = ({

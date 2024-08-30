@@ -1,5 +1,5 @@
 {
-  "name": "@retailify/validation",
+  "name": "@core/validation",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -10,8 +10,8 @@
     "lint": "eslint ./src --fix"
   },
   "devDependencies": {
-    "@retailify/eslint-config": "*",
-    "@retailify/typescript-config": "*",
+    "@core/eslint-config": "*",
+    "@core/typescript-config": "*",
     "@types/node": "^22.1.0",
     "eslint": "^9.8.0",
     "typescript": "^5.4.5"

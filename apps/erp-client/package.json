@@ -10,10 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@retailify/i18n": "*",
-    "@retailify/trpc": "*",
-    "@retailify/ui": "*",
-    "@retailify/validation": "*",
+    "@core/i18n": "*",
+    "@core/trpc": "*",
+    "@core/ui": "*",
+    "@core/validation": "*",
     "@tanstack/react-query": "^5.51.23",
     "@tanstack/react-query-devtools": "^5.52.2",
     "@tanstack/react-router": "^1.46.8",

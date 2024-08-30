@@ -1,8 +1,8 @@
 import { TRPCError } from '@trpc/server';
 import { authenticatedProcedure } from '../../../procedures/authenticated.js';
-import { addOrganizationSchema } from '@retailify/validation/erp/organization/add.schema';
+import { addOrganizationSchema } from '@core/validation/erp/organization/add.schema';
 import { generateSession } from '../../../utils/session.js';
-import logger from '@retailify/logger';
+import logger from '@core/logger';
 import { observable } from '@trpc/server/observable';
 
 export const addHandler = authenticatedProcedure

@@ -8,13 +8,13 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@retailify/ui/components/ui/table';
-import { Button } from '@retailify/ui/components/ui/button';
+} from '@core/ui/components/ui/table';
+import { Button } from '@core/ui/components/ui/button';
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '@retailify/ui/components/ui/tooltip';
+} from '@core/ui/components/ui/tooltip';
 import { PiBuildingOffice, PiPencil, PiTrash } from 'react-icons/pi';
 import {
   Dialog,
@@ -24,12 +24,12 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@retailify/ui/components/ui/dialog';
+} from '@core/ui/components/ui/dialog';
 import { useForm } from 'react-hook-form';
 import {
   EditOrganizationInput,
   editOrganizationSchema,
-} from '@retailify/validation/erp/organization/edit.schema';
+} from '@core/validation/erp/organization/edit.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Form,
@@ -38,13 +38,13 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@retailify/ui/components/ui/form';
-import { Skeleton } from '@retailify/ui/components/ui/skeleton';
-import { Input } from '@retailify/ui/components/ui/input';
-import { Textarea } from '@retailify/ui/components/ui/textarea';
+} from '@core/ui/components/ui/form';
+import { Skeleton } from '@core/ui/components/ui/skeleton';
+import { Input } from '@core/ui/components/ui/input';
+import { Textarea } from '@core/ui/components/ui/textarea';
 import { useEffect, useState } from 'react';
-import SpinnerIcon from '@retailify/ui/components/ui/spinner-icon';
-import { toast } from '@retailify/ui/lib/toast';
+import SpinnerIcon from '@core/ui/components/ui/spinner-icon';
+import { toast } from '@core/ui/lib/toast';
 
 export const Route = createFileRoute('/_app/_settings/settings/organizations')({
   component: Component,

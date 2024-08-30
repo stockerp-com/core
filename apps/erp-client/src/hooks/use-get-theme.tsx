@@ -1,4 +1,4 @@
-import { useTheme } from '@retailify/ui/components/providers/vite-theme-provider';
+import { useTheme } from '@core/ui/components/providers/vite-theme-provider';
 import { useEffect, useState } from 'react';
 
 export function useGetTheme() {

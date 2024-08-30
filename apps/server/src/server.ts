@@ -3,15 +3,15 @@ import helmet from 'helmet';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
 import cookieParser from 'cookie-parser';
-import { createExpressTrpcMiddleware } from '@retailify/trpc/erp-server/middleware/express';
-import { redis } from '@retailify/redis';
-import logger from '@retailify/logger';
-import { prismaManager } from '@retailify/db';
+import { createExpressTrpcMiddleware } from '@core/trpc/erp-server/middleware/express';
+import { redis } from '@core/redis';
+import logger from '@core/logger';
+import { prismaManager } from '@core/db';
 import * as i18nextMiddleware from 'i18next-http-middleware';
 import { initI18n } from './utils/i18n.js';
 import http from 'http';
 import { WebSocketServer } from 'ws';
-import { createWSSHandler } from '@retailify/trpc/erp-server/middleware/websocket';
+import { createWSSHandler } from '@core/trpc/erp-server/middleware/websocket';
 import env from './utils/env.js';
 
 export const serverFactory = async () => {

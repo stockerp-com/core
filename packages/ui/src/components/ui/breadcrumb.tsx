@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 
-import { cn } from '@retailify/ui/lib/utils';
+import { cn } from '@core/ui/lib/utils';
 import { PiCaretRight, PiDotsThree } from 'react-icons/pi';
 
 const Breadcrumb = React.forwardRef<

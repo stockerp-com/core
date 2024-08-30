@@ -1,5 +1,5 @@
 {
-  "name": "@retailify/i18n",
+  "name": "@core/i18n",
   "version": "1.0.0",
   "private": true,
   "type": "module"

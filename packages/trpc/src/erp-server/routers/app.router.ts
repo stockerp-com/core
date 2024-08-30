@@ -7,6 +7,7 @@ import { employeeRouter } from './employee/employee.router.js';
 import { organizationRouter } from './organization/organization.router.js';
 
 export const appRouter = router({
+  // Routers:
   auth: authRouter,
   employee: employeeRouter,
   account: accountRouter,

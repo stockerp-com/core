@@ -1,5 +1,5 @@
 {
-  "name": "@retailify/db",
+  "name": "@core/db",
   "version": "1.0.0",
   "license": "MIT",
   "type": "module",
@@ -28,8 +28,8 @@
     "bcrypt": "^5.1.1"
   },
   "devDependencies": {
-    "@retailify/eslint-config": "*",
-    "@retailify/typescript-config": "*",
+    "@core/eslint-config": "*",
+    "@core/typescript-config": "*",
     "@types/bcrypt": "^5.0.2",
     "@types/node": "^22.1.0",
     "eslint": "^9.8.0",

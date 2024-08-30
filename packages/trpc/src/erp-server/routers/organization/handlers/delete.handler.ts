@@ -1,7 +1,7 @@
-import { deleteOrganizationSchema } from '@retailify/validation/erp/organization/delete.schema';
+import { deleteOrganizationSchema } from '@core/validation/erp/organization/delete.schema';
 import { authenticatedProcedure } from '../../../procedures/authenticated.js';
 import { TRPCError } from '@trpc/server';
-import logger from '@retailify/logger';
+import logger from '@core/logger';
 
 export const deleteHandler = authenticatedProcedure
   .input(deleteOrganizationSchema)

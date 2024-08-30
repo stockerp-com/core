@@ -9,6 +9,7 @@ import {
 import { findOneHandler } from './handlers/find-one.handler.js';
 
 export const organizationRouter = router({
+  // Handlers:
   add: addHandler,
   onAdd: onAddHandler,
   findManyInfinite: findManyInfiniteHandler,

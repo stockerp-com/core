@@ -3,7 +3,7 @@ import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
-} from '@retailify/ui/components/ui/resizable';
+} from '@core/ui/components/ui/resizable';
 import Topbar from './components/Topbar';
 import Sidebar from './components/Sidebar';
 import { authStore } from '../utils/auth-store';

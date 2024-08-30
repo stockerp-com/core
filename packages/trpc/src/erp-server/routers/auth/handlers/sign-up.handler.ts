@@ -1,9 +1,9 @@
 import { publicProcedure } from '../../../procedures/public.js';
 import { hash } from 'bcrypt';
 import { TRPCError } from '@trpc/server';
-import { signUpSchema } from '@retailify/validation/erp/auth/sign-up.schema';
+import { signUpSchema } from '@core/validation/erp/auth/sign-up.schema';
 import { generateSession } from '../../../utils/session.js';
-import logger from '@retailify/logger';
+import logger from '@core/logger';
 
 export const signUpHandler = publicProcedure
   .input(signUpSchema)

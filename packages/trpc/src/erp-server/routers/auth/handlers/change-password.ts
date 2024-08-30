@@ -1,8 +1,8 @@
-import { changePasswordSchema } from '@retailify/validation/erp/auth/change-password.schema';
+import { changePasswordSchema } from '@core/validation/erp/auth/change-password.schema';
 import { authenticatedProcedure } from '../../../procedures/authenticated.js';
 import { TRPCError } from '@trpc/server';
 import { hash } from 'bcrypt';
-import logger from '@retailify/logger';
+import logger from '@core/logger';
 
 export const changePasswordHandler = authenticatedProcedure
   .input(changePasswordSchema)

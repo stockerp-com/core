@@ -1,1 +1,1 @@
-export { default } from "@retailify/ui/postcss.config";
+export { default } from "@core/ui/postcss.config";

@@ -1,5 +1,5 @@
 {
-  "name": "@retailify/trpc",
+  "name": "@core/trpc",
   "version": "1.0.0",
   "license": "MIT",
   "type": "module",
@@ -13,8 +13,8 @@
     "lint": "eslint ./src --fix"
   },
   "devDependencies": {
-    "@retailify/eslint-config": "*",
-    "@retailify/typescript-config": "*",
+    "@core/eslint-config": "*",
+    "@core/typescript-config": "*",
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^22.1.0",
@@ -22,11 +22,11 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@retailify/constants": "*",
-    "@retailify/db": "*",
-    "@retailify/logger": "*",
-    "@retailify/redis": "*",
-    "@retailify/validation": "*",
+    "@core/constants": "*",
+    "@core/db": "*",
+    "@core/logger": "*",
+    "@core/redis": "*",
+    "@core/validation": "*",
     "@trpc/client": "^11.0.0-rc.477",
     "@trpc/server": "^11.0.0-rc.477",
     "bcrypt": "^5.1.1",

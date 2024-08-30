@@ -1,4 +1,4 @@
-import { editProfileSchema } from '@retailify/validation/erp/account/edit-profile.schema';
+import { editProfileSchema } from '@core/validation/erp/account/edit-profile.schema';
 import { authenticatedProcedure } from '../../../procedures/authenticated.js';
 import { TRPCError } from '@trpc/server';
 import { deleteObject } from '../../../utils/worker.js';

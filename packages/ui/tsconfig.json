@@ -1,9 +1,9 @@
 {
-  "extends": "@retailify/typescript-config/react-library.json",
+  "extends": "@core/typescript-config/react-library.json",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@retailify/ui/*": ["./src/*"]
+      "@core/ui/*": ["./src/*"]
     }
   },
   "include": ["src"]

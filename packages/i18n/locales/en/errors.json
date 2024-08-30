@@ -17,7 +17,10 @@
     "min_other": "This field must be at least {{count}} characters",
     "max_one": "This field must be at most {{count}} character",
     "max_other": "This field must be at most {{count}} characters",
-    "file_too_large": "Max file size is {{size}} MB, yours is {{user_size}} MB."
+    "length_one": "This field must be {{count}} character long",
+    "length_other": "This field must be {{count}} characters long",
+    "file_too_large": "Max file size is {{size}} MB, yours is {{user_size}} MB.",
+    "numeric": "This field must contain only numbers"
   },
   "not_found": {
     "title": "Oops! This page does not exist.",

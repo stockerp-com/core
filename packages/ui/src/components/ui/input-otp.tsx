@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { OTPInput, OTPInputContext } from 'input-otp';
 
-import { cn } from '@retailify/ui/lib/utils';
+import { cn } from '@core/ui/lib/utils';
 import { PiDot } from 'react-icons/pi';
 
 const InputOTP = React.forwardRef<

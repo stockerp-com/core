@@ -7,8 +7,8 @@ import {
   ToastProvider,
   ToastTitle,
   ToastViewport,
-} from '@retailify/ui/components/ui/toast';
-import { useToast } from '@retailify/ui/components/ui/use-toast';
+} from '@core/ui/components/ui/toast';
+import { useToast } from '@core/ui/components/ui/use-toast';
 
 export function Toaster() {
   const { toasts } = useToast();

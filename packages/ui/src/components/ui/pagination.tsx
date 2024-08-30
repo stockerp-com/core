@@ -1,10 +1,7 @@
 import * as React from 'react';
 
-import { cn } from '@retailify/ui/lib/utils';
-import {
-  ButtonProps,
-  buttonVariants,
-} from '@retailify/ui/components/ui/button';
+import { cn } from '@core/ui/lib/utils';
+import { ButtonProps, buttonVariants } from '@core/ui/components/ui/button';
 import { PiCaretLeft, PiCaretRight, PiDotsThree } from 'react-icons/pi';
 
 const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => (

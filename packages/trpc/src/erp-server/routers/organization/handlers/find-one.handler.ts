@@ -1,4 +1,4 @@
-import { findOneSchema } from '@retailify/validation/erp/organization/find-one.schema';
+import { findOneSchema } from '@core/validation/erp/organization/find-one.schema';
 import { authenticatedProcedure } from '../../../procedures/authenticated.js';
 
 export const findOneHandler = authenticatedProcedure

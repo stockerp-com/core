@@ -18,7 +18,7 @@ export const initI18n = async () => {
       backend: {
         loadPath: path.resolve(
           __dirname,
-          '../../../../node_modules/@retailify/i18n/locales/{{lng}}/{{ns}}.json',
+          '../../../../node_modules/@core/i18n/locales/{{lng}}/{{ns}}.json',
         ),
       },
     });

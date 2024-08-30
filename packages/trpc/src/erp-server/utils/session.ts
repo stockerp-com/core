@@ -1,4 +1,4 @@
-import { EmployeeSession } from '@retailify/constants';
+import { EmployeeSession } from '@core/constants';
 import { Context } from '../context.js';
 import { signTokens, verifyRT } from './jwt.js';
 

@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useEffect, useState } from 'react';
 import { authStore } from '../utils/auth-store';
-import { EmployeeSession } from '@retailify/constants';
+import { EmployeeSession } from '@core/constants';
 
 export interface AuthContext {
   accessToken: string | null;

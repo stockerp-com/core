@@ -12,10 +12,10 @@ import {
   useFormContext,
 } from 'react-hook-form';
 
-import { cn } from '@retailify/ui/lib/utils';
-import { Label } from '@retailify/ui/components/ui/label';
+import { cn } from '@core/ui/lib/utils';
+import { Label } from '@core/ui/components/ui/label';
 
-import { TranslateFunc } from '@retailify/ui/lib/types';
+import { TranslateFunc } from '@core/ui/lib/types';
 
 const Form = FormProvider;
 

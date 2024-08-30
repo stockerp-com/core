@@ -16,7 +16,7 @@ i18next
   .use(
     resourcesToBackend(
       (language: string, namespace: string) =>
-        import(`@retailify/i18n/locales/${language}/${namespace}.json`),
+        import(`@core/i18n/locales/${language}/${namespace}.json`),
     ),
   )
   .use(initReactI18next)

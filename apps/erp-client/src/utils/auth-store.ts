@@ -1,4 +1,4 @@
-import { EmployeeSession } from '@retailify/constants';
+import { EmployeeSession } from '@core/constants';
 import { jwtDecode } from 'jwt-decode';
 import { wsClient } from '../router';
 

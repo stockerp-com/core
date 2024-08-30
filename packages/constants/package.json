@@ -1,5 +1,5 @@
 {
-  "name": "@retailify/constants",
+  "name": "@core/constants",
   "version": "1.0.0",
   "license": "MIT",
   "type": "module",
@@ -16,8 +16,8 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@retailify/eslint-config": "*",
-    "@retailify/typescript-config": "*",
+    "@core/eslint-config": "*",
+    "@core/typescript-config": "*",
     "tsup": "^8.2.4",
     "typescript": "^5.4.5",
     "eslint": "^9.8.0"

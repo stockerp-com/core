@@ -5,8 +5,8 @@ import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from 'embla-carousel-react';
 
-import { cn } from '@retailify/ui/lib/utils';
-import { Button } from '@retailify/ui/components/ui/button';
+import { cn } from '@core/ui/lib/utils';
+import { Button } from '@core/ui/components/ui/button';
 import { PiArrowLeft, PiArrowRight } from 'react-icons/pi';
 
 type CarouselApi = UseEmblaCarouselType[1];

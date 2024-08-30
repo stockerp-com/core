@@ -3,7 +3,7 @@
 import * as React from 'react';
 import * as ContextMenuPrimitive from '@radix-ui/react-context-menu';
 
-import { cn } from '@retailify/ui/lib/utils';
+import { cn } from '@core/ui/lib/utils';
 import { PiCaretRight, PiCheck, PiCircle } from 'react-icons/pi';
 
 const ContextMenu = ContextMenuPrimitive.Root;

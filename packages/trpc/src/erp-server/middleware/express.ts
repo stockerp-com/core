@@ -2,8 +2,8 @@
 import { createExpressMiddleware } from '@trpc/server/adapters/express';
 import { appRouter } from '../routers/app.router.js';
 import { createContext } from '../context.js';
-import { PrismaManager } from '@retailify/db';
-import { Redis } from '@retailify/redis';
+import { PrismaManager } from '@core/db';
+import { Redis } from '@core/redis';
 import { TFunction } from 'i18next';
 
 export type CreateExpressTrpcMiddleware = (

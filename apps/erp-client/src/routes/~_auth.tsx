@@ -1,4 +1,4 @@
-import { AnimatedGridPattern } from '@retailify/ui/components/backgrounds/animated-grid-pattern';
+import { AnimatedGridPattern } from '@core/ui/components/backgrounds/animated-grid-pattern';
 import { createFileRoute, Outlet } from '@tanstack/react-router';
 import { useGetTheme } from '../hooks/use-get-theme';
 
@@ -29,7 +29,7 @@ function AuthComponent() {
             className="w-16 h-16 drop-shadow-sm"
           />
           <h1 className="text-6xl z-10 font-medium drop-shadow-sm">
-            Retailify
+            keeplicity
           </h1>
         </div>
         <AnimatedGridPattern

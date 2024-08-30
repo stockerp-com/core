@@ -1,7 +1,7 @@
 import { TRPCError } from '@trpc/server';
 import { publicProcedure } from '../../../procedures/public.js';
 import { refreshSession } from '../../../utils/session.js';
-import logger from '@retailify/logger';
+import logger from '@core/logger';
 
 export const refreshTokensHandler = publicProcedure.query(async ({ ctx }) => {
   const newSession = await refreshSession(ctx);

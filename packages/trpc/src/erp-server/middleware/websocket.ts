@@ -3,10 +3,10 @@ import { applyWSSHandler } from '@trpc/server/adapters/ws';
 import { appRouter } from '../routers/app.router.js';
 import { createContextInner } from '../context.js';
 import { type TFunction } from 'i18next';
-import { type PrismaManager } from '@retailify/db';
-import { type Redis } from '@retailify/redis';
+import { type PrismaManager } from '@core/db';
+import { type Redis } from '@core/redis';
 import { verifyAT } from '../utils/jwt.js';
-import logger from '@retailify/logger';
+import logger from '@core/logger';
 
 export const createWSSHandler = ({
   wss,

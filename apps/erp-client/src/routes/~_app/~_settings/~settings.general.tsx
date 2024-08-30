@@ -1,28 +1,25 @@
-import { Label } from '@retailify/ui/components/ui/label';
+import { Label } from '@core/ui/components/ui/label';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { PiCheck, PiLaptop, PiMoon, PiSignOut, PiSun } from 'react-icons/pi';
-import {
-  RadioGroup,
-  RadioGroupItem,
-} from '@retailify/ui/components/ui/radio-group';
-import { useTheme } from '@retailify/ui/components/providers/vite-theme-provider';
-import { cn } from '@retailify/ui/lib/utils';
+import { RadioGroup, RadioGroupItem } from '@core/ui/components/ui/radio-group';
+import { useTheme } from '@core/ui/components/providers/vite-theme-provider';
+import { cn } from '@core/ui/lib/utils';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@retailify/ui/components/ui/select';
+} from '@core/ui/components/ui/select';
 import { useAuth } from '../../../hooks/use-auth';
 import { useForm } from 'react-hook-form';
 import {
   EditProfileInput,
   editProfileSchema,
-} from '@retailify/validation/erp/account/edit-profile.schema';
+} from '@core/validation/erp/account/edit-profile.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { toast } from '@retailify/ui/lib/toast';
+import { toast } from '@core/ui/lib/toast';
 import { useEffect, useState } from 'react';
 import useUpload from '../../../hooks/use-upload';
 import {
@@ -32,9 +29,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@retailify/ui/components/ui/form';
-import { Input } from '@retailify/ui/components/ui/input';
-import { DropzoneFileInput } from '@retailify/ui/components/ui/file-select';
+} from '@core/ui/components/ui/form';
+import { Input } from '@core/ui/components/ui/input';
+import { DropzoneFileInput } from '@core/ui/components/ui/file-select';
 import {
   Card,
   CardContent,
@@ -42,10 +39,10 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@retailify/ui/components/ui/card';
-import SubmitButton from '@retailify/ui/components/form/SubmitButton';
+} from '@core/ui/components/ui/card';
+import SubmitButton from '@core/ui/components/form/SubmitButton';
 import { IconType } from 'react-icons';
-import { Skeleton } from '@retailify/ui/components/ui/skeleton';
+import { Skeleton } from '@core/ui/components/ui/skeleton';
 import {
   Dialog,
   DialogContent,
@@ -54,9 +51,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@retailify/ui/components/ui/dialog';
-import { Button } from '@retailify/ui/components/ui/button';
-import SpinnerIcon from '@retailify/ui/components/ui/spinner-icon';
+} from '@core/ui/components/ui/dialog';
+import { Button } from '@core/ui/components/ui/button';
+import SpinnerIcon from '@core/ui/components/ui/spinner-icon';
 import { trpc, trpcQueryUtils } from '../../../router';
 import { authStore } from '../../../utils/auth-store';
 

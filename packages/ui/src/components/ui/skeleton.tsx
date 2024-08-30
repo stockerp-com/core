@@ -1,4 +1,4 @@
-import { cn } from '@retailify/ui/lib/utils';
+import { cn } from '@core/ui/lib/utils';
 
 function Skeleton({
   className,

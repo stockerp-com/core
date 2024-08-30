@@ -5,12 +5,6 @@
       "email_taken": "\"{{email}}\" is already taken",
       "failed": "Failed to register"
     },
-    "forgot_password": {
-      "link_sent": "We have emailed you a link to reset your password",
-      "invalid_email": "There is no account with the email \"{{email}}\"",
-      "success": "You have successfully reset your password",
-      "failed": "Failed to send password reset email"
-    },
     "change_password": {
       "success": "Successfully changed password",
       "failed": "Failed to change password"
@@ -24,6 +18,15 @@
     "sign_out": {
       "success": "Successfully signed out",
       "failed": "Failed to sign out"
+    },
+    "reset_password": {
+      "otp_sent": "One-time password sent to \"{{email}}\"",
+      "otp_expired": "One-time password has expired",
+      "otp_invalid": "Invalid one-time password",
+      "otp_verified": "One-time password verified",
+      "email_not_found": "There is no account with the email \"{{email}}\"",
+      "success": "Successfully reset password",
+      "failed": "Failed to reset password"
     }
   },
   "employee": {

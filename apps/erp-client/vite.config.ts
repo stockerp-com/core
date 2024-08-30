@@ -15,7 +15,7 @@ export default defineConfig({
     }),
     dynamicImport({
       filter(id) {
-        if (id.includes('/node_modules/@retailify/i18n/locales')) {
+        if (id.includes('/node_modules/@core/i18n/locales')) {
           return true;
         }
       },

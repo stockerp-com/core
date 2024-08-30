@@ -1,4 +1,4 @@
-import logger from '@retailify/logger';
+import logger from '@core/logger';
 import { authenticatedProcedure } from '../../../procedures/authenticated.js';
 import { removeCurrentSession } from '../../../utils/session.js';
 

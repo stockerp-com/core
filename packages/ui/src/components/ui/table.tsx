@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { cn } from '@retailify/ui/lib/utils';
+import { cn } from '@core/ui/lib/utils';
 
 const Table = React.forwardRef<
   HTMLTableElement,

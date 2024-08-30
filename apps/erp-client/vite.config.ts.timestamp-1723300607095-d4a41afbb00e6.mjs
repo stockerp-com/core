@@ -1,9 +1,9 @@
 // vite.config.ts
-import { defineConfig } from "file:///home/artem/projects/retailify/node_modules/vite/dist/node/index.js";
-import react from "file:///home/artem/projects/retailify/node_modules/@vitejs/plugin-react-swc/index.mjs";
-import { TanStackRouterVite } from "file:///home/artem/projects/retailify/node_modules/@tanstack/router-plugin/dist/esm/vite.js";
-import dynamicImport from "file:///home/artem/projects/retailify/node_modules/vite-plugin-dynamic-import/dist/index.mjs";
-import { imagetools } from "file:///home/artem/projects/retailify/node_modules/vite-imagetools/dist/index.js";
+import { defineConfig } from "file:///home/artem/projects/keeplicity/node_modules/vite/dist/node/index.js";
+import react from "file:///home/artem/projects/keeplicity/node_modules/@vitejs/plugin-react-swc/index.mjs";
+import { TanStackRouterVite } from "file:///home/artem/projects/keeplicity/node_modules/@tanstack/router-plugin/dist/esm/vite.js";
+import dynamicImport from "file:///home/artem/projects/keeplicity/node_modules/vite-plugin-dynamic-import/dist/index.mjs";
+import { imagetools } from "file:///home/artem/projects/keeplicity/node_modules/vite-imagetools/dist/index.js";
 var vite_config_default = defineConfig({
   plugins: [
     react(),
@@ -14,7 +14,7 @@ var vite_config_default = defineConfig({
     }),
     dynamicImport({
       filter(id) {
-        if (id.includes("/node_modules/@retailify/i18n/locales")) {
+        if (id.includes("/node_modules/@core/i18n/locales")) {
           return true;
         }
       }

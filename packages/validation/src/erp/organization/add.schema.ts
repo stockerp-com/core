@@ -1,8 +1,7 @@
 import { z } from 'zod';
-import { crudString } from '../../create-edit-preset.schema.js';
-
+import { stringField } from '../../utils/common.js';
 export const addOrganizationSchema = z.object({
-  name: crudString,
+  name: stringField,
   description: z.string().optional(),
 });
 

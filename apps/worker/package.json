@@ -7,7 +7,7 @@
   "dependencies": {
     "hono": "^4.5.6",
     "nanoid": "^5.0.7",
-    "@retailify/constants": "*"
+    "@core/constants": "*"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240815.0",

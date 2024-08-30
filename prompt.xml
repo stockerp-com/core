@@ -9,13 +9,13 @@
                - The code snippet for the context is provided below:
                  <Code>
                    <![CDATA[
-                   import { PrismaManager } from '@retailify/db';
-                   import { Redis } from '@retailify/redis';
+                   import { PrismaManager } from '@core/db';
+                   import { Redis } from '@core/redis';
                    import { TRPCError } from '@trpc/server';
                    import { type TFunction } from 'i18next';
                    import { CreateExpressContextOptions } from '@trpc/server/adapters/express';
                    import { getRTCookie, rmRTCookie, setRTCookie } from './utils/cookie.js';
-                   import { EmployeeSession } from '@retailify/constants';
+                   import { EmployeeSession } from '@core/constants';
 
                    interface CreateContextInnerOpts {
                      session: EmployeeSession | null;
@@ -86,10 +86,10 @@
                    import cors from 'cors';
                    import rateLimit from 'express-rate-limit';
                    import cookieParser from 'cookie-parser';
-                   import { createExpressTrpcMiddleware } from '@retailify/trpc/erp-server/middleware/express';
-                   import { redis } from '@retailify/redis';
-                   import logger from '@retailify/logger';
-                   import { prismaManager } from '@retailify/db';
+                   import { createExpressTrpcMiddleware } from '@core/trpc/erp-server/middleware/express';
+                   import { redis } from '@core/redis';
+                   import logger from '@core/logger';
+                   import { prismaManager } from '@core/db';
                    import * as i18nextMiddleware from 'i18next-http-middleware';
                    import { initI18n } from './utils/i18n.js';
                    import ws from 'ws';
@@ -158,7 +158,7 @@
                - The code snippet for the main file is provided below:
                  <Code>
                    <![CDATA[
-                   import logger from '@retailify/logger';
+                   import logger from '@core/logger';
                    import env from './utils/env.js';
                    import { createExpressServer } from './server.js';
 

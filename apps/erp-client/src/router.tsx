@@ -1,4 +1,4 @@
-import type { AppRouter } from '@retailify/trpc/erp-server/routers/app.router';
+import type { AppRouter } from '@core/trpc/erp-server/routers/app.router';
 import {
   createRouter as createTanStackRouter,
   ParseRoute,
@@ -11,7 +11,7 @@ import SuperJSON from 'superjson';
 import { authStore } from './utils/auth-store';
 import { fetcher } from './utils/fetcher';
 import { routeTree } from './routeTree.gen';
-import SpinnerIcon from '@retailify/ui/components/ui/spinner-icon';
+import SpinnerIcon from '@core/ui/components/ui/spinner-icon';
 
 export const queryClient = new QueryClient();
 export const trpc = createTRPCReact<AppRouter>({});

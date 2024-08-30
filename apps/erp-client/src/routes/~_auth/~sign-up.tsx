@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import {
   SignUpInput,
   signUpSchema,
-} from '@retailify/validation/erp/auth/sign-up.schema';
+} from '@core/validation/erp/auth/sign-up.schema';
 import {
   Form,
   FormField,
@@ -14,11 +14,11 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
-} from '@retailify/ui/components/ui/form';
-import SubmitButton from '@retailify/ui/components/form/SubmitButton';
-import { PasswordInput } from '@retailify/ui/components/form/PasswordInput';
-import { Input } from '@retailify/ui/components/ui/input';
-import { toast } from '@retailify/ui/lib/toast';
+} from '@core/ui/components/ui/form';
+import SubmitButton from '@core/ui/components/form/SubmitButton';
+import { PasswordInput } from '@core/ui/components/form/PasswordInput';
+import { Input } from '@core/ui/components/ui/input';
+import { toast } from '@core/ui/lib/toast';
 import { PiSignIn } from 'react-icons/pi';
 import { useAuth } from '../../hooks/use-auth';
 import { trpc } from '../../router';

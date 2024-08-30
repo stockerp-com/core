@@ -2,7 +2,7 @@ import { authenticatedProcedure } from '../../../procedures/authenticated.js';
 import {
   findManyInfiniteOrganizationsSchema,
   findManyOrganizationsSchema,
-} from '@retailify/validation/erp/organization/find-many.schema';
+} from '@core/validation/erp/organization/find-many.schema';
 
 export const findManyInfiniteHandler = authenticatedProcedure
   .input(findManyInfiniteOrganizationsSchema)

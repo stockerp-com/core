@@ -1,5 +1,5 @@
-import { redisSchema } from '@retailify/validation/env/redis.schema';
-import logger from '@retailify/logger';
+import { redisSchema } from '@core/validation/env/redis.schema';
+import logger from '@core/logger';
 import { config } from 'dotenv';
 
 const { NODE_ENV } = process.env;

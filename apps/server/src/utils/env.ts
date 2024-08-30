@@ -1,6 +1,6 @@
-import logger from '@retailify/logger';
+import logger from '@core/logger';
 import { config } from 'dotenv';
-import { serverSchema } from '@retailify/validation/env/server.schema';
+import { serverSchema } from '@core/validation/env/server.schema';
 
 const { NODE_ENV } = process.env;
 

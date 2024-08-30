@@ -1,4 +1,4 @@
-import { editOrganizationSchema } from '@retailify/validation/erp/organization/edit.schema';
+import { editOrganizationSchema } from '@core/validation/erp/organization/edit.schema';
 import { authenticatedProcedure } from '../../../procedures/authenticated.js';
 import { TRPCError } from '@trpc/server';
 

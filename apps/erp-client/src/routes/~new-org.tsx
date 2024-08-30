@@ -5,7 +5,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@retailify/ui/components/ui/card';
+} from '@core/ui/components/ui/card';
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../hooks/use-auth';
@@ -13,10 +13,10 @@ import { useForm } from 'react-hook-form';
 import {
   addOrganizationSchema,
   AddOrganizationSchema,
-} from '@retailify/validation/erp/organization/add.schema';
+} from '@core/validation/erp/organization/add.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { trpc, trpcQueryUtils } from '../router';
-import { toast } from '@retailify/ui/lib/toast';
+import { toast } from '@core/ui/lib/toast';
 import {
   Form,
   FormControl,
@@ -24,16 +24,16 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@retailify/ui/components/ui/form';
-import { Input } from '@retailify/ui/components/ui/input';
-import { Textarea } from '@retailify/ui/components/ui/textarea';
-import { Button } from '@retailify/ui/components/ui/button';
+} from '@core/ui/components/ui/form';
+import { Input } from '@core/ui/components/ui/input';
+import { Textarea } from '@core/ui/components/ui/textarea';
+import { Button } from '@core/ui/components/ui/button';
 import { PiArrowLeft, PiBuildingOffice } from 'react-icons/pi';
-import SpinnerIcon from '@retailify/ui/components/ui/spinner-icon';
+import SpinnerIcon from '@core/ui/components/ui/spinner-icon';
 import { useState } from 'react';
 import { useGetTheme } from '../hooks/use-get-theme';
-import { Progress } from '@retailify/ui/components/ui/progress';
-import { formatPercentage } from '@retailify/ui/lib/formatter';
+import { Progress } from '@core/ui/components/ui/progress';
+import { formatPercentage } from '@core/ui/lib/formatter';
 
 export const Route = createFileRoute('/new-org')({
   component: Component,
@@ -210,7 +210,7 @@ function OrgLoader(props: {
             className="w-16 h-16 drop-shadow-sm"
           />
           <h1 className="text-6xl z-10 font-medium drop-shadow-sm">
-            Retailify
+            keeplicity
           </h1>
         </div>
       </CardContent>

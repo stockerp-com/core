@@ -1,5 +1,5 @@
 {
-  "name": "@retailify/redis",
+  "name": "@core/redis",
   "version": "1.0.0",
   "license": "MIT",
   "type": "module",
@@ -15,14 +15,14 @@
     "lint": "eslint ./src --fix"
   },
   "dependencies": {
-    "@retailify/logger": "*",
-    "@retailify/validation": "*",
+    "@core/logger": "*",
+    "@core/validation": "*",
     "dotenv": "^16.4.5",
     "redis": "^4.7.0"
   },
   "devDependencies": {
-    "@retailify/eslint-config": "*",
-    "@retailify/typescript-config": "*",
+    "@core/eslint-config": "*",
+    "@core/typescript-config": "*",
     "@types/node": "^22.1.0",
     "eslint": "^9.8.0",
     "prisma": "^5.17.0",

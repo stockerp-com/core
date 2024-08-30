@@ -1,7 +1,7 @@
-import { ResizablePanel } from '@retailify/ui/components/ui/resizable';
-import { cn } from '@retailify/ui/lib/utils';
+import { ResizablePanel } from '@core/ui/components/ui/resizable';
+import { cn } from '@core/ui/lib/utils';
 import { useState } from 'react';
-import { Button } from '@retailify/ui/components/ui/button';
+import { Button } from '@core/ui/components/ui/button';
 import { Link } from '@tanstack/react-router';
 import { PiGearSix } from 'react-icons/pi';
 import { t } from 'i18next';

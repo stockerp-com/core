@@ -1,1 +1,1 @@
-export * from '@retailify/ui/tailwind.config';
+export * from '@core/ui/tailwind.config';

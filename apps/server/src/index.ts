@@ -1,4 +1,4 @@
-import logger from '@retailify/logger';
+import logger from '@core/logger';
 import env from './utils/env.js';
 import { serverFactory } from './server.js';
 

@@ -1,4 +1,4 @@
-import { Button } from '@retailify/ui/components/ui/button';
+import { Button } from '@core/ui/components/ui/button';
 import {
   createRootRouteWithContext,
   Link,
@@ -16,8 +16,8 @@ import {
 } from 'react-icons/pi';
 import { trpcQueryUtils } from '../router';
 import ThemeProvider from '../providers/theme-provider';
-import { TooltipProvider } from '@retailify/ui/components/ui/tooltip';
-import { Toaster } from '@retailify/ui/components/ui/sonner';
+import { TooltipProvider } from '@core/ui/components/ui/tooltip';
+import { Toaster } from '@core/ui/components/ui/sonner';
 import { AuthProvider } from '../providers/auth-provider';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';

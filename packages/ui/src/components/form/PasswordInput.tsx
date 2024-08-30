@@ -2,7 +2,7 @@ import React from 'react';
 import { Input, InputProps } from '../ui/input.js';
 import { Button } from '../ui/button.js';
 import { PiEye, PiEyeSlash } from 'react-icons/pi';
-import { cn } from '@retailify/ui/lib/utils';
+import { cn } from '@core/ui/lib/utils';
 
 const PasswordInput = React.forwardRef<
   HTMLInputElement,

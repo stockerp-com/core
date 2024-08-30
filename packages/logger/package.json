@@ -1,29 +1,29 @@
 {
-    "name": "@retailify/logger",
-    "version": "1.0.0",
-    "license": "MIT",
-    "type": "module",
-    "main": "./dist/index.js",
-    "module": "./dist/index.mjs",
-    "types": "./dist/index.d.ts",
-    "files": [
-        "dist/**"
-    ],
-    "scripts": {
-        "build": "tsup",
-        "dev": "tsup --watch",
-        "lint": "eslint ./src --fix"
-    },
-    "devDependencies": {
-        "@retailify/eslint-config": "*",
-        "@retailify/typescript-config": "*",
-        "@types/node": "^22.1.0",
-        "eslint": "^9.8.0",
-        "tsup": "^8.2.4",
-        "typescript": "^5.4.5"
-    },
-    "dependencies": {
-        "pino": "^9.3.2",
-        "pino-pretty": "^11.2.2"
-    }
+  "name": "@core/logger",
+  "version": "1.0.0",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint ./src --fix"
+  },
+  "devDependencies": {
+    "@core/eslint-config": "*",
+    "@core/typescript-config": "*",
+    "@types/node": "^22.1.0",
+    "eslint": "^9.8.0",
+    "tsup": "^8.2.4",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "pino": "^9.3.2",
+    "pino-pretty": "^11.2.2"
+  }
 }

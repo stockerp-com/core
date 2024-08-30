@@ -1,10 +1,10 @@
-import { type PrismaManager } from '@retailify/db';
-import { type Redis } from '@retailify/redis';
+import { type PrismaManager } from '@core/db';
+import { type Redis } from '@core/redis';
 import { TRPCError } from '@trpc/server';
 import { type TFunction } from 'i18next';
 import { type CreateExpressContextOptions } from '@trpc/server/adapters/express';
 import { getRTCookie, rmRTCookie, setRTCookie } from './utils/cookie.js';
-import { type EmployeeSession } from '@retailify/constants';
+import { type EmployeeSession } from '@core/constants';
 
 interface CreateContextInnerOpts {
   session: EmployeeSession | null;
