@@ -14,7 +14,8 @@
     "apps:erp-client",
     "packages:ui",
     "packages:i18n",
-    "apps:worker"
+    "apps:worker",
+    "packages:aws"
   ],
   "editor.fontFamily": "JetBrains Mono",
   "files.autoSave": "onFocusChange"

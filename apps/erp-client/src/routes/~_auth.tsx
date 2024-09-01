@@ -28,9 +28,7 @@ function AuthComponent() {
             }
             className="w-16 h-16 drop-shadow-sm"
           />
-          <h1 className="text-6xl z-10 font-medium drop-shadow-sm">
-            keeplicity
-          </h1>
+          <h1 className="text-6xl z-10 font-medium drop-shadow-sm">stockerp</h1>
         </div>
         <AnimatedGridPattern
           numSquares={30}

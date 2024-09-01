@@ -3,7 +3,7 @@ import { ThemeProvider as Provider } from '@core/ui/components/providers/vite-th
 
 export default function ThemeProvider(props: { children: ReactNode }) {
   return (
-    <Provider defaultTheme="system" storageKey="keeplicity-erp-theme">
+    <Provider defaultTheme="system" storageKey="stockerp-erp-theme">
       {props.children}
     </Provider>
   );

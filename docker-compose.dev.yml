@@ -1,4 +1,4 @@
-name: 'keeplicity-dev'
+name: 'stockerp-dev'
 
 services:
   postgresql:

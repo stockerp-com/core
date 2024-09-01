@@ -1,6 +1,5 @@
 {
-  "name": "@core/redis",
-  "version": "1.0.0",
+  "name": "@core/aws",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -14,17 +13,20 @@
     "lint": "eslint ./src --fix"
   },
   "dependencies": {
+    "@aws-sdk/client-cloudfront": "^3.637.0",
+    "@aws-sdk/client-s3": "^3.637.0",
+    "@aws-sdk/cloudfront-signer": "^3.621.0",
+    "@aws-sdk/s3-request-presigner": "^3.637.0",
     "@core/logger": "*",
     "@core/validation": "*",
-    "dotenv": "^16.4.5",
-    "redis": "^4.7.0"
+    "@smithy/types": "^3.3.0",
+    "dotenv": "^16.4.5"
   },
   "devDependencies": {
     "@core/eslint-config": "*",
     "@core/typescript-config": "*",
     "@types/node": "^22.1.0",
     "eslint": "^9.8.0",
-    "prisma": "^5.17.0",
     "tsup": "^8.2.4",
     "typescript": "^5.4.5"
   }

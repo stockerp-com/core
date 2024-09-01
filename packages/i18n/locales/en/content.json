@@ -143,7 +143,7 @@
   "organization": {
     "add": {
       "title": "Add organization",
-      "subtitle": "Add your organization to the keeplicity platform.",
+      "subtitle": "Add your organization to the stockerp platform.",
       "adding": "Adding organization...",
       "adding_subtitle": "Please wait while we add your organization.",
       "form_fields": {

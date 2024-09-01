@@ -29,7 +29,7 @@ app.use(
 app.get(
   '/r2/*',
   cache({
-    cacheName: 'keeplicity-worker',
+    cacheName: 'stockerp-worker',
     cacheControl: `max-age=${60 * 60 * 24}`,
   }),
 );
