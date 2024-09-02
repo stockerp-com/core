@@ -78,6 +78,24 @@
       "not_found": "Organization with id \"{{id}}\" not found"
     }
   },
+  "good": {
+    "additional_identificator": {
+      "add": {
+        "success": "Successfully added additional identificator \"{{name}}\"",
+        "failed": "Failed to add additional identificator",
+        "name_taken": "Additional identificator with name \"{{name}}\" is already taken"
+      },
+      "find_one": {
+        "success": "Successfully found additional identificator with name \"{{name}}\"",
+        "not_found": "Additional identificator with name \"{{name}}\" not found"
+      },
+      "delete": {
+        "success": "Successfully deleted additional identificator \"{{name}}\"",
+        "not_found": "Additional identificator with name \"{{name}}\" not found",
+        "failed": "Failed to delete additional identificator"
+      }
+    }
+  },
   "import": {
     "schema": {
       "add": {

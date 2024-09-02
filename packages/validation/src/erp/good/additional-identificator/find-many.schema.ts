@@ -9,6 +9,7 @@ const orderBy = z.object({
 
 export const findManyInfiniteAdditionalGoodIdentificatorsSchema = z.object({
   ...findManyInfiniteSchema.shape,
+  cursor: z.string().nullish(),
   orderBy,
 });
 

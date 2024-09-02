@@ -54,7 +54,12 @@ export const ensureTenant = (allowedRoles: EmployeeRoles) =>
       });
     }
 
+    const tenantDb = await ctx.prismaManager?.getClient(orgId);
+
     return next({
-      ctx,
+      ctx: {
+        ...ctx,
+        tenantDb,
+      },
     });
   });
