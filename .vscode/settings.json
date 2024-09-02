@@ -2,6 +2,7 @@
   "conventionalCommits.scopes": [
     "apps:erp-client",
     "packages:db",
-    "packages:trpc"
+    "packages:trpc",
+    "packages:aws"
   ]
 }

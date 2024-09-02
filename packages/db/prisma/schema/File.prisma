@@ -15,7 +15,6 @@ model File {
   goods             GoodMedia[]
   imports           Import[]
   exports           Export[]
-  importSchemas     ImportSchema[]
 
   @@index([id])
   @@index([key])

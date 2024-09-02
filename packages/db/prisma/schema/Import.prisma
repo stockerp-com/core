@@ -31,12 +31,11 @@ model ImportSchema {
   updatedAt DateTime @updatedAt
 
   name     String  @unique
+  schema   Json
   isPublic Boolean @default(false)
 
-  file         File?         @relation(fields: [fileId], references: [id])
   organization Organization? @relation(fields: [organizationId], references: [id])
   imports      Import[]
 
-  fileId         Int?
   organizationId Int?
 }

@@ -7,17 +7,18 @@ model Good {
   isArchived          Boolean             @default(false)
   distributionChannel DistributionChannel
 
-  collection    Collection?        @relation(fields: [collectionId], references: [id])
-  retailGroup   GoodsRetailGroup?  @relation(fields: [retailGroupId], references: [id])
-  localizations GoodLocalization[]
-  attributes    AttributeValue[]
-  stock         Stock[]
-  media         GoodMedia[]
-  promotions    PricePromotion[]
-  bulkPrices    BulkPrice[]
-  retailPrices  RetailPrice[]
-  children      Good[]             @relation("children")
-  parent        Good?              @relation("children", fields: [parentId], references: [id])
+  collection               Collection?                        @relation(fields: [collectionId], references: [id])
+  retailGroup              GoodsRetailGroup?                  @relation(fields: [retailGroupId], references: [id])
+  localizations            GoodLocalization[]
+  attributes               AttributeValue[]
+  stock                    Stock[]
+  media                    GoodMedia[]
+  promotions               PricePromotion[]
+  bulkPrices               BulkPrice[]
+  retailPrices             RetailPrice[]
+  children                 Good[]                             @relation("children")
+  parent                   Good?                              @relation("children", fields: [parentId], references: [id])
+  additionalIdentificators AdditionalGoodIdentificatorValue[]
 
   collectionId  Int?
   retailGroupId Int?
@@ -33,6 +34,37 @@ model Good {
 enum DistributionChannel {
   BULK
   RETAIL
+}
+
+model AdditionalGoodIdentificator {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name String @unique
+
+  values AdditionalGoodIdentificatorValue[]
+
+  @@index([id])
+  @@index([name])
+}
+
+model AdditionalGoodIdentificatorValue {
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  value String
+
+  identificator AdditionalGoodIdentificator @relation(fields: [identificatorId], references: [id], onDelete: Cascade)
+
+  identificatorId Int
+  good            Good? @relation(fields: [goodId], references: [id])
+  goodId          Int?
+
+  @@id([identificatorId, value])
+  @@index([identificatorId, value])
+  @@index([identificatorId])
+  @@index([value])
 }
 
 model GoodLocalization {
