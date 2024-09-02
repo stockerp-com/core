@@ -4,9 +4,9 @@ model Characteristic {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  groups        CharacteristicGroup[]
-  localizations CharacteristicLocalization[]
-  goodsGroups   GoodsGroup[]
+  groups            CharacteristicGroup[]
+  localizations     CharacteristicLocalization[]
+  goodsRetailGroups GoodsRetailGroup[]
 }
 
 model CharacteristicLocalization {

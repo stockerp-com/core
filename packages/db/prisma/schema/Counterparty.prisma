@@ -6,7 +6,7 @@ model Counterparty {
   updatedAt DateTime @updatedAt
 
   name  String
-  phone String  @unique
+  phone String? @unique
   email String? @unique
 
   netBalance Decimal @default(0) @db.Decimal(12, 2) // The amount of money that the counterparty owes to the company. Positive value means that the counterparty owes money to the company, negative value means that the company owes money to the counterparty.
@@ -14,8 +14,22 @@ model Counterparty {
   financialDocuments FinancialDocument[]
   supplier           Supplier?
   customer           Customer?
+  Manufacturer       Manufacturer?
 
   @@index([id])
+}
+
+model Manufacturer {
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  counterparty      Counterparty       @relation(fields: [coutnerpartyId], references: [id])
+  goodsRetailGroups GoodsRetailGroup[]
+
+  coutnerpartyId Int @unique
+
+  @@id([coutnerpartyId])
+  @@index([coutnerpartyId])
 }
 
 model Supplier {

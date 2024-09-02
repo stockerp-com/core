@@ -11,11 +11,12 @@ model BusinessBankAccount {
   balance       Decimal @db.Decimal(12, 2)
   note          String?
 
-  currency           Currency
+  currency           Currency            @relation(fields: [currencyId], references: [id])
   financialDocuments FinancialDocument[]
   employee           Employee            @relation(fields: [employeeId], references: [id])
 
   employeeId Int
+  currencyId CurrencyId
 
   @@index([id])
   @@index([employeeId])

@@ -1,0 +1,19 @@
+model Currency {
+  id        CurrencyId @id
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  name String  @unique
+  rate Decimal @default(1) @db.Decimal(12, 6) // The exchange rate to the United States Dollar (USD).
+
+  bankAccounts       BusinessBankAccount[]
+  financialDocuments FinancialDocument[]
+  bulkPrices         BulkPrice[]
+  retailPrices       RetailPrice[]
+}
+
+enum CurrencyId {
+  USD // United States Dollar
+  EUR // Euro
+  UAH // Ukrainian Hryvnia
+}

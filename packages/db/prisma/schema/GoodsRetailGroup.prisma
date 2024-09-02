@@ -1,5 +1,5 @@
 // A group of goods that share a vast majority of their characteristics.
-model GoodsGroup {
+model GoodsRetailGroup {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -8,18 +8,18 @@ model GoodsGroup {
   isArchived Boolean @default(false)
 
   goods           Good[]
-  localizations   GoodsGroupLocalization[]
+  localizations   GoodsRetailGroupLocalization[]
   characteristics Characteristic[]
-  media           GoodsGroupMedia[]
-  brand           Brand?                   @relation(fields: [brandId], references: [id])
+  media           GoodsRetailGroupMedia[]
+  manufacturer    Manufacturer?                  @relation(fields: [manufacturerId], references: [coutnerpartyId])
 
-  brandId Int?
+  manufacturerId Int?
 
   @@index([id])
   @@index([sku])
 }
 
-model GoodsGroupLocalization {
+model GoodsRetailGroupLocalization {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -32,7 +32,7 @@ model GoodsGroupLocalization {
   focusKeyword      String
   secondaryKeywords String[]
 
-  group GoodsGroup @relation(fields: [groupId], references: [id])
+  group GoodsRetailGroup @relation(fields: [groupId], references: [id])
 
   groupId Int
 
@@ -42,12 +42,12 @@ model GoodsGroupLocalization {
   @@index([language])
 }
 
-model GoodsGroupMedia {
+model GoodsRetailGroupMedia {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  file  File       @relation(fields: [fileId], references: [id])
-  group GoodsGroup @relation(fields: [goodsGroupId], references: [id])
+  file  File             @relation(fields: [fileId], references: [id])
+  group GoodsRetailGroup @relation(fields: [goodsGroupId], references: [id])
 
   fileId       Int
   goodsGroupId Int

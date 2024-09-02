@@ -23,12 +23,12 @@ model Stockpoint {
   @@index([id])
 }
 
-// Quantity of a good stored in a specific stockpoint.
+// Quantity of a good stored in a specific stockpoint linked to a specific goods bulk or retail good.
 model Stock {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  quantity Int
+  quantity Decimal @default(0) @db.Decimal(12, 4)
 
   stockpoint Stockpoint          @relation(fields: [stockpointId], references: [id])
   good       Good                @relation(fields: [goodId], references: [id])

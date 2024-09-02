@@ -10,12 +10,12 @@ model File {
   type  String
   index Int    @default(0)
 
-  employees     Employee[]
-  goodsGroups   GoodsGroupMedia[]
-  goods         GoodMedia[]
-  imports       Import[]
-  exports       Export[]
-  importSchemas ImportSchema[]
+  employees         Employee[]
+  goodsRetailGroups GoodsRetailGroupMedia[]
+  goods             GoodMedia[]
+  imports           Import[]
+  exports           Export[]
+  importSchemas     ImportSchema[]
 
   @@index([id])
   @@index([key])
