@@ -4,7 +4,6 @@ model GoodsRetailGroup {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  sku        String
   isArchived Boolean @default(false)
 
   goods           Good[]
@@ -16,7 +15,6 @@ model GoodsRetailGroup {
   manufacturerId Int?
 
   @@index([id])
-  @@index([sku])
 }
 
 model GoodsRetailGroupLocalization {

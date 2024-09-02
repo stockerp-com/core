@@ -4,8 +4,9 @@ model Good {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  isArchived          Boolean             @default(false)
+  sku                 String
   distributionChannel DistributionChannel
+  isArchived          Boolean             @default(false)
 
   collection               Collection?                        @relation(fields: [collectionId], references: [id])
   retailGroup              GoodsRetailGroup?                  @relation(fields: [retailGroupId], references: [id])
@@ -16,13 +17,10 @@ model Good {
   promotions               PricePromotion[]
   bulkPrices               BulkPrice[]
   retailPrices             RetailPrice[]
-  children                 Good[]                             @relation("children")
-  parent                   Good?                              @relation("children", fields: [parentId], references: [id])
   additionalIdentificators AdditionalGoodIdentificatorValue[]
 
   collectionId  Int?
   retailGroupId Int?
-  parentId      Int? @map("goodId")
 
   @@index([id])
   @@index([retailGroupId])
