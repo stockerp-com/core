@@ -35,15 +35,14 @@ enum DistributionChannel {
 }
 
 model AdditionalGoodIdentificator {
-  id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  name String @unique
+  name String
 
   values AdditionalGoodIdentificatorValue[]
 
-  @@index([id])
+  @@id([name])
   @@index([name])
 }
 
@@ -53,16 +52,13 @@ model AdditionalGoodIdentificatorValue {
 
   value String
 
-  identificator AdditionalGoodIdentificator @relation(fields: [identificatorId], references: [id], onDelete: Cascade)
+  good          Good                        @relation(fields: [goodId], references: [id], onDelete: Cascade)
+  identificator AdditionalGoodIdentificator @relation(fields: [identificatorName], references: [name], onDelete: Cascade)
 
-  identificatorId Int
-  good            Good? @relation(fields: [goodId], references: [id])
-  goodId          Int?
+  goodId            Int
+  identificatorName String
 
-  @@id([identificatorId, value])
-  @@index([identificatorId, value])
-  @@index([identificatorId])
-  @@index([value])
+  @@id([identificatorName, goodId])
 }
 
 model GoodLocalization {
