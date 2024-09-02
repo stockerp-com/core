@@ -77,5 +77,31 @@
       "success": "Successfully found organization with id \"{{id}}\"",
       "not_found": "Organization with id \"{{id}}\" not found"
     }
+  },
+  "import": {
+    "schema": {
+      "add": {
+        "success": "Successfully added schema \"{{name}}\"",
+        "failed": "Failed to add schema",
+        "name_taken": "\"{{name}}\" is already taken"
+      },
+      "find_one": {
+        "success": "Successfully found schema with id \"{{id}}\"",
+        "not_found": "Schema with id \"{{id}}\" not found",
+        "forbidden": "You are not allowed to view this schema"
+      },
+      "edit": {
+        "success": "Successfully updated schema \"{{name}}\"",
+        "not_found": "Schema with id \"{{id}}\" not found",
+        "forbidden": "You are not allowed to update this schema",
+        "failed": "Failed to update schema"
+      },
+      "delete": {
+        "success": "Successfully deleted schema \"{{name}}\"",
+        "not_found": "Schema with id \"{{id}}\" not found",
+        "forbidden": "You are not allowed to delete this schema",
+        "failed": "Failed to delete schema"
+      }
+    }
   }
 }

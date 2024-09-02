@@ -6,7 +6,8 @@ model Organization {
   name        String
   description String?
 
-  staff EmployeeToOrganization[]
+  staff         EmployeeToOrganization[]
+  importSchemas ImportSchema[]
 
   @@index([id])
 }

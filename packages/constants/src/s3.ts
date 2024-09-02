@@ -1,4 +1,6 @@
 export const S3_PATHS = [
+  'Tenants/<tenantId>/Private/Schemas/Import',
+  'Tenants/<tenantId>/Private/Schemas/Export',
   'Tenants/<tenantId>/Private/Imports',
   'Tenants/<tenantId>/Private/Documents',
   'Tenants/<tenantId>/Private/Exports',
@@ -12,6 +14,8 @@ export const S3_PATHS = [
   'Tenants/<tenantId>/Public/Categories/Media/<categoryId>/Compressed',
   'Tenants/<tenantId>/Public/Categories/Media/<categoryId>/Original',
   'Shared/Employees/Avatars',
+  'Shared/Schemas/Import',
+  'Shared/Schemas/Export',
   'Shared/Assets',
   'Shared/Docs',
   'System/Backups',

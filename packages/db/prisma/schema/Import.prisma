@@ -30,10 +30,13 @@ model ImportSchema {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  name String @unique
+  name     String  @unique
+  isPublic Boolean @default(false)
 
-  file File @relation(fields: [fileId], references: [id])
+  file         File?         @relation(fields: [fileId], references: [id])
+  organization Organization? @relation(fields: [organizationId], references: [id])
+  imports      Import[]
 
-  fileId Int
-  Import Import[]
+  fileId         Int?
+  organizationId Int?
 }
