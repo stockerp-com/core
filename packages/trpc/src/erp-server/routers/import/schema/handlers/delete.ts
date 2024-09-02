@@ -18,9 +18,6 @@ export const deleteHandler = tenantProcedure(['ADMIN', 'OWNER'])
         where: {
           id: input.id,
         },
-        include: {
-          file: true,
-        },
       });
     if (!importSchema) {
       throw new TRPCError({
@@ -37,21 +34,11 @@ export const deleteHandler = tenantProcedure(['ADMIN', 'OWNER'])
       });
     }
 
-    await Promise.all([
-      ctx.prismaManager?.rootPrismaClient?.importSchema.delete({
-        where: {
-          id: input.id,
-        },
-      }),
-      ctx.prismaManager?.rootPrismaClient?.file.delete({
-        where: {
-          id: importSchema.file?.id,
-        },
-      }),
-      ctx.aws?.s3.deleteObject({
-        key: importSchema.file?.key ?? '',
-      }),
-    ]);
+    ctx.prismaManager?.rootPrismaClient?.importSchema.delete({
+      where: {
+        id: input.id,
+      },
+    });
 
     return {
       message: ctx.t?.('res:import.schema.delete.success', {

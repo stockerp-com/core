@@ -28,15 +28,11 @@ export const addHandler = tenantProcedure(['ADMIN', 'OWNER'])
       });
     }
 
-    const schemaFile = await ctx.prismaManager?.rootPrismaClient.file.create({
-      data: input.file,
-    });
-
     await ctx.prismaManager?.rootPrismaClient.importSchema.create({
       data: {
         name: input.name,
         organizationId: orgId,
-        fileId: schemaFile?.id,
+        schema: input.schema,
         isPublic: input.isPublic,
       },
     });

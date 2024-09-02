@@ -1,10 +1,11 @@
 import { z } from 'zod';
-import { fileField, stringField } from '../../../utils/common.js';
+import { stringField } from '../../../utils/common.js';
+import { importSchemaSchema } from './schema.schema.js';
 
 export const editImportSchemaSchema = z.object({
   id: z.number(),
   name: stringField,
-  file: fileField,
+  schema: importSchemaSchema,
 });
 
 export type EditImportSchemaSchemaInput = z.infer<
