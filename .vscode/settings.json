@@ -3,6 +3,7 @@
     "apps:erp-client",
     "packages:db",
     "packages:trpc",
-    "packages:aws"
+    "packages:aws",
+    "packages:validation"
   ]
 }
