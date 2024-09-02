@@ -21,7 +21,6 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from '@core/ui/lib/toast';
 import { useEffect, useState } from 'react';
-import useUpload from '../../../hooks/use-upload';
 import {
   Form,
   FormControl,
@@ -31,7 +30,6 @@ import {
   FormMessage,
 } from '@core/ui/components/ui/form';
 import { Input } from '@core/ui/components/ui/input';
-import { DropzoneFileInput } from '@core/ui/components/ui/file-select';
 import {
   Card,
   CardContent,
@@ -56,6 +54,8 @@ import { Button } from '@core/ui/components/ui/button';
 import SpinnerIcon from '@core/ui/components/ui/spinner-icon';
 import { trpc, trpcQueryUtils } from '../../../router';
 import { authStore } from '../../../utils/auth-store';
+import { SingleFile } from '../../components/Files';
+import { useObjectStorage } from '../../../hooks/use-object-storage';
 
 export const Route = createFileRoute('/_app/_settings/settings/general')({
   component: Component,
@@ -109,6 +109,7 @@ function Profile() {
   const { data, isLoading } = trpc.employee.findOne.useQuery({
     id: authCtx.session?.id as unknown as number,
   });
+  const { putObjects, uploadState, getObjectUrl } = useObjectStorage();
 
   useEffect(() => {
     if (data) {
@@ -126,8 +127,6 @@ function Profile() {
       });
     }
   }, [data, form]);
-
-  const { uploadOne } = useUpload();
 
   function onSubmit(values: EditProfileInput) {
     mutate(values);
@@ -202,40 +201,25 @@ function Profile() {
               <Label htmlFor="edit_profile_picture">
                 {t('content:account.edit_profile.form_fields.picture.label')}
               </Label>
-              <DropzoneFileInput
-                removeFile={() => form.setValue('picture', null)}
-                labelHtmlFor="edit_profile_picture"
+              <SingleFile
+                onRemove={() => form.setValue('picture', null)}
+                onChange={async (file) =>
+                  putObjects(
+                    {
+                      files: [{ file, index: 0 }],
+                      path: 'Shared/Employees/Avatars',
+                    },
+                    (objects) => form.setValue('picture', objects[0]),
+                  )
+                }
+                getObjectUrl={getObjectUrl}
+                isUploading={
+                  uploadState.length > 0 && uploadState[0].status === 'pending'
+                }
                 placeholder={t(
                   'content:account.edit_profile.form_fields.picture.placeholder',
                 )}
-                placeholderDragging={t(
-                  'content:account.edit_profile.form_fields.picture.dragging',
-                )}
-                isLoading={isLoading}
-                maxSize={1 * 1024 * 1024}
-                contentType="image"
-                callback={async (files) => {
-                  if (authCtx.accessToken && authCtx.session && files[0]) {
-                    const key = await uploadOne({
-                      file: files[0],
-                      directory: 'profile',
-                      accessToken: authCtx.accessToken,
-                      path: 'employees',
-                      session: authCtx.session,
-                    });
-
-                    if (key) {
-                      form.setValue('picture', {
-                        key,
-                        name: files[0].name,
-                        size: files[0].size,
-                        type: files[0].type,
-                      });
-                    }
-                  }
-                }}
-                uploadedFiles={[form.watch('picture')]}
-                baseImgUrl={`${import.meta.env.VITE_WORKER_URL}/r2`}
+                file={form.watch('picture')}
               />
             </div>
           </form>

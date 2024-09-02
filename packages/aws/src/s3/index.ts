@@ -5,95 +5,112 @@ import {
 } from '@aws-sdk/client-s3';
 import env from '../env.js';
 import { StreamingBlobPayloadInputTypes } from '@smithy/types';
-import { invalidateCache } from '../cloudfront/index.js';
+import { CloudFront } from '../cloudfront/index.js';
+import { S3Path } from '@core/constants/s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
-// S3 client setup
-const s3Client = new S3Client({
-  credentials: {
-    accessKeyId: env?.AWS_ACCESS_KEY_ID as string,
-    secretAccessKey: env?.AWS_SECRET_ACCESS_KEY as string,
-  },
-  region: env?.AWS_S3_REGION as string,
-});
+class S3 {
+  // Environment variables
+  private readonly ACESS_KEY_ID = env?.AWS_ACCESS_KEY_ID as string;
+  private readonly SECRET_ACCESS_KEY = env?.AWS_SECRET_ACCESS_KEY as string;
+  private readonly BUCKET = env?.AWS_S3_BUCKET as string;
+  private readonly REGION = env?.AWS_S3_REGION as string;
+  // AWS SDK clients
+  private client: S3Client;
+  private cloudFront: CloudFront;
 
-const S3_BUCKET_PATHS = [
-  '/Tenants/<tenantId>/Private/Imports',
-  '/Tenants/<tenantId>/Private/Documents',
-  '/Tenants/<tenantId>/Private/Exports',
-  '/Tenants/<tenantId>/Private/Analytics',
-  '/Tenants/<tenantId>/Private/Messages/Attachments',
-  '/Tenants/<tenantId>/Public/Exports',
-  '/Tenants/<tenantId>/Public/Customers/Avatars',
-  '/Tenants/<tenantId>/Public/Customers/Attachments',
-  '/Tenants/<tenantId>/Public/Goods/Media/<goodId>/Compressed',
-  '/Tenants/<tenantId>/Public/Goods/Media/<goodId>/Original',
-  '/Tenants/<tenantId>/Public/Categories/Media/<categoryId>/Compressed',
-  '/Tenants/<tenantId>/Public/Categories/Media/<categoryId>/Original',
-  '/Shared/Employees/Avatars',
-  '/Shared/Assets',
-  '/Shared/Docs',
-  '/System/Backups',
-  '/System/Logs',
-  '/System/Configs',
-  '/System/Temp',
-] as const;
-
-// Get a key for a file in S3
-export function getKey({
-  path,
-  categoryId,
-  goodId,
-  tenantId,
-  fileName,
-}: {
-  path: (typeof S3_BUCKET_PATHS)[number];
-  tenantId?: string;
-  goodId?: string;
-  categoryId?: string;
-  fileName: string;
-}) {
-  if (path.includes('<tenantId>') && !tenantId) {
-    throw new Error('Tenant ID is required');
-  }
-  if (path.includes('<goodId>') && !goodId) {
-    throw new Error('Good ID is required');
-  }
-  if (path.includes('<categoryId>') && !categoryId) {
-    throw new Error('Category ID is required');
+  constructor({ cloudFront }: { cloudFront: CloudFront }) {
+    this.client = new S3Client({
+      credentials: {
+        accessKeyId: this.ACESS_KEY_ID,
+        secretAccessKey: this.SECRET_ACCESS_KEY,
+      },
+      region: this.REGION,
+    });
+    this.cloudFront = cloudFront;
   }
 
-  const partialPath = path
-    .replace('<tenantId>', tenantId ?? '')
-    .replace('<goodId>', goodId ?? '')
-    .replace('<categoryId>', categoryId ?? '');
+  getKey({
+    path,
+    categoryId,
+    goodId,
+    tenantId,
+    fileName,
+  }: {
+    path: S3Path;
+    tenantId?: number;
+    goodId?: number;
+    categoryId?: number;
+    fileName: string;
+  }) {
+    const partialPath = path;
 
-  return `${partialPath}/${fileName}`;
+    if (path.includes('<tenantId>')) {
+      if (!tenantId) {
+        throw new Error('Tenant ID is required');
+      }
+
+      partialPath.replace('<tenantId>', tenantId.toString());
+    }
+    if (path.includes('<goodId>')) {
+      if (!goodId) {
+        throw new Error('Good ID is required');
+      }
+
+      partialPath.replace('<goodId>', goodId.toString());
+    }
+    if (path.includes('<categoryId>')) {
+      if (!categoryId) {
+        throw new Error('Category ID is required');
+      }
+
+      partialPath.replace('<categoryId>', categoryId.toString());
+    }
+
+    return `${partialPath}/${fileName}`;
+  }
+
+  async putObject({
+    key,
+    body,
+  }: {
+    key: string;
+    body: StreamingBlobPayloadInputTypes;
+  }) {
+    const command = new PutObjectCommand({
+      Bucket: this.BUCKET,
+      Key: key,
+      Body: body,
+    });
+
+    return this.client.send(command);
+  }
+
+  async presignPutObjectUrl({ key }: { key: string }) {
+    const command = new PutObjectCommand({
+      Bucket: this.BUCKET,
+      Key: key,
+    });
+
+    return getSignedUrl(this.client, command, { expiresIn: 3600 });
+  }
+
+  async deleteObject({ key }: { key: string }) {
+    const command = new DeleteObjectCommand({
+      Bucket: this.BUCKET,
+      Key: key,
+    });
+
+    const deleteResult = await this.client.send(command);
+    await this.cloudFront.invalidateCache({ keys: [key] });
+
+    return deleteResult;
+  }
+
+  async deleteObjects({ keys }: { keys: string[] }) {
+    await Promise.all(keys.map((key) => this.deleteObject({ key })));
+    await this.cloudFront.invalidateCache({ keys });
+  }
 }
 
-export function putObject({
-  key,
-  body,
-}: {
-  key: string;
-  body: StreamingBlobPayloadInputTypes;
-}) {
-  const command = new PutObjectCommand({
-    Bucket: env?.AWS_S3_BUCKET as string,
-    Key: key,
-    Body: body,
-  });
-
-  return s3Client.send(command);
-}
-
-export async function deleteObject({ key }: { key: string }) {
-  const command = new DeleteObjectCommand({
-    Bucket: env?.AWS_S3_BUCKET as string,
-    Key: key,
-  });
-
-  const deleteResult = await s3Client.send(command);
-  await invalidateCache({ key });
-
-  return deleteResult;
-}
+export { S3 };

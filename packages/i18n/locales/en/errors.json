@@ -20,7 +20,8 @@
     "length_one": "This field must be {{count}} character long",
     "length_other": "This field must be {{count}} characters long",
     "file_too_large": "Max file size is {{size}} MB, yours is {{user_size}} MB.",
-    "numeric": "This field must contain only numbers"
+    "numeric": "This field must contain only numbers",
+    "invalidType": "Invalid type"
   },
   "not_found": {
     "title": "Oops! This page does not exist.",
@@ -31,5 +32,10 @@
   "unknown": {
     "title": "Oops! Something went wrong.",
     "subtitle": "An unknown error occurred. Please try again later. If the problem persists, please contact us."
+  },
+  "file_upload": {
+    "invalid_file": "Invalid file type. Please upload a valid file.",
+    "file_too_large": "Max file size is {{size}} MB, yours is {{user_size}} MB.",
+    "unknown_error": "An unknown error occurred. Please try again later."
   }
 }

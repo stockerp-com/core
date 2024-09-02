@@ -10,7 +10,6 @@ export const serverSchema = z.object({
   STOREFRONT_CLIENT_URL: z.string().default('http://localhost:4244'),
   JWT_AT_SECRET: z.string(),
   JWT_RT_SECRET: z.string(),
-  WORKER_URL: z.string().default('http://localhost:8787'),
 });
 
 export type ServerEnv = z.infer<typeof serverSchema>;

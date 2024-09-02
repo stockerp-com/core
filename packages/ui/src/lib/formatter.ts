@@ -14,3 +14,10 @@ export const formatCurrency = (
     style: 'currency',
     currency,
   });
+
+export const formatNameToShorthand = (value: string) =>
+  value
+    .split(' ')
+    .map((name) => name[0])
+    .join('')
+    .slice(0, 2);

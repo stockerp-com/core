@@ -5,7 +5,7 @@ import { signInSchema } from '@core/validation/erp/auth/sign-in.schema';
 import { generateSession } from '../../../utils/session.js';
 import { Context } from '../../../context.js';
 import { Employee } from '@core/db';
-import { EmployeeSession } from '@core/constants';
+import { EmployeeSession } from '@core/constants/employee';
 import logger from '@core/logger';
 
 // Helper function to generate session and return response

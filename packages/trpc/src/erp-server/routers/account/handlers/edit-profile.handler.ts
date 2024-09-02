@@ -1,7 +1,6 @@
 import { editProfileSchema } from '@core/validation/erp/account/edit-profile.schema';
 import { authenticatedProcedure } from '../../../procedures/authenticated.js';
 import { TRPCError } from '@trpc/server';
-import { deleteObject } from '../../../utils/worker.js';
 
 export const editProfileHandler = authenticatedProcedure
   .input(editProfileSchema)
@@ -46,16 +45,17 @@ export const editProfileHandler = authenticatedProcedure
       employee.picture?.key !== input.picture.key;
     const hasUserRemovedPicture = !input.picture && employee.picture?.key;
 
-    if (hasUserChangedPicture || hasUserRemovedPicture) {
-      const accessToken = ctx.getAT?.();
-      if (accessToken && employee.picture?.key) {
-        await deleteObject(accessToken, employee.picture?.key);
-        await ctx.prismaManager?.rootPrismaClient.file.delete({
+    if ((hasUserChangedPicture || hasUserRemovedPicture) && employee.picture) {
+      await Promise.all([
+        ctx.aws?.s3.deleteObject({
+          key: employee.picture.key,
+        }),
+        ctx.prismaManager?.rootPrismaClient.file.delete({
           where: {
-            key: employee.picture?.key,
+            key: employee.picture.key,
           },
-        });
-      }
+        }),
+      ]);
     }
 
     await ctx.prismaManager?.rootPrismaClient.employee.update({

@@ -7,7 +7,7 @@ export const awsSchema = z.object({
   AWS_S3_BUCKET: z.string(),
   AWS_CLOUDFRONT_PRIVATE_KEY: z.string(),
   AWS_CLOUDFRONT_KEY_PAIR_ID: z.string(),
-  AWS_CLOUDFRONT_DOMAIN_NAME: z.string(),
+  AWS_CLOUDFRONT_DOMAIN: z.string(),
   AWS_CLOUDFRONT_DISTRIBUTION_ID: z.string(),
 });
 

@@ -1,4 +1,4 @@
-const EMPLOYEE_ROLES = ['OWNER', 'ADMIN'] as const;
+export const EMPLOYEE_ROLES = ['OWNER', 'ADMIN'] as const;
 export type EmployeeRoles = (typeof EMPLOYEE_ROLES)[number][];
 
 export type EmployeeSession = {

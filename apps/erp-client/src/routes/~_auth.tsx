@@ -1,6 +1,7 @@
 import { AnimatedGridPattern } from '@core/ui/components/backgrounds/animated-grid-pattern';
 import { createFileRoute, Outlet } from '@tanstack/react-router';
 import { useGetTheme } from '../hooks/use-get-theme';
+import { APP_NAME } from '@core/constants/branding';
 
 export const Route = createFileRoute('/_auth')({
   component: AuthComponent,
@@ -21,14 +22,16 @@ function AuthComponent() {
           <img
             src={
               actualTheme === 'light'
-                ? '/icon-black.svg'
+                ? '/Icon_Dark.svg'
                 : actualTheme === 'dark'
-                  ? '/icon-white.svg'
-                  : '/icon-black.svg'
+                  ? '/Icon_Light.svg'
+                  : '/Icon_Dark.svg'
             }
             className="w-16 h-16 drop-shadow-sm"
           />
-          <h1 className="text-6xl z-10 font-medium drop-shadow-sm">stockerp</h1>
+          <h1 className="text-6xl z-10 font-medium drop-shadow-sm">
+            {APP_NAME}
+          </h1>
         </div>
         <AnimatedGridPattern
           numSquares={30}

@@ -12,6 +12,7 @@
   "devDependencies": {
     "@core/eslint-config": "*",
     "@core/typescript-config": "*",
+    "@core/constants": "*",
     "@types/node": "^22.1.0",
     "eslint": "^9.8.0",
     "typescript": "^5.4.5"

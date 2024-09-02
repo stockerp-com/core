@@ -1,17 +1,12 @@
 {
   "name": "@core/constants",
   "version": "1.0.0",
-  "license": "MIT",
+  "private": true,
   "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
-  "files": [
-    "dist/**"
-  ],
+  "exports": {
+    "./*": "./src/*.ts"
+  },
   "scripts": {
-    "dev": "NODE_ENV=development tsup --watch",
-    "build": "tsup",
     "lint": "eslint ./src --fix"
   },
   "dependencies": {},

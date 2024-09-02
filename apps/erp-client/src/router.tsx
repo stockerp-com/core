@@ -48,7 +48,7 @@ const httpLink = httpBatchLink({
   transformer: SuperJSON,
   headers() {
     return {
-      Authorization: authStore.getAuthToken(),
+      authorization: authStore.getAuthToken(),
     };
   },
   fetch(url, options) {

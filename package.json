@@ -7,9 +7,11 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "db:push": "turbo db:push"
+    "db:push": "turbo db:push",
+    "prepare": "husky"
   },
   "devDependencies": {
+    "husky": "^9.1.5",
     "prettier": "^3.2.5",
     "turbo": "^2.0.11",
     "typescript": "^5.4.5"

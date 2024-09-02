@@ -7,6 +7,7 @@ import {
 import Topbar from './components/Topbar';
 import Sidebar from './components/Sidebar';
 import { authStore } from '../utils/auth-store';
+import { ScrollArea } from '@core/ui/components/ui/scroll-area';
 
 export const Route = createFileRoute('/_app')({
   component: AppComponent,
@@ -48,11 +49,11 @@ function Layout(props: { children: React.ReactNode }) {
       <Sidebar />
       <ResizableHandle withHandle className="hidden lg:flex bg-transparent" />
       <ResizablePanel minSize={50} className="flex h-full w-full">
-        <div className="flex flex-1  flex-col h-full w-full overflow-auto">
+        <div className="flex flex-1 flex-col h-full w-full">
           <Topbar />
-          <div className="flex h-full w-full overflow-auto p-4">
-            {props.children}
-          </div>
+          <ScrollArea className="max-h-full">
+            <div className="p-4">{props.children}</div>
+          </ScrollArea>
         </div>
       </ResizablePanel>
     </ResizablePanelGroup>

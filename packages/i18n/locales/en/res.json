@@ -1,4 +1,14 @@
 {
+  "aws": {
+    "s3": {
+      "put_object": {
+        "success_many": "Successfully uploaded {{count}} files",
+        "success_one": "Successfully uploaded file",
+        "failed_many": "Failed to upload {{count}} files",
+        "failed_one": "Failed to upload file"
+      }
+    }
+  },
   "auth": {
     "sign_up": {
       "success": "Successfully registered as \"{{email}}\"",

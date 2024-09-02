@@ -20,6 +20,7 @@ export const fileField = z.object({
   key: z.string(),
   size: z.number(),
   type: z.string(),
+  index: z.number(),
 });
 
 export const otpField = z

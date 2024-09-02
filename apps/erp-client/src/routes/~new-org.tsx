@@ -34,6 +34,7 @@ import { useState } from 'react';
 import { useGetTheme } from '../hooks/use-get-theme';
 import { Progress } from '@core/ui/components/ui/progress';
 import { formatPercentage } from '@core/ui/lib/formatter';
+import { APP_NAME } from '@core/constants/branding';
 
 export const Route = createFileRoute('/new-org')({
   component: Component,
@@ -202,14 +203,16 @@ function OrgLoader(props: {
           <img
             src={
               actualTheme === 'light'
-                ? '/icon-black.svg'
+                ? '/Icon_Dark.svg'
                 : actualTheme === 'dark'
-                  ? '/icon-white.svg'
-                  : '/icon-black.svg'
+                  ? '/Icon_Light.svg'
+                  : '/Icon_Dark.svg'
             }
             className="w-16 h-16 drop-shadow-sm"
           />
-          <h1 className="text-6xl z-10 font-medium drop-shadow-sm">stockerp</h1>
+          <h1 className="text-6xl z-10 font-medium drop-shadow-sm">
+            {APP_NAME}
+          </h1>
         </div>
       </CardContent>
       <CardFooter className="flex w-full gap-4 mt-4">

@@ -13,6 +13,7 @@ export const findOneHandler = authenticatedProcedure
           picture: true,
         },
       });
+
     if (!employee) {
       return {
         error: {

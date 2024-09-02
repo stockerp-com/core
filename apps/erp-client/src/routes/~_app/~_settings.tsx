@@ -78,7 +78,7 @@ function SettingsNavbarButton(
 
   return (
     <Button
-      variant={props.currentRoute === props.route ? 'secondary' : 'outline'}
+      variant={props.currentRoute === props.route ? 'default' : 'outline'}
       className="rounded-full flex items-center gap-2"
       size="sm"
       asChild

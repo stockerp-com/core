@@ -13,6 +13,7 @@ import http from 'http';
 import { WebSocketServer } from 'ws';
 import { createWSSHandler } from '@core/trpc/erp-server/middleware/websocket';
 import env from './utils/env.js';
+import { AWS } from '@core/aws';
 
 export const serverFactory = async () => {
   await (async () => {
@@ -25,8 +26,8 @@ export const serverFactory = async () => {
 
     await redis.ping();
   })();
-
   const i18n = await initI18n();
+  const aws = new AWS();
 
   const app = express();
   const server = http.createServer(app);
@@ -61,7 +62,14 @@ export const serverFactory = async () => {
     });
   });
 
-  app.use('/erp/trpc', createExpressTrpcMiddleware(redis, prismaManager));
+  app.use(
+    '/erp/trpc',
+    createExpressTrpcMiddleware({
+      redis,
+      prismaManager,
+      aws,
+    }),
+  );
 
   const wss = new WebSocketServer({ server });
   const wssHandlerErp = createWSSHandler({

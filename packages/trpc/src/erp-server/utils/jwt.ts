@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { env } from '../env.js';
-import { EmployeeSession } from '@core/constants';
+import { EmployeeSession } from '@core/constants/employee';
 
 export function signTokens(payload: EmployeeSession) {
   return {

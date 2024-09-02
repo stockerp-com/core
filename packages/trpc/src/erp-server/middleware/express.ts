@@ -1,20 +1,20 @@
-/* eslint-disable no-unused-vars */
 import { createExpressMiddleware } from '@trpc/server/adapters/express';
 import { appRouter } from '../routers/app.router.js';
 import { createContext } from '../context.js';
 import { PrismaManager } from '@core/db';
 import { Redis } from '@core/redis';
 import { TFunction } from 'i18next';
+import { AWS } from '@core/aws';
 
-export type CreateExpressTrpcMiddleware = (
-  redis: Redis,
-  prismaManager: PrismaManager,
-) => ReturnType<typeof createExpressMiddleware>;
-
-export const createExpressTrpcMiddleware: CreateExpressTrpcMiddleware = (
-  redis: Redis,
-  prismaManager: PrismaManager,
-) =>
+export const createExpressTrpcMiddleware = ({
+  redis,
+  prismaManager,
+  aws,
+}: {
+  redis: Redis;
+  prismaManager: PrismaManager;
+  aws: AWS;
+}) =>
   createExpressMiddleware({
     router: appRouter,
     createContext: (opts) =>
@@ -24,5 +24,6 @@ export const createExpressTrpcMiddleware: CreateExpressTrpcMiddleware = (
         },
         redis,
         prismaManager,
+        aws,
       }),
   });

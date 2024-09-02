@@ -1,47 +1,66 @@
 import { getSignedUrl } from '@aws-sdk/cloudfront-signer';
-import env from '../env.js';
 import {
   CloudFrontClient,
   CreateInvalidationCommand,
 } from '@aws-sdk/client-cloudfront';
 import { randomUUID } from 'crypto';
+import env from '../env.js';
 
-// CloudFront client setup
-const cloudfrontClient = new CloudFrontClient({
-  credentials: {
-    accessKeyId: env?.AWS_ACCESS_KEY_ID as string,
-    secretAccessKey: env?.AWS_SECRET_ACCESS_KEY as string,
-  },
-});
+class CloudFront {
+  // Environment variables
+  private readonly ACESS_KEY_ID = env?.AWS_ACCESS_KEY_ID as string;
+  private readonly SECRET_ACCESS_KEY = env?.AWS_SECRET_ACCESS_KEY as string;
+  private readonly DISTRIBUTION_ID =
+    env?.AWS_CLOUDFRONT_DISTRIBUTION_ID as string;
+  private readonly DOMAIN = env?.AWS_CLOUDFRONT_DOMAIN as string;
+  private readonly KEY_PAIR_ID = env?.AWS_CLOUDFRONT_KEY_PAIR_ID as string;
+  private readonly PRIVATE_KEY = env?.AWS_CLOUDFRONT_PRIVATE_KEY as string;
+  // AWS SDK CloudFront client
+  private client: CloudFrontClient;
 
-// Invalidate CloudFront cache. You can either invalidate a single file or a directory by providing a wildcard (*).
-export function invalidateCache({ key }: { key: string }) {
-  const command = new CreateInvalidationCommand({
-    DistributionId: env?.AWS_CLOUDFRONT_DISTRIBUTION_ID as string,
-    InvalidationBatch: {
-      CallerReference: randomUUID(),
-      Paths: {
-        Quantity: 1,
-        Items: [`/${key}`],
+  constructor() {
+    this.client = new CloudFrontClient({
+      credentials: {
+        accessKeyId: this.ACESS_KEY_ID,
+        secretAccessKey: this.SECRET_ACCESS_KEY,
       },
-    },
-  });
+    });
+  }
 
-  return cloudfrontClient.send(command);
+  public getPublicUrl({ key }: { key: string }): string {
+    return `https://${this.DOMAIN}/${key}`;
+  }
+
+  public getPrivateUrl({ key }: { key: string }): string {
+    const url = `https://${this.DOMAIN}/${key}`;
+    const privateKey = this.PRIVATE_KEY;
+    const keyPairId = this.KEY_PAIR_ID;
+    const currentDate = new Date();
+    const expirationDate = new Date(currentDate.getTime() + 1000 * 60 * 60); // 1 hour from now
+
+    return getSignedUrl({
+      url,
+      keyPairId,
+      privateKey,
+      dateLessThan: expirationDate.toUTCString(),
+      dateGreaterThan: currentDate.toUTCString(),
+    });
+  }
+
+  public async invalidateCache({ keys }: { keys: string[] }): Promise<void> {
+    const command = new CreateInvalidationCommand({
+      DistributionId: this.DISTRIBUTION_ID,
+      InvalidationBatch: {
+        CallerReference: randomUUID(),
+        Paths: {
+          Quantity: keys.length,
+          Items: keys.map((key) => `/${key}`),
+        },
+      },
+    });
+
+    await this.client.send(command);
+  }
 }
 
-// Sign a CloudFront URL
-export function signGetUrl({ key }: { key: string }) {
-  return getSignedUrl({
-    url: `${env?.AWS_CLOUDFRONT_DOMAIN_NAME}/${key}`,
-    keyPairId: env?.AWS_CLOUDFRONT_KEY_PAIR_ID as string,
-    privateKey: env?.AWS_CLOUDFRONT_PRIVATE_KEY as string,
-    dateGreaterThan: new Date().toUTCString(), // Right now
-    dateLessThan: new Date(Date.now() + 1000 * 60 * 60).toUTCString(), // 1 hour from now
-  });
-}
-
-// A simple function to get a public URL of a file in CloudFront
-export function getPublicUrl({ key }: { key: string }) {
-  return `${env?.AWS_CLOUDFRONT_DOMAIN_NAME}/${key}`;
-}
+export { CloudFront };

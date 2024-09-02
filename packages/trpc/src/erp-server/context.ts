@@ -1,15 +1,17 @@
+import { AWS } from '@core/aws';
+import { type EmployeeSession } from '@core/constants/employee';
 import { type PrismaManager } from '@core/db';
 import { type Redis } from '@core/redis';
 import { TRPCError } from '@trpc/server';
-import { type TFunction } from 'i18next';
 import { type CreateExpressContextOptions } from '@trpc/server/adapters/express';
+import { type TFunction } from 'i18next';
 import { getRTCookie, rmRTCookie, setRTCookie } from './utils/cookie.js';
-import { type EmployeeSession } from '@core/constants';
 
 interface CreateContextInnerOpts {
   session: EmployeeSession | null;
   prismaManager: PrismaManager;
   redis: Redis;
+  aws: AWS;
   t: TFunction;
   // eslint-disable-next-line no-unused-vars
   setRTCookie?: (token: string) => void;
@@ -26,6 +28,7 @@ export const createContextInner = (opts?: CreateContextInnerOpts) => ({
   getAT: opts?.getAT,
   redis: opts?.redis,
   prismaManager: opts?.prismaManager,
+  aws: opts?.aws,
   t: opts?.t,
 });
 
@@ -38,6 +41,7 @@ interface CreateContextOpts {
   };
   prismaManager: PrismaManager;
   redis: Redis;
+  aws: AWS;
 }
 
 export const createContext = async (opts?: CreateContextOpts) => {
@@ -59,6 +63,7 @@ export const createContext = async (opts?: CreateContextOpts) => {
     getAT: () => req.headers.authorization?.replace(/^Bearer /, '') ?? null,
     t: req.t,
     prismaManager: opts?.prismaManager,
+    aws: opts?.aws,
   });
 };
 
