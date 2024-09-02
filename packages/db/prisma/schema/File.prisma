@@ -8,13 +8,14 @@ model File {
   key   String @unique
   size  Int
   type  String
-  index Int
+  index Int    @default(0)
 
-  employees   Employee[]
-  goodsGroups GoodsGroupMedia[]
-  goods       GoodMedia[]
-  imports     Import[]
-  exports     Export[]
+  employees     Employee[]
+  goodsGroups   GoodsGroupMedia[]
+  goods         GoodMedia[]
+  imports       Import[]
+  exports       Export[]
+  importSchemas ImportSchema[]
 
   @@index([id])
   @@index([key])

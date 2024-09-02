@@ -6,9 +6,11 @@ model Import {
   status ImportStatus
   source ImportSource
 
-  file File? @relation(fields: [fileId], references: [id])
+  file   File?         @relation(fields: [fileId], references: [id])
+  schema ImportSchema? @relation(fields: [schemaId], references: [id])
 
-  fileId Int?
+  fileId   Int?
+  schemaId Int?
 }
 
 enum ImportStatus {
@@ -21,4 +23,17 @@ enum ImportStatus {
 enum ImportSource {
   PROM
   TORGSOFT
+}
+
+model ImportSchema {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name String @unique
+
+  file File @relation(fields: [fileId], references: [id])
+
+  fileId Int
+  Import Import[]
 }
