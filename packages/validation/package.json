@@ -12,12 +12,13 @@
   "devDependencies": {
     "@core/eslint-config": "*",
     "@core/typescript-config": "*",
-    "@core/constants": "*",
+    "@core/utils": "*",
     "@types/node": "^22.1.0",
     "eslint": "^9.8.0",
     "typescript": "^5.4.5"
   },
   "dependencies": {
+    "decimal.js": "^10.4.3",
     "zod": "^3.23.8"
   }
 }

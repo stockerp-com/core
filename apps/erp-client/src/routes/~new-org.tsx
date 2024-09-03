@@ -34,7 +34,7 @@ import { useState } from 'react';
 import { useGetTheme } from '../hooks/use-get-theme';
 import { Progress } from '@core/ui/components/ui/progress';
 import { formatPercentage } from '@core/ui/lib/formatter';
-import { APP_NAME } from '@core/constants/branding';
+import { APP_NAME } from '@core/utils/branding';
 
 export const Route = createFileRoute('/new-org')({
   component: Component,

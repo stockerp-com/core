@@ -1,5 +1,5 @@
 {
-  "name": "@core/constants",
+  "name": "@core/utils",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -9,12 +9,14 @@
   "scripts": {
     "lint": "eslint ./src --fix"
   },
-  "dependencies": {},
+  "dependencies": {
+    "decimal.js": "^10.4.3"
+  },
   "devDependencies": {
     "@core/eslint-config": "*",
     "@core/typescript-config": "*",
+    "eslint": "^9.8.0",
     "tsup": "^8.2.4",
-    "typescript": "^5.4.5",
-    "eslint": "^9.8.0"
+    "typescript": "^5.4.5"
   }
 }

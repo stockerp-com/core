@@ -1,4 +1,4 @@
-import { EmployeeSession } from '@core/constants/employee';
+import { EmployeeSession } from '@core/utils/employee';
 import { jwtDecode } from 'jwt-decode';
 import { wsClient } from '../router';
 

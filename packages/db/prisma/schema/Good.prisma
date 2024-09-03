@@ -11,13 +11,13 @@ model Good {
   collection               Collection?                        @relation(fields: [collectionId], references: [id])
   retailGroup              GoodsRetailGroup?                  @relation(fields: [retailGroupId], references: [id])
   localizations            GoodLocalization[]
-  attributes               AttributeValue[]
   stock                    Stock[]
   media                    GoodMedia[]
   promotions               PricePromotion[]
   bulkPrices               BulkPrice[]
   retailPrices             RetailPrice[]
   additionalIdentificators AdditionalGoodIdentificatorValue[]
+  attributes               GoodAttributes[]
 
   collectionId  Int?
   retailGroupId Int?
@@ -27,6 +27,26 @@ model Good {
   @@index([collectionId])
   @@index([isArchived])
   @@index([distributionChannel])
+}
+
+model GoodAttributes {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  index Int @default(0)
+
+  attribute Attribute        @relation(fields: [attributeId], references: [id], onDelete: Cascade)
+  good      Good             @relation(fields: [goodId], references: [id], onDelete: Cascade)
+  values    AttributeValue[]
+
+  attributeId Int
+  goodId      Int
+
+  @@unique([attributeId, goodId])
+  @@index([id])
+  @@index([attributeId])
+  @@index([goodId])
 }
 
 enum DistributionChannel {
@@ -82,15 +102,17 @@ model GoodMedia {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  file File @relation(fields: [fileId], references: [id], onDelete: Cascade)
+  index Int @default(0)
+
+  file File @relation(fields: [fileKey], references: [key], onDelete: Cascade)
   good Good @relation(fields: [goodId], references: [id], onDelete: Cascade)
 
-  fileId Int
-  goodId Int
+  fileKey String
+  goodId  Int
 
-  @@id([fileId, goodId])
-  @@index([fileId, goodId])
-  @@index([fileId])
+  @@id([fileKey, goodId])
+  @@index([fileKey, goodId])
+  @@index([fileKey])
   @@index([goodId])
 }
 
@@ -98,8 +120,9 @@ model BulkPrice {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  price    Decimal @default(0) @db.Decimal(12, 2)
-  discount Decimal @default(0) @db.Decimal(12, 7) // Max discount is 99,999.9999999%
+  fullPrice Decimal @default(0) @db.Decimal(12, 2)
+  price     Decimal @default(0) @db.Decimal(12, 2)
+  discount  Decimal @default(0) @db.Decimal(12, 7) // Max discount is 99,999.9999999%
 
   currency Currency @relation(fields: [currencyId], references: [id], onDelete: Cascade)
   good     Good     @relation(fields: [goodId], references: [id], onDelete: Cascade)
@@ -117,8 +140,9 @@ model RetailPrice {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  price    Decimal @default(0) @db.Decimal(12, 2)
-  discount Decimal @default(0) @db.Decimal(12, 7) // Max discount is 99,999.9999999%
+  fullPrice Decimal @default(0) @db.Decimal(12, 2)
+  price     Decimal @default(0) @db.Decimal(12, 2)
+  discount  Decimal @default(0) @db.Decimal(12, 7) // Max discount is 99,999.9999999%
 
   currency Currency @relation(fields: [currencyId], references: [id], onDelete: Cascade)
   good     Good     @relation(fields: [goodId], references: [id], onDelete: Cascade)

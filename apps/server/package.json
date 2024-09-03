@@ -15,7 +15,7 @@
     "lint": "eslint ./src --fix"
   },
   "dependencies": {
-    "@core/constants": "*",
+    "@core/utils": "*",
     "@core/db": "*",
     "@core/i18n": "*",
     "@core/logger": "*",

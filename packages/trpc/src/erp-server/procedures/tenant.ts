@@ -1,4 +1,4 @@
-import { EmployeeRoles } from '@core/constants/employee';
+import { EmployeeRoles } from '@core/utils/employee';
 import { ensureSession, ensureTenant } from '../middleware/session.js';
 import { procedure } from '../trpc.js';
 

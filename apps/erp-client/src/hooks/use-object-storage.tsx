@@ -1,4 +1,4 @@
-import { S3Path } from '@core/constants/s3';
+import { S3Path } from '@core/utils/s3';
 import { trpcQueryUtils } from '../router';
 import { toast } from '@core/ui/lib/toast';
 import { useTranslation } from 'react-i18next';

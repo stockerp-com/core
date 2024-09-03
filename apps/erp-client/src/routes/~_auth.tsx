@@ -1,7 +1,7 @@
 import { AnimatedGridPattern } from '@core/ui/components/backgrounds/animated-grid-pattern';
 import { createFileRoute, Outlet } from '@tanstack/react-router';
 import { useGetTheme } from '../hooks/use-get-theme';
-import { APP_NAME } from '@core/constants/branding';
+import { APP_NAME } from '@core/utils/branding';
 
 export const Route = createFileRoute('/_auth')({
   component: AuthComponent,

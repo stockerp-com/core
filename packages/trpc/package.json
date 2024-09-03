@@ -22,7 +22,7 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@core/constants": "*",
+    "@core/utils": "*",
     "@core/db": "*",
     "@core/logger": "*",
     "@core/redis": "*",

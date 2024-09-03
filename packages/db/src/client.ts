@@ -1,4 +1,5 @@
 import { Prisma, PrismaClient } from '@prisma/client';
+import { DefaultArgs } from '@prisma/client/runtime/library';
 import { exec } from 'child_process';
 import { promisify } from 'util';
 
@@ -137,3 +138,7 @@ const createMultitenantPrismaManager = () => {
 
 export const prismaManager = createMultitenantPrismaManager();
 export type PrismaManager = ReturnType<typeof createMultitenantPrismaManager>;
+export type PrismaTX = Omit<
+  PrismaClient<Prisma.PrismaClientOptions, never, DefaultArgs>,
+  '$connect' | '$disconnect' | '$on' | '$transaction' | '$use' | '$extends'
+>;

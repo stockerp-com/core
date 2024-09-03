@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useEffect, useState } from 'react';
 import { authStore } from '../utils/auth-store';
-import { EmployeeSession } from '@core/constants/employee';
+import { EmployeeSession } from '@core/utils/employee';
 
 export interface AuthContext {
   accessToken: string | null;

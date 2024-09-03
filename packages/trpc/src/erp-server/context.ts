@@ -1,5 +1,5 @@
 import { AWS } from '@core/aws';
-import { type EmployeeSession } from '@core/constants/employee';
+import { type EmployeeSession } from '@core/utils/employee';
 import { type PrismaManager } from '@core/db';
 import { type Redis } from '@core/redis';
 import { TRPCError } from '@trpc/server';

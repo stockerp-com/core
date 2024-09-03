@@ -12,10 +12,10 @@ model Employee {
   organizations EmployeeToOrganization[]
   bankAccounts  BusinessBankAccount[]
   cashRegister  CashRegister?
-  picture       File?                    @relation(fields: [pictureId], references: [id])
+  picture       File?                    @relation(fields: [pictureKey], references: [key])
 
   currentOrganizationId Int?
-  pictureId             Int?
+  pictureKey            String?
 
   @@index([id])
   @@index([fullName])

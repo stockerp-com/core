@@ -4,8 +4,6 @@ model GoodsRetailGroup {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  isArchived Boolean @default(false)
-
   goods           Good[]
   localizations   GoodsRetailGroupLocalization[]
   characteristics Characteristic[]
@@ -44,14 +42,14 @@ model GoodsRetailGroupMedia {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  file  File             @relation(fields: [fileId], references: [id])
+  file  File             @relation(fields: [fileKey], references: [key])
   group GoodsRetailGroup @relation(fields: [goodsGroupId], references: [id])
 
-  fileId       Int
+  fileKey      String
   goodsGroupId Int
 
-  @@id([fileId, goodsGroupId])
-  @@index([fileId, goodsGroupId])
-  @@index([fileId])
+  @@id([fileKey, goodsGroupId])
+  @@index([fileKey, goodsGroupId])
+  @@index([fileKey])
   @@index([goodsGroupId])
 }

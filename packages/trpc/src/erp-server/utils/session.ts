@@ -1,4 +1,4 @@
-import { EmployeeSession } from '@core/constants/employee';
+import { EmployeeSession } from '@core/utils/employee';
 import { Context } from '../context.js';
 import { signTokens, verifyRT } from './jwt.js';
 

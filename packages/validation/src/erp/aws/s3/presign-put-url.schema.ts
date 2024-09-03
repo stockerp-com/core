@@ -1,10 +1,10 @@
 import { z } from 'zod';
-import { S3_PATHS } from '@core/constants/s3';
+import { S3_PATHS } from '@core/utils/s3';
 
 export const presignPutUrlSchema = z.object({
   path: z.enum(S3_PATHS, {
     required_error: 'erros:validation.required',
-    invalid_type_error: 'errors:validation.invalidType',
+    invalid_type_error: 'errors:validation.invalid_type',
   }),
   categoryId: z.number().optional(),
   goodId: z.number().optional(),

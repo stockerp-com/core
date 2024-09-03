@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { Decimal } from 'decimal.js';
 
 export const stringField = z
   .string({
@@ -6,6 +7,31 @@ export const stringField = z
   })
   .min(1, 'errors:validation.min?count=1')
   .max(191, 'errors:validation.max?count=191');
+
+export const numberField = z.number({
+  required_error: 'errors:validation.required',
+});
+
+export const decimalField = z.instanceof(Decimal, {
+  message: 'errors:validation.decimal',
+});
+
+export const booleanField = z.boolean({
+  required_error: 'errors:validation.required',
+});
+
+export const dateField = z.date({
+  required_error: 'errors:validation.required',
+});
+
+export const enumField = <T extends readonly [string, ...string[]]>(
+  values: T,
+) => {
+  return z.enum(values, {
+    required_error: 'errors:validation.required',
+    invalid_type_error: 'errors:validation.invalid_type',
+  });
+};
 
 export const emailField = z
   .string({
@@ -20,7 +46,6 @@ export const fileField = z.object({
   key: z.string(),
   size: z.number(),
   type: z.string(),
-  index: z.number(),
 });
 
 export const otpField = z

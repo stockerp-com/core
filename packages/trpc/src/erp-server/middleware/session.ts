@@ -2,7 +2,7 @@ import { TRPCError } from '@trpc/server';
 import { middleware } from '../trpc.js';
 import { verifyAT } from '../utils/jwt.js';
 import jwt from 'jsonwebtoken';
-import { EmployeeRoles } from '@core/constants/employee';
+import { EmployeeRoles } from '@core/utils/employee';
 
 export const ensureSession = middleware(async ({ ctx, next }) => {
   const at = ctx.getAT?.();

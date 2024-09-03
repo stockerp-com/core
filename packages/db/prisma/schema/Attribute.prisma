@@ -7,6 +7,8 @@ model Attribute {
 
   groups        AttributeGroup[]
   localizations AttributeLocalization[]
+  values        AttributeValue[]
+  goods         GoodAttributes[]
 
   @@index([id])
 }
@@ -36,9 +38,13 @@ model AttributeValue {
 
   dataType      AttributeValueDataType
   localizations AttributeValueLocalization[]
-  goods         Good[]
+  attribute     Attribute?                   @relation(fields: [attributeId], references: [id])
+
+  attributeId     Int?
+  goodsAttributes GoodAttributes[]
 
   @@index([id])
+  @@index([attributeId])
 }
 
 enum AttributeValueDataType {

@@ -6,7 +6,7 @@ import {
 import env from '../env.js';
 import { StreamingBlobPayloadInputTypes } from '@smithy/types';
 import { CloudFront } from '../cloudfront/index.js';
-import { S3Path } from '@core/constants/s3';
+import { S3Path } from '@core/utils/s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 class S3 {
