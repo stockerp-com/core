@@ -97,6 +97,12 @@
     }
   },
   "import": {
+    "add": {
+      "success": "Successfully finished import process",
+      "import_file_not_found": "Import file not found",
+      "import_schema_not_found": "Import schema not found",
+      "failed": "Failed to import data"
+    },
     "schema": {
       "add": {
         "success": "Successfully added schema \"{{name}}\"",

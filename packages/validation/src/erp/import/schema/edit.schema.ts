@@ -6,6 +6,13 @@ export const editImportSchemaSchema = z.object({
   id: z.number(),
   name: stringField,
   schema: importSchemaSchema,
+  additionalIdentificators: z
+    .array(
+      z.object({
+        identificatorName: stringField,
+      }),
+    )
+    .optional(),
 });
 
 export type EditImportSchemaSchemaInput = z.infer<

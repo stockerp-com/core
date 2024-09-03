@@ -55,14 +55,13 @@ enum DistributionChannel {
 }
 
 model AdditionalGoodIdentificator {
+  name      String   @id
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  name String
+  values        AdditionalGoodIdentificatorValue[]
+  importSchemas ImportSchemaAdditionalIdentificators[]
 
-  values AdditionalGoodIdentificatorValue[]
-
-  @@id([name])
   @@index([name])
 }
 

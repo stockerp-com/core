@@ -5,27 +5,17 @@ import { TRPCError } from '@trpc/server';
 export const findOneHandler = tenantProcedure(['ADMIN', 'OWNER'])
   .input(findOneImportSchemaSchema)
   .query(async ({ ctx, input }) => {
-    const importSchema =
-      await ctx.prismaManager?.rootPrismaClient.importSchema.findUnique({
-        where: {
-          id: input.id,
-        },
-      });
+    const importSchema = await ctx.tenantDb?.importSchema.findUnique({
+      where: {
+        id: input.id,
+      },
+    });
     if (!importSchema) {
       throw new TRPCError({
         code: 'NOT_FOUND',
         message: ctx.t?.('res:import.schema.find_one.not_found', {
           id: input.id,
         }),
-      });
-    }
-    if (
-      importSchema.isPublic === false &&
-      importSchema.organizationId !== ctx.session?.currentOrganization?.id
-    ) {
-      throw new TRPCError({
-        code: 'FORBIDDEN',
-        message: ctx.t?.('res:import.schema.find_one.forbidden'),
       });
     }
 

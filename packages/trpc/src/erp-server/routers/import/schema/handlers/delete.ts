@@ -5,14 +5,6 @@ import { TRPCError } from '@trpc/server';
 export const deleteHandler = tenantProcedure(['ADMIN', 'OWNER'])
   .input(deleteImportSchemaSchema)
   .mutation(async ({ ctx, input }) => {
-    const orgId = ctx.session?.currentOrganization?.id;
-    if (!orgId) {
-      throw new TRPCError({
-        code: 'FORBIDDEN',
-        message: ctx.t?.('errors:http.403'),
-      });
-    }
-
     const importSchema =
       await ctx.prismaManager?.rootPrismaClient.importSchema.findUnique({
         where: {
@@ -27,14 +19,8 @@ export const deleteHandler = tenantProcedure(['ADMIN', 'OWNER'])
         }),
       });
     }
-    if (importSchema.organizationId !== ctx.session?.currentOrganization?.id) {
-      throw new TRPCError({
-        code: 'FORBIDDEN',
-        message: ctx.t?.('res:import.schema.delete.forbidden'),
-      });
-    }
 
-    ctx.prismaManager?.rootPrismaClient?.importSchema.delete({
+    ctx.tenantDb?.importSchema.delete({
       where: {
         id: input.id,
       },

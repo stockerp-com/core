@@ -4,8 +4,14 @@ import { importSchemaSchema } from './schema.schema.js';
 
 export const addImportSchemaSchema = z.object({
   name: stringField,
-  isPublic: z.boolean().default(false),
   schema: importSchemaSchema,
+  additionalIdentificators: z
+    .array(
+      z.object({
+        identificatorName: stringField,
+      }),
+    )
+    .optional(),
 });
 
 export type AddImportSchemaSchemaInput = z.infer<typeof addImportSchemaSchema>;

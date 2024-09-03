@@ -5,20 +5,11 @@ import { TRPCError } from '@trpc/server';
 export const addHandler = tenantProcedure(['ADMIN', 'OWNER'])
   .input(addImportSchemaSchema)
   .mutation(async ({ ctx, input }) => {
-    const orgId = ctx.session?.currentOrganization?.id;
-    if (!orgId) {
-      throw new TRPCError({
-        code: 'FORBIDDEN',
-        message: ctx.t?.('errors:http.403'),
-      });
-    }
-
-    const existingImportSchema =
-      await ctx.prismaManager?.rootPrismaClient.importSchema.findUnique({
-        where: {
-          name: input.name,
-        },
-      });
+    const existingImportSchema = await ctx.tenantDb?.importSchema.findUnique({
+      where: {
+        name: input.name,
+      },
+    });
     if (existingImportSchema) {
       throw new TRPCError({
         code: 'BAD_REQUEST',
@@ -28,12 +19,24 @@ export const addHandler = tenantProcedure(['ADMIN', 'OWNER'])
       });
     }
 
-    await ctx.prismaManager?.rootPrismaClient.importSchema.create({
+    await ctx.tenantDb?.importSchema.create({
       data: {
         name: input.name,
-        organizationId: orgId,
         schema: input.schema,
-        isPublic: input.isPublic,
+        additionalIdentificators:
+          input.additionalIdentificators &&
+          input.additionalIdentificators.length > 0
+            ? {
+                createMany: {
+                  data: input.additionalIdentificators?.map(
+                    ({ identificatorName }, index) => ({
+                      identificatorName,
+                      index,
+                    }),
+                  ),
+                },
+              }
+            : undefined,
       },
     });
 

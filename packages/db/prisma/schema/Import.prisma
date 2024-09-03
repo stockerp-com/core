@@ -24,12 +24,24 @@ model ImportSchema {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  name     String  @unique
-  schema   Json
-  isPublic Boolean @default(false)
+  name   String @unique
+  schema Json
 
-  organization Organization? @relation(fields: [organizationId], references: [id])
-  imports      Import[]
+  imports                  Import[]
+  additionalIdentificators ImportSchemaAdditionalIdentificators[]
+}
 
-  organizationId Int?
+model ImportSchemaAdditionalIdentificators {
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  index Int @default(0)
+
+  schema        ImportSchema                @relation(fields: [schemaId], references: [id], onDelete: Cascade)
+  identificator AdditionalGoodIdentificator @relation(fields: [identificatorName], references: [name], onDelete: Cascade)
+
+  schemaId          Int
+  identificatorName String
+
+  @@id([schemaId, identificatorName])
 }
