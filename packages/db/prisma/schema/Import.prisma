@@ -4,7 +4,6 @@ model Import {
   updatedAt DateTime @updatedAt
 
   status ImportStatus
-  source ImportSource
 
   file   File?         @relation(fields: [fileKey], references: [key])
   schema ImportSchema? @relation(fields: [schemaId], references: [id])
@@ -18,11 +17,6 @@ enum ImportStatus {
   PROCESSING
   PROCESSED
   FAILED
-}
-
-enum ImportSource {
-  PROM
-  TORGSOFT
 }
 
 model ImportSchema {
