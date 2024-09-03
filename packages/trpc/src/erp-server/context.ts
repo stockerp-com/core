@@ -7,6 +7,9 @@ import { type CreateExpressContextOptions } from '@trpc/server/adapters/express'
 import { type TFunction } from 'i18next';
 import { getRTCookie, rmRTCookie, setRTCookie } from './utils/cookie.js';
 
+/**
+ * Options for creating the inner context
+ */
 interface CreateContextInnerOpts {
   session: EmployeeSession | null;
   prismaManager: PrismaManager;
@@ -20,6 +23,11 @@ interface CreateContextInnerOpts {
   getAT?: () => string | null;
 }
 
+/**
+ * Creates the inner context with the provided options
+ * @param opts - Options for creating the inner context
+ * @returns The created inner context
+ */
 export const createContextInner = (opts?: CreateContextInnerOpts) => ({
   session: opts?.session,
   setRTCookie: opts?.setRTCookie,
@@ -32,6 +40,9 @@ export const createContextInner = (opts?: CreateContextInnerOpts) => ({
   t: opts?.t,
 });
 
+/**
+ * Options for creating the context
+ */
 interface CreateContextOpts {
   expressContextOpts: {
     req: CreateExpressContextOptions['req'] & {
@@ -44,7 +55,14 @@ interface CreateContextOpts {
   aws: AWS;
 }
 
+/**
+ * Creates the context for the tRPC server
+ * @param opts - Options for creating the context
+ * @returns The created context
+ * @throws {TRPCError} If express context is missing
+ */
 export const createContext = async (opts?: CreateContextOpts) => {
+  // Check if express context options are provided
   if (!opts?.expressContextOpts) {
     throw new TRPCError({
       code: 'INTERNAL_SERVER_ERROR',
@@ -54,6 +72,7 @@ export const createContext = async (opts?: CreateContextOpts) => {
 
   const { req, res } = opts.expressContextOpts;
 
+  // Create and return the inner context with the provided options
   return createContextInner({
     session: null,
     redis: opts?.redis,
@@ -67,4 +86,7 @@ export const createContext = async (opts?: CreateContextOpts) => {
   });
 };
 
+/**
+ * Type definition for the context
+ */
 export type Context = Awaited<ReturnType<typeof createContext>>;

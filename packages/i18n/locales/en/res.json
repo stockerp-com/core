@@ -99,7 +99,7 @@
   "import": {
     "add": {
       "success": "Successfully finished import process",
-      "import_file_not_found": "Import file not found",
+      "import_object_not_found": "Import file not found",
       "import_schema_not_found": "Import schema not found",
       "failed": "Failed to import data"
     },
@@ -111,19 +111,16 @@
       },
       "find_one": {
         "success": "Successfully found schema with id \"{{id}}\"",
-        "not_found": "Schema with id \"{{id}}\" not found",
-        "forbidden": "You are not allowed to view this schema"
+        "not_found": "Schema with id \"{{id}}\" not found"
       },
       "edit": {
         "success": "Successfully updated schema \"{{name}}\"",
         "not_found": "Schema with id \"{{id}}\" not found",
-        "forbidden": "You are not allowed to update this schema",
         "failed": "Failed to update schema"
       },
       "delete": {
         "success": "Successfully deleted schema \"{{name}}\"",
         "not_found": "Schema with id \"{{id}}\" not found",
-        "forbidden": "You are not allowed to delete this schema",
         "failed": "Failed to delete schema"
       }
     }

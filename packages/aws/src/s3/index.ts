@@ -1,5 +1,6 @@
 import {
   DeleteObjectCommand,
+  GetObjectCommand,
   PutObjectCommand,
   S3Client,
 } from '@aws-sdk/client-s3';
@@ -8,6 +9,14 @@ import { StreamingBlobPayloadInputTypes } from '@smithy/types';
 import { CloudFront } from '../cloudfront/index.js';
 import { S3Path } from '@core/utils/s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+
+type GetKeyProps = {
+  path: S3Path;
+  tenantId?: number;
+  goodId?: number;
+  categoryId?: number;
+  fileName: string;
+};
 
 class S3 {
   // Environment variables
@@ -30,19 +39,7 @@ class S3 {
     this.cloudFront = cloudFront;
   }
 
-  getKey({
-    path,
-    categoryId,
-    goodId,
-    tenantId,
-    fileName,
-  }: {
-    path: S3Path;
-    tenantId?: number;
-    goodId?: number;
-    categoryId?: number;
-    fileName: string;
-  }) {
+  getKey({ path, categoryId, goodId, tenantId, fileName }: GetKeyProps) {
     const partialPath = path;
 
     if (path.includes('<tenantId>')) {
@@ -68,6 +65,15 @@ class S3 {
     }
 
     return `${partialPath}/${fileName}`;
+  }
+
+  async getObject({ key }: { key: string }) {
+    const command = new GetObjectCommand({
+      Bucket: this.BUCKET,
+      Key: key,
+    });
+
+    return this.client.send(command);
   }
 
   async putObject({

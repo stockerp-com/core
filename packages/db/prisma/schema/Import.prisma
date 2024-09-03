@@ -5,11 +5,13 @@ model Import {
 
   status ImportStatus
 
-  file   File?         @relation(fields: [fileKey], references: [key])
-  schema ImportSchema? @relation(fields: [schemaId], references: [id])
+  file       File?         @relation(fields: [fileKey], references: [key])
+  schema     ImportSchema? @relation(fields: [schemaId], references: [id])
+  stockpoint Stockpoint?   @relation(fields: [stockpointId], references: [id])
 
-  fileKey  String?
-  schemaId Int?
+  fileKey      String?
+  schemaId     Int?
+  stockpointId Int?
 }
 
 enum ImportStatus {

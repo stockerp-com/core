@@ -5,22 +5,18 @@ import { TRPCError } from '@trpc/server';
 export const addHandler = tenantProcedure(['ADMIN', 'OWNER'])
   .input(addImportSchema)
   .mutation(async ({ ctx, input }) => {
-    const [importFile, importSchema] = await Promise.all([
-      ctx.tenantDb?.file.findUnique({
-        where: {
-          key: input.importFileKey,
-        },
-      }),
+    const [importObject, importSchema] = await Promise.all([
+      ctx.aws?.s3.getObject({ key: input.importFileKey }),
       ctx.tenantDb?.importSchema.findUnique({
         where: {
           id: input.schemaId,
         },
       }),
     ]);
-    if (!importFile) {
+    if (!importObject) {
       throw new TRPCError({
         code: 'NOT_FOUND',
-        message: ctx.t?.('res:import.add.import_file_not_found'),
+        message: ctx.t?.('res:import.add.import_object_not_found'),
       });
     }
     if (!importSchema) {
@@ -29,4 +25,6 @@ export const addHandler = tenantProcedure(['ADMIN', 'OWNER'])
         message: ctx.t?.('res:import.add.import_schema_not_found'),
       });
     }
+
+    
   });

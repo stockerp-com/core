@@ -19,6 +19,7 @@ model Stockpoint {
   goodsWriteOffs            GoodsWriteOff[]
   goodsTransferInternalFrom GoodsTransferInternal[] @relation("FromStockpoint")
   goodsTransferInternalTo   GoodsTransferInternal[] @relation("ToStockpoint")
+  imports                   Import[]
 
   @@index([id])
 }
