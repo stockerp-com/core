@@ -12,12 +12,12 @@ import { DISTRIBUTION_CHANNELS } from '@core/utils/goods';
 import { SUPPORTED_LOCALIZATIONS } from '@core/utils/localizations';
 
 export const addGoodSchema = z.object({
-  retailGroupId: numberField,
+  retailGroupId: numberField.optional(),
   distributionChannel: enumField<typeof DISTRIBUTION_CHANNELS>(
     DISTRIBUTION_CHANNELS,
   ),
   sku: stringField,
-  isArchived: booleanField.default(false),
+  isArchived: booleanField.optional().default(false),
   additionalIdentificators: z
     .array(
       z.object({

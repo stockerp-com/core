@@ -100,7 +100,11 @@
     "add": {
       "success": "Successfully finished import process",
       "import_object_not_found": "Import file not found",
+      "import_object_empty": "Import file is empty",
       "import_schema_not_found": "Import schema not found",
+      "no_goods_sheet_name": "No goods sheet name provided in the schema",
+      "invalid_goods_sheet_name": "Invalid goods sheet name provided in the schema",
+      "attribute_not_found": "Attribute with id \"{{id}}\" not found in the schema",
       "failed": "Failed to import data"
     },
     "schema": {

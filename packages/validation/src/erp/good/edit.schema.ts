@@ -14,31 +14,31 @@ export const editGoodFieldsSchema = z.object({
   isArchived: z.boolean(),
   additionalIdentificators: z.object({
     edit: z.boolean(),
-    allowDelete: z.boolean(),
+    delete: z.boolean(),
   }),
   retailPrices: z.object({
     edit: z.boolean(),
-    allowDelete: z.boolean(),
+    delete: z.boolean(),
   }),
   bulkPrices: z.object({
     edit: z.boolean(),
-    allowDelete: z.boolean(),
+    delete: z.boolean(),
   }),
   media: z.object({
     edit: z.boolean(),
-    allowDelete: z.boolean(),
+    delete: z.boolean(),
   }),
   attributes: z.object({
     edit: z.boolean(),
-    allowDelete: z.boolean(),
+    delete: z.boolean(),
   }),
   stock: z.object({
     edit: z.boolean(),
-    allowDelete: z.boolean(),
+    delete: z.boolean(),
   }),
   localizations: z.object({
     edit: z.boolean(),
-    allowDelete: z.boolean(),
+    delete: z.boolean(),
   }),
 });
 

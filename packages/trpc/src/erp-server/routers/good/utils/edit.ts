@@ -104,7 +104,7 @@ export async function editUtil({
             }))
           : undefined,
       deleteMany:
-        editFields.additionalIdentificators.allowDelete &&
+        editFields.additionalIdentificators.delete &&
         deletedData &&
         deletedData.length > 0
           ? {
@@ -177,9 +177,7 @@ export async function editUtil({
             }))
           : undefined,
       deleteMany:
-        editFields.retailPrices.allowDelete &&
-        deletedData &&
-        deletedData.length > 0
+        editFields.retailPrices.delete && deletedData && deletedData.length > 0
           ? {
               goodId,
               currencyId: {
@@ -250,9 +248,7 @@ export async function editUtil({
             }))
           : undefined,
       deleteMany:
-        editFields.bulkPrices.allowDelete &&
-        deletedData &&
-        deletedData.length > 0
+        editFields.bulkPrices.delete && deletedData && deletedData.length > 0
           ? {
               goodId,
               currencyId: {
@@ -317,7 +313,7 @@ export async function editUtil({
             }))
           : undefined,
       deleteMany:
-        editFields.media.allowDelete && deletedData && deletedData.length > 0
+        editFields.media.delete && deletedData && deletedData.length > 0
           ? {
               goodId,
               fileKey: {
@@ -378,9 +374,7 @@ export async function editUtil({
             }))
           : undefined,
       deleteMany:
-        editFields.attributes.allowDelete &&
-        deletedData &&
-        deletedData.length > 0
+        editFields.attributes.delete && deletedData && deletedData.length > 0
           ? {
               goodId,
               attributeId: {
@@ -433,7 +427,7 @@ export async function editUtil({
             }))
           : undefined,
       deleteMany:
-        editFields.stock.allowDelete && deletedData && deletedData.length > 0
+        editFields.stock.delete && deletedData && deletedData.length > 0
           ? {
               goodId,
               stockpointId: {
@@ -489,9 +483,7 @@ export async function editUtil({
             }))
           : undefined,
       deleteMany:
-        editFields.localizations.allowDelete &&
-        deletedData &&
-        deletedData.length > 0
+        editFields.localizations.delete && deletedData && deletedData.length > 0
           ? {
               goodId,
               language: {

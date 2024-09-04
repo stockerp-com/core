@@ -4,15 +4,32 @@ model GoodsRetailGroup {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  goods           Good[]
-  localizations   GoodsRetailGroupLocalization[]
-  characteristics Characteristic[]
-  media           GoodsRetailGroupMedia[]
-  manufacturer    Manufacturer?                  @relation(fields: [manufacturerId], references: [coutnerpartyId])
+  goods                    Good[]
+  localizations            GoodsRetailGroupLocalization[]
+  characteristics          Characteristic[]
+  media                    GoodsRetailGroupMedia[]
+  manufacturer             Manufacturer?                      @relation(fields: [manufacturerId], references: [coutnerpartyId])
+  additionalIdentificators AdditionalGoodGroupIdentificator[]
 
   manufacturerId Int?
 
   @@index([id])
+}
+
+model AdditionalGoodGroupIdentificator {
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name String
+
+  goodsGroup GoodsRetailGroup @relation(fields: [goodsRetailGroupId], references: [id])
+
+  goodsRetailGroupId Int
+
+  @@id([name, goodsRetailGroupId])
+  @@index([name, goodsRetailGroupId])
+  @@index([name])
+  @@index([goodsRetailGroupId])
 }
 
 model GoodsRetailGroupLocalization {

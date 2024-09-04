@@ -1,80 +1,49 @@
 import { z } from 'zod';
 import { enumField, numberField, stringField } from '../../../utils/common.js';
-import { SUPPORTED_CURRENCIES } from '@core/utils/financial';
+import { editGoodFieldsSchema } from '../../good/edit.schema.js';
 import { SUPPORTED_LOCALIZATIONS } from '@core/utils/localizations';
+import { SUPPORTED_CURRENCIES } from '@core/utils/financial';
 
-export const goodsImportFieldMapSchema = z.object({
-  retailGroupIdField: stringField,
-  distributionChannelField: stringField.optional(),
-  skuField: stringField,
-  isArchivedField: stringField.optional(),
-  additionalIdentificatorFields: z.array(
-    z.object({
-      identificatorName: stringField,
-      valueField: stringField,
-    }),
-    {
-      required_error: 'errors:validation.required',
-    },
-  ),
-  retailPriceFields: z
-    .array(
-      z.object({
-        priceField: stringField,
-        discountField: stringField,
-        fullPriceField: stringField,
-        currencyId:
-          enumField<typeof SUPPORTED_CURRENCIES>(SUPPORTED_CURRENCIES),
-      }),
-    )
+export const importGoodsMapSchema = z.object({
+  sku: stringField,
+  price: stringField.optional(),
+  discount: stringField.optional(),
+  fullPrice: stringField,
+  name: stringField,
+  groupName: stringField,
+  media: z
+    .object({
+      field: stringField,
+      type: z.enum(['key', 'url']),
+    })
     .optional(),
-  bulkPriceFields: z
+  attributes: z
     .array(
       z.object({
-        priceField: stringField,
-        discountField: stringField,
-        fullPriceField: stringField,
-        currencyId:
-          enumField<typeof SUPPORTED_CURRENCIES>(SUPPORTED_CURRENCIES),
-      }),
-    )
-    .optional(),
-  mediaFields: z
-    .array(
-      z.object({
-        dataType: z.enum(['string', 'array']),
+        id: numberField,
         field: stringField,
       }),
     )
     .optional(),
-  attributeFields: z
-    .array(
-      z.object({
-        attributeId: numberField,
-        index: numberField,
-        valueField: stringField,
-      }),
-    )
-    .optional(),
-  stock: z.object({
-    quantityField: stringField,
-  }),
-  localizations: z
-    .array(
-      z.object({
-        language: enumField<typeof SUPPORTED_LOCALIZATIONS>(
-          SUPPORTED_LOCALIZATIONS,
-        ),
-        nameField: stringField,
-      }),
-    )
-    .optional(),
+  additionalIdentificators: z.array(
+    z.object({
+      name: stringField,
+      field: stringField,
+    }),
+  ),
+  quantity: stringField.optional(),
 });
 
 export const importSchemaSchema = z.object({
+  localization: enumField<typeof SUPPORTED_LOCALIZATIONS>(
+    SUPPORTED_LOCALIZATIONS,
+  ),
+  currency: enumField<typeof SUPPORTED_CURRENCIES>(SUPPORTED_CURRENCIES),
   goods: z.object({
-    name: stringField,
+    stockpointId: numberField,
+    sheetName: stringField,
     organizeGoodsGroupsBy: z.array(stringField),
-    fieldMap: goodsImportFieldMapSchema,
+    map: importGoodsMapSchema,
+    editFields: editGoodFieldsSchema,
   }),
 });
