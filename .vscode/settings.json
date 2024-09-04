@@ -4,6 +4,7 @@
     "packages:db",
     "packages:trpc",
     "packages:aws",
-    "packages:validation"
+    "packages:validation",
+    "packages:i18n"
   ]
 }

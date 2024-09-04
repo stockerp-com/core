@@ -128,5 +128,29 @@
         "failed": "Failed to delete schema"
       }
     }
+  },
+  "stockpoint": {
+    "add": {
+      "success": "Successfully added stockpoint \"{{name}}\"",
+      "failed": "Failed to add stockpoint"
+    },
+    "edit": {
+      "success": "Successfully updated stockpoint \"{{name}}\"",
+      "not_found": "Stockpoint with id \"{{id}}\" not found",
+      "failed": "Failed to update stockpoint"
+    },
+    "find_one": {
+      "success": "Successfully found stockpoint with id \"{{id}}\"",
+      "not_found": "Stockpoint with id \"{{id}}\" not found"
+    },
+    "find_many": {
+      "success": "Successfully found stockpoints",
+      "not_found": "No stockpoints found"
+    },
+    "archive": {
+      "success": "Successfully archived stockpoint with id \"{{id}}\"",
+      "not_found": "Stockpoint with id \"{{id}}\" not found",
+      "failed": "Failed to archive stockpoint"
+    }
   }
 }
