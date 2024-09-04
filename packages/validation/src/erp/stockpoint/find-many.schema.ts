@@ -1,9 +1,9 @@
 import { z } from 'zod';
 import { findManyInfiniteSchema, findManySchema } from '../../utils/common.js';
 
-export const findManyInfiniteStockpointsSchema = findManyInfiniteSchema.extend(
-  {},
-);
+export const findManyInfiniteStockpointsSchema = findManyInfiniteSchema.extend({
+  isArchived: z.boolean().optional(),
+});
 
 export const findManyStockpointsSchema = findManySchema.extend({
   orderBy: z
@@ -20,6 +20,7 @@ export const findManyStockpointsSchema = findManySchema.extend({
       coordinates: z.enum(['asc', 'desc']).optional(),
     })
     .optional(),
+  isArchived: z.boolean().optional(),
 });
 
 export type findManyInfiniteStockpointsInput = z.infer<

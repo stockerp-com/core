@@ -3,7 +3,9 @@ import { accountRouter } from './account/account.router.js';
 import { authRouter } from './auth/auth.router.js';
 import { awsRouter } from './aws/aws.router.js';
 import { employeeRouter } from './employee/employee.router.js';
+import { importRouter } from './import/import.router.js';
 import { organizationRouter } from './organization/organization.router.js';
+import { stockpointRouter } from './stockpoint/stockpoint.router.js';
 
 export const appRouter = router({
   // Routers:
@@ -12,6 +14,8 @@ export const appRouter = router({
   account: accountRouter,
   organization: organizationRouter,
   aws: awsRouter,
+  stockpoint: stockpointRouter,
+  import: importRouter,
 });
 
 export type AppRouter = typeof appRouter;
