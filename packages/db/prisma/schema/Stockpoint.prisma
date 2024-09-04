@@ -11,8 +11,7 @@ model Stockpoint {
   phone       String?
   email       String?
   website     String?
-  latitude    Float?
-  longitude   Float?
+  coordinates String?
 
   goods                     Stock[]
   cashRegisters             CashRegister[]
