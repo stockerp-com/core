@@ -117,6 +117,31 @@
       "find_many": {
         "success": "Successfully found attributes",
         "not_found": "No attributes found"
+      },
+      "value": {
+        "add": {
+          "success": "Successfully added value \"{{value}}\" to attribute \"{{attribute}}\"",
+          "failed": "Failed to add value to attribute",
+          "value_taken": "Value \"{{value}}\" is already taken"
+        },
+        "find_one": {
+          "success": "Successfully found value with id \"{{id}}\"",
+          "not_found": "Value with id \"{{id}}\" not found"
+        },
+        "edit": {
+          "success": "Successfully updated value \"{{value}}\"",
+          "not_found": "Value with id \"{{id}}\" not found",
+          "failed": "Failed to update value"
+        },
+        "delete": {
+          "success": "Successfully deleted value with id \"{{id}}\"",
+          "not_found": "Value with id \"{{id}}\" not found",
+          "failed": "Failed to delete value"
+        },
+        "find_many": {
+          "success": "Successfully found values",
+          "not_found": "No values found"
+        }
       }
     }
   },
