@@ -120,7 +120,7 @@
       },
       "value": {
         "add": {
-          "success": "Successfully added value \"{{value}}\" to attribute \"{{attribute}}\"",
+          "success": "Successfully added value \"{{value}}\"",
           "failed": "Failed to add value to attribute",
           "value_taken": "Value \"{{value}}\" is already taken"
         },
@@ -130,12 +130,10 @@
         },
         "edit": {
           "success": "Successfully updated value \"{{value}}\"",
-          "not_found": "Value with id \"{{id}}\" not found",
           "failed": "Failed to update value"
         },
         "delete": {
           "success": "Successfully deleted value with id \"{{id}}\"",
-          "not_found": "Value with id \"{{id}}\" not found",
           "failed": "Failed to delete value"
         },
         "find_many": {

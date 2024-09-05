@@ -1,14 +1,16 @@
 import { z } from 'zod';
-import { enumField, numberField } from '../../../../utils/common.js';
-import { ATTRIBUTE_VALUE_TYPES } from '@core/utils/goods';
+import {
+  enumField,
+  numberField,
+  stringField,
+} from '../../../../utils/common.js';
 import { SUPPORTED_LOCALIZATIONS } from '@core/utils/localizations';
 
 export const addAttributeValueSchema = z.object({
-  dataType: enumField<typeof ATTRIBUTE_VALUE_TYPES>(ATTRIBUTE_VALUE_TYPES),
   languageName: enumField<typeof SUPPORTED_LOCALIZATIONS>(
     SUPPORTED_LOCALIZATIONS,
   ),
-  value: z.any(),
+  data: stringField,
   attributeId: numberField,
 });
 

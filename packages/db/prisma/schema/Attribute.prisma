@@ -37,7 +37,6 @@ model AttributeValue {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  dataType      AttributeValueDataType
   localizations AttributeValueLocalization[]
   attribute     Attribute?                   @relation(fields: [attributeId], references: [id])
 
@@ -48,19 +47,11 @@ model AttributeValue {
   @@index([attributeId])
 }
 
-enum AttributeValueDataType {
-  STRING
-  NUMBER
-  BOOLEAN
-  DATE
-  COLOR
-}
-
 model AttributeValueLocalization {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  data Json
+  data String
 
   value    AttributeValue @relation(fields: [valueId], references: [id], onDelete: Cascade)
   language Language       @relation(fields: [languageName], references: [name], onDelete: Cascade)

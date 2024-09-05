@@ -237,10 +237,9 @@ export const addHandler = tenantProcedure(['ADMIN', 'OWNER'])
             const newValue = await ctx.tenantDb?.attributeValue.create({
               data: {
                 attributeId: id,
-                dataType: 'STRING',
                 localizations: {
                   create: {
-                    data: JSON.stringify(attributeValue),
+                    data: attributeValue,
                     languageName: importSchema.languageName,
                   },
                 },
