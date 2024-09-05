@@ -32,7 +32,16 @@ export const signUpHandler = publicProcedure
         fullName: input.fullName,
         email: input.email,
         pwHash: await hash(input.password, 10),
-        preferredLanguage: input.preferredLanguage,
+        language: {
+          connectOrCreate: {
+            where: {
+              name: input.language,
+            },
+            create: {
+              name: input.language,
+            },
+          },
+        },
       },
     });
 

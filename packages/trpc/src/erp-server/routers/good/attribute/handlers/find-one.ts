@@ -12,7 +12,7 @@ export const findOneHandler = tenantProcedure(['ADMIN', 'OWNER'])
       include: {
         localizations: {
           where: {
-            languageName: input.languageName,
+            locale: input.locale,
           },
         },
       },

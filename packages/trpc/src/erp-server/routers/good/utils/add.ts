@@ -104,8 +104,8 @@ export async function addUtil({
         data.localizations && data.localizations.length > 0
           ? {
               createMany: {
-                data: data.localizations.map(({ languageName, name }) => ({
-                  languageName,
+                data: data.localizations.map(({ locale, name }) => ({
+                  locale,
                   name,
                 })),
               },

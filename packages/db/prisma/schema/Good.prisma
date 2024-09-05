@@ -86,16 +86,16 @@ model GoodLocalization {
 
   name String
 
-  good     Good     @relation(fields: [goodId], references: [id], onDelete: Cascade)
-  language Language @relation(fields: [languageName], references: [name], onDelete: Cascade)
+  good         Good         @relation(fields: [goodId], references: [id], onDelete: Cascade)
+  localization Localization @relation(fields: [locale], references: [locale], onDelete: Cascade)
 
-  goodId       Int
-  languageName String
+  goodId Int
+  locale String
 
-  @@id([goodId, languageName])
-  @@index([goodId, languageName])
+  @@id([goodId, locale])
+  @@index([goodId, locale])
   @@index([goodId])
-  @@index([languageName])
+  @@index([locale])
 }
 
 model GoodMedia {

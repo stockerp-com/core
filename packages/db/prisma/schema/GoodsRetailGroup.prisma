@@ -44,16 +44,16 @@ model GoodsRetailGroupLocalization {
   focusKeyword      String
   secondaryKeywords String[]
 
-  group    GoodsRetailGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
-  language Language         @relation(fields: [languageName], references: [name], onDelete: Cascade)
+  group        GoodsRetailGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  localization Localization     @relation(fields: [locale], references: [locale], onDelete: Cascade)
 
-  groupId      Int
-  languageName String
+  groupId Int
+  locale  String
 
-  @@id([groupId, languageName])
-  @@index([groupId, languageName])
+  @@id([groupId, locale])
+  @@index([groupId, locale])
   @@index([groupId])
-  @@index([languageName])
+  @@index([locale])
 }
 
 model GoodsRetailGroupMedia {

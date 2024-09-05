@@ -27,9 +27,9 @@ export const editHandler = tenantProcedure(['ADMIN', 'OWNER'])
         localizations: {
           upsert: {
             where: {
-              valueId_languageName: {
+              valueId_locale: {
                 valueId: input.id,
-                languageName: input.languageName,
+                locale: input.locale,
               },
             },
             update: {
@@ -37,7 +37,7 @@ export const editHandler = tenantProcedure(['ADMIN', 'OWNER'])
             },
             create: {
               data: input.data,
-              languageName: input.languageName,
+              locale: input.locale,
             },
           },
         },

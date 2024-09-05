@@ -9,13 +9,13 @@ export const addHandler = tenantProcedure(['ADMIN', 'OWNER'])
         localizations: {
           create: {
             name: input.name,
-            language: {
+            localization: {
               connectOrCreate: {
                 where: {
-                  name: input.languageName,
+                  locale: input.locale,
                 },
                 create: {
-                  name: input.languageName,
+                  locale: input.locale,
                 },
               },
             },

@@ -19,16 +19,16 @@ model AttributeLocalization {
 
   name String
 
-  attribute Attribute @relation(fields: [attributeId], references: [id], onDelete: Cascade)
-  language  Language  @relation(fields: [languageName], references: [name], onDelete: Cascade)
+  attribute    Attribute    @relation(fields: [attributeId], references: [id], onDelete: Cascade)
+  localization Localization @relation(fields: [locale], references: [locale], onDelete: Cascade)
 
-  attributeId  Int
-  languageName String
+  attributeId Int
+  locale      String
 
-  @@id([attributeId, languageName])
-  @@index([attributeId, languageName])
+  @@id([attributeId, locale])
+  @@index([attributeId, locale])
   @@index([attributeId])
-  @@index([languageName])
+  @@index([locale])
 }
 
 // Value of the attribute.
@@ -53,14 +53,14 @@ model AttributeValueLocalization {
 
   data String
 
-  value    AttributeValue @relation(fields: [valueId], references: [id], onDelete: Cascade)
-  language Language       @relation(fields: [languageName], references: [name], onDelete: Cascade)
+  value        AttributeValue @relation(fields: [valueId], references: [id], onDelete: Cascade)
+  localization Localization   @relation(fields: [locale], references: [locale], onDelete: Cascade)
 
-  valueId      Int
-  languageName String
+  valueId Int
+  locale  String
 
-  @@id([valueId, languageName])
-  @@index([valueId, languageName])
+  @@id([valueId, locale])
+  @@index([valueId, locale])
   @@index([valueId])
-  @@index([languageName])
+  @@index([locale])
 }

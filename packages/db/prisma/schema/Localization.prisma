@@ -1,5 +1,5 @@
-model Language {
-  name      String   @id
+model Localization {
+  locale    String   @id
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -10,5 +10,5 @@ model Language {
   goodsRetailGroupLocalizations GoodsRetailGroupLocalization[]
   goodLocalizations             GoodLocalization[]
 
-  @@index([name])
+  @@index([locale])
 }

@@ -443,8 +443,8 @@ export async function editUtil({
     | undefined;
   if (editFields.localizations.edit) {
     const oldDataArray = oldData.localizations
-      ? oldData.localizations.map(({ languageName, name }) => ({
-          languageName,
+      ? oldData.localizations.map(({ locale, name }) => ({
+        locale,
           name,
         }))
       : [];
@@ -454,7 +454,7 @@ export async function editUtil({
     const { newData, deletedData, updatedData } = trackArrayObjectsChanges(
       oldDataArray,
       newDataArray,
-      ['languageName', 'name'],
+      ['locale', 'name'],
     );
 
     localizations = {
@@ -462,7 +462,7 @@ export async function editUtil({
         newData && newData.length > 0
           ? {
               data: newData.map(({ item }) => ({
-                languageName: item.languageName,
+                locale: item.locale,
                 name: item.name,
               })),
             }
@@ -471,13 +471,13 @@ export async function editUtil({
         updatedData && updatedData.length > 0
           ? updatedData.map(({ item }) => ({
               where: {
-                goodId_languageName: {
+                goodId_locale: {
                   goodId,
-                  languageName: item.languageName,
+                  locale: item.locale,
                 },
               },
               data: {
-                languageName: item.languageName,
+                locale: item.locale,
                 name: item.name,
               },
             }))
@@ -486,8 +486,8 @@ export async function editUtil({
         editFields.localizations.delete && deletedData && deletedData.length > 0
           ? {
               goodId,
-              languageName: {
-                in: deletedData.map(({ languageName }) => languageName),
+              locale: {
+                in: deletedData.map(({ locale }) => locale),
               },
             }
           : undefined,

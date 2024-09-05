@@ -9,7 +9,6 @@ import {
 } from '../../utils/common.js';
 import { SUPPORTED_CURRENCIES } from '@core/utils/financial';
 import { DISTRIBUTION_CHANNELS } from '@core/utils/goods';
-import { SUPPORTED_LOCALIZATIONS } from '@core/utils/localizations';
 
 export const addGoodSchema = z.object({
   retailGroupId: numberField.optional(),
@@ -68,9 +67,7 @@ export const addGoodSchema = z.object({
   localizations: z
     .array(
       z.object({
-        languageName: enumField<typeof SUPPORTED_LOCALIZATIONS>(
-          SUPPORTED_LOCALIZATIONS,
-        ),
+        locale: stringField,
         name: stringField,
       }),
     )

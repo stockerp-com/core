@@ -12,12 +12,12 @@ model Employee {
   bankAccounts  BusinessBankAccount[]
   cashRegister  CashRegister?
   picture       File?                    @relation(fields: [fileKey], references: [key])
-  language      Language?                @relation(fields: [languageName], references: [name])
+  localization  Localization?            @relation(fields: [locale], references: [locale])
 
   currentOrganizationId Int?
   pictureKey            String?
   fileKey               String?
-  languageName          String?
+  locale                String?
 
   @@index([id])
   @@index([fullName])

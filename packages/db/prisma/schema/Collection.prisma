@@ -18,14 +18,14 @@ model CollectionLocalization {
   name        String
   description String? @db.Text
 
-  collection Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
-  language   Language   @relation(fields: [languageName], references: [name], onDelete: Cascade)
+  collection   Collection   @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  localization Localization @relation(fields: [locale], references: [locale], onDelete: Cascade)
 
   collectionId Int
-  languageName String
+  locale       String
 
-  @@id([collectionId, languageName])
-  @@index([collectionId, languageName])
+  @@id([collectionId, locale])
+  @@index([collectionId, locale])
   @@index([collectionId])
-  @@index([languageName])
+  @@index([locale])
 }

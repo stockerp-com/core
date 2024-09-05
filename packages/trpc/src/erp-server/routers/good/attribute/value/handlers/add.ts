@@ -25,7 +25,7 @@ export const addHandler = tenantProcedure(['ADMIN', 'OWNER'])
         localizations: {
           create: {
             data: input.data,
-            languageName: input.languageName,
+            locale: input.locale,
           },
         },
       },

@@ -1,7 +1,6 @@
 import { z } from 'zod';
 import { enumField, numberField, stringField } from '../../../utils/common.js';
 import { editGoodFieldsSchema } from '../../good/edit.schema.js';
-import { SUPPORTED_LOCALIZATIONS } from '@core/utils/localizations';
 import { SUPPORTED_CURRENCIES } from '@core/utils/financial';
 
 export const importGoodsMapSchema = z.object({
@@ -35,9 +34,7 @@ export const importGoodsMapSchema = z.object({
 });
 
 export const importSchemaSchema = z.object({
-  languageName: enumField<typeof SUPPORTED_LOCALIZATIONS>(
-    SUPPORTED_LOCALIZATIONS,
-  ),
+  locale: stringField,
   currency: enumField<typeof SUPPORTED_CURRENCIES>(SUPPORTED_CURRENCIES),
   goods: z.object({
     stockpointId: numberField,

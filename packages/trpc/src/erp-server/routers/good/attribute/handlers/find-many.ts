@@ -17,7 +17,7 @@ export const findManyInfiniteHandler = tenantProcedure(['ADMIN', 'OWNER'])
         id: true,
         localizations: {
           where: {
-            languageName: input.languageName,
+            locale: input.locale,
           },
           select: {
             name: true,
