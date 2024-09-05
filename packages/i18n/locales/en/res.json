@@ -94,6 +94,30 @@
         "not_found": "Additional identificator with name \"{{name}}\" not found",
         "failed": "Failed to delete additional identificator"
       }
+    },
+    "attribute": {
+      "add": {
+        "success": "Successfully added attribute \"{{name}}\"",
+        "failed": "Failed to add attribute"
+      },
+      "find_one": {
+        "success": "Successfully found attribute with id \"{{id}}\"",
+        "not_found": "Attribute with id \"{{id}}\" not found"
+      },
+      "edit": {
+        "success": "Successfully updated attribute \"{{name}}\"",
+        "not_found": "Attribute with id \"{{id}}\" not found",
+        "failed": "Failed to update attribute"
+      },
+      "delete": {
+        "success": "Successfully deleted attribute \"{{id}}\"",
+        "not_found": "Attribute with id \"{{id}}\" not found",
+        "failed": "Failed to delete attribute"
+      },
+      "find_many": {
+        "success": "Successfully found attributes",
+        "not_found": "No attributes found"
+      }
     }
   },
   "import": {

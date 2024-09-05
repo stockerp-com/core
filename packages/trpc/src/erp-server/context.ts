@@ -16,6 +16,8 @@ interface CreateContextInnerOpts {
   redis: Redis;
   aws: AWS;
   t: TFunction;
+  language: string;
+  languages: string[];
   // eslint-disable-next-line no-unused-vars
   setRTCookie?: (token: string) => void;
   getRTCookie?: () => string | null;
@@ -38,6 +40,8 @@ export const createContextInner = (opts?: CreateContextInnerOpts) => ({
   prismaManager: opts?.prismaManager,
   aws: opts?.aws,
   t: opts?.t,
+  language: opts?.language,
+  languages: opts?.languages,
 });
 
 /**
@@ -47,6 +51,8 @@ interface CreateContextOpts {
   expressContextOpts: {
     req: CreateExpressContextOptions['req'] & {
       t: TFunction;
+      language: string;
+      languages: string[];
     };
     res: CreateExpressContextOptions['res'];
   };
@@ -83,6 +89,8 @@ export const createContext = async (opts?: CreateContextOpts) => {
     t: req.t,
     prismaManager: opts?.prismaManager,
     aws: opts?.aws,
+    language: req.language,
+    languages: req.languages,
   });
 };
 
