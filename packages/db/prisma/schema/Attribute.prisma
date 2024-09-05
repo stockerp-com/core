@@ -17,17 +17,18 @@ model AttributeLocalization {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  language String
-  name     String
+  name String
 
-  attribute Attribute @relation(fields: [attributeId], references: [id])
+  attribute Attribute @relation(fields: [attributeId], references: [id], onDelete: Cascade)
+  language  Language  @relation(fields: [languageName], references: [name], onDelete: Cascade)
 
-  attributeId Int
+  attributeId  Int
+  languageName String
 
-  @@id([attributeId, language])
-  @@index([attributeId, language])
+  @@id([attributeId, languageName])
+  @@index([attributeId, languageName])
   @@index([attributeId])
-  @@index([language])
+  @@index([languageName])
 }
 
 // Value of the attribute.
@@ -59,15 +60,16 @@ model AttributeValueLocalization {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  language String
-  data     Json
+  data Json
 
-  value AttributeValue @relation(fields: [valueId], references: [id])
+  value    AttributeValue @relation(fields: [valueId], references: [id], onDelete: Cascade)
+  language Language       @relation(fields: [languageName], references: [name], onDelete: Cascade)
 
-  valueId Int
+  valueId      Int
+  languageName String
 
-  @@id([valueId, language])
-  @@index([valueId, language])
+  @@id([valueId, languageName])
+  @@index([valueId, languageName])
   @@index([valueId])
-  @@index([language])
+  @@index([languageName])
 }

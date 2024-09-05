@@ -1,5 +1,9 @@
 import { z } from 'zod';
-import { enumField, numberField, stringField } from '../../../utils/common.js';
+import {
+  enumField,
+  numberField,
+  stringField,
+} from '../../../../utils/common.js';
 import { ATTRIBUTE_VALUE_TYPES } from '@core/utils/goods';
 
 export const addAttributeValueSchema = z.object({

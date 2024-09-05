@@ -15,16 +15,17 @@ model CollectionLocalization {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  language    String
   name        String
   description String? @db.Text
 
-  collection Collection @relation(fields: [collectionId], references: [id])
+  collection Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  language   Language   @relation(fields: [languageName], references: [name], onDelete: Cascade)
 
   collectionId Int
+  languageName String
 
-  @@id([collectionId, language])
-  @@index([collectionId, language])
+  @@id([collectionId, languageName])
+  @@index([collectionId, languageName])
   @@index([collectionId])
-  @@index([language])
+  @@index([languageName])
 }

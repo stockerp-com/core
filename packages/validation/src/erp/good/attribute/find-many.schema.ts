@@ -3,7 +3,7 @@ import {
   findManyInfiniteSchema,
   findManySchema,
   orderByField,
-} from '../../utils/common.js';
+} from '../../../utils/common.js';
 
 const orderBy = z.object({
   createdAt: orderByField,

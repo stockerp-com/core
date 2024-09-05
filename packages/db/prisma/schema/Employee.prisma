@@ -4,18 +4,20 @@ model Employee {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  fullName          String
-  email             String @unique
-  pwHash            String
-  preferredLanguage String
+  fullName String
+  email    String @unique
+  pwHash   String
 
   organizations EmployeeToOrganization[]
   bankAccounts  BusinessBankAccount[]
   cashRegister  CashRegister?
-  picture       File?                    @relation(fields: [pictureKey], references: [key])
+  picture       File?                    @relation(fields: [fileKey], references: [key])
+  language      Language?                @relation(fields: [languageName], references: [name])
 
   currentOrganizationId Int?
   pictureKey            String?
+  fileKey               String?
+  languageName          String?
 
   @@index([id])
   @@index([fullName])

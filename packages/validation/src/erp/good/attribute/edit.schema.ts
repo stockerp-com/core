@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { numberField, stringField } from '../../utils/common.js';
+import { numberField, stringField } from '../../../utils/common.js';
 
 export const editAttributeSchema = z.object({
   id: numberField,

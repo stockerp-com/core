@@ -36,7 +36,6 @@ model GoodsRetailGroupLocalization {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  language          String
   name              String
   description       String   @db.Text
   metaTitle         String
@@ -45,14 +44,16 @@ model GoodsRetailGroupLocalization {
   focusKeyword      String
   secondaryKeywords String[]
 
-  group GoodsRetailGroup @relation(fields: [groupId], references: [id])
+  group    GoodsRetailGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  language Language         @relation(fields: [languageName], references: [name], onDelete: Cascade)
 
-  groupId Int
+  groupId      Int
+  languageName String
 
-  @@id([groupId, language])
-  @@index([groupId, language])
+  @@id([groupId, languageName])
+  @@index([groupId, languageName])
   @@index([groupId])
-  @@index([language])
+  @@index([languageName])
 }
 
 model GoodsRetailGroupMedia {

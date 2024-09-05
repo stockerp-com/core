@@ -1,0 +1,14 @@
+model Language {
+  name      String   @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  employees                     Employee[]
+  attributeLocalizations        AttributeLocalization[]
+  attributeValueLocalizations   AttributeValueLocalization[]
+  collectionLocalizations       CollectionLocalization[]
+  goodsRetailGroupLocalizations GoodsRetailGroupLocalization[]
+  goodLocalizations             GoodLocalization[]
+
+  @@index([name])
+}

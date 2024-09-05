@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { stringField } from '../../utils/common.js';
+import { stringField } from '../../../utils/common.js';
 
 export const addAttributeSchema = z.object({
   name: stringField,
