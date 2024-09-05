@@ -35,7 +35,7 @@ export const importGoodsMapSchema = z.object({
 });
 
 export const importSchemaSchema = z.object({
-  localization: enumField<typeof SUPPORTED_LOCALIZATIONS>(
+  languageName: enumField<typeof SUPPORTED_LOCALIZATIONS>(
     SUPPORTED_LOCALIZATIONS,
   ),
   currency: enumField<typeof SUPPORTED_CURRENCIES>(SUPPORTED_CURRENCIES),

@@ -68,7 +68,7 @@ export const addGoodSchema = z.object({
   localizations: z
     .array(
       z.object({
-        language: enumField<typeof SUPPORTED_LOCALIZATIONS>(
+        languageName: enumField<typeof SUPPORTED_LOCALIZATIONS>(
           SUPPORTED_LOCALIZATIONS,
         ),
         name: stringField,

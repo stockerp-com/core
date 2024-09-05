@@ -241,7 +241,7 @@ export const addHandler = tenantProcedure(['ADMIN', 'OWNER'])
                 localizations: {
                   create: {
                     data: JSON.stringify(attributeValue),
-                    language: importSchema.localization,
+                    languageName: importSchema.languageName,
                   },
                 },
               },
@@ -277,7 +277,7 @@ export const addHandler = tenantProcedure(['ADMIN', 'OWNER'])
               ],
               localizations: [
                 {
-                  language: importSchema.localization,
+                  languageName: importSchema.languageName,
                   name: good.name,
                 },
               ],
@@ -309,7 +309,7 @@ export const addHandler = tenantProcedure(['ADMIN', 'OWNER'])
               ],
               localizations: [
                 {
-                  language: importSchema.localization,
+                  languageName: importSchema.languageName,
                   name: good.name,
                 },
               ],
@@ -465,7 +465,7 @@ async function transformRow(
         },
         localizations: {
           create: {
-            language: importSchema.localization,
+            languageName: importSchema.languageName,
             name: result.groupName,
             description: '',
             focusKeyword: '',
