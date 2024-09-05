@@ -5,7 +5,7 @@ export const signUpSchema = z.object({
   fullName: stringField,
   email: emailField,
   password: passwordField,
-  language: stringField,
+  locale: stringField,
 });
 
 export type SignUpInput = z.infer<typeof signUpSchema>;

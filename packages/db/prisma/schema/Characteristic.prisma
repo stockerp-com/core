@@ -13,17 +13,18 @@ model CharacteristicLocalization {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  language String
-  name     String
+  name String
 
-  characteristic Characteristic @relation(fields: [characteristicId], references: [id])
+  characteristic Characteristic @relation(fields: [characteristicId], references: [id], onDelete: Cascade)
+  localization   Localization   @relation(fields: [locale], references: [locale], onDelete: Cascade)
 
   characteristicId Int
+  locale           String
 
-  @@id([characteristicId, language])
-  @@index([characteristicId, language])
+  @@id([characteristicId, locale])
+  @@index([characteristicId, locale])
   @@index([characteristicId])
-  @@index([language])
+  @@index([locale])
 }
 
 model CharacteristicValue {

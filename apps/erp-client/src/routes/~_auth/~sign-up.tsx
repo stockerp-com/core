@@ -65,7 +65,7 @@ function SignUpForm() {
       fullName: '',
       email: '',
       password: '',
-      language: i18n.language,
+      locale: i18n.language,
     },
   });
 

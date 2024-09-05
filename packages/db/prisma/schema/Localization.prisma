@@ -9,6 +9,7 @@ model Localization {
   collectionLocalizations       CollectionLocalization[]
   goodsRetailGroupLocalizations GoodsRetailGroupLocalization[]
   goodLocalizations             GoodLocalization[]
+  characteristicLocalizations   CharacteristicLocalization[]
 
   @@index([locale])
 }

@@ -32,13 +32,13 @@ export const signUpHandler = publicProcedure
         fullName: input.fullName,
         email: input.email,
         pwHash: await hash(input.password, 10),
-        language: {
+        localization: {
           connectOrCreate: {
             where: {
-              name: input.language,
+              locale: input.locale,
             },
             create: {
-              name: input.language,
+              locale: input.locale,
             },
           },
         },
