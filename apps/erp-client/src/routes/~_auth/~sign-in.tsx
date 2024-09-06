@@ -33,8 +33,8 @@ function SignInComponent() {
   return (
     <div className="flex flex-col gap-16">
       <AuthTitle
-        title={t('content:auth.sign_in.title')}
-        subtitle={t('content:auth.sign_in.subtitle')}
+        title={t('content:erp.auth.sign_in.title')}
+        subtitle={t('content:erp.auth.sign_in.subtitle')}
       />
       <SignInForm />
     </div>
@@ -84,13 +84,13 @@ function SignInForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel required>
-                  {t('content:auth.sign_in.form_fields.email.label')}
+                  {t('content:erp.auth.sign_in.form_fields.email.label')}
                 </FormLabel>
                 <FormControl>
                   <Input
                     type="email"
                     placeholder={t(
-                      'content:auth.sign_in.form_fields.email.placeholder',
+                      'content:erp.auth.sign_in.form_fields.email.placeholder',
                     )}
                     {...field}
                   />
@@ -106,16 +106,16 @@ function SignInForm() {
               <FormItem>
                 <div className="flex items-center justify-between w-full">
                   <FormLabel required>
-                    {t('content:auth.sign_in.form_fields.password.label')}
+                    {t('content:erp.auth.sign_in.form_fields.password.label')}
                   </FormLabel>
                   <Link className="text-muted-foreground hover:underline text-xs">
-                    {t('content:auth.sign_in.forgot_password')}
+                    {t('content:erp.auth.sign_in.forgot_password')}
                   </Link>
                 </div>
                 <FormControl>
                   <PasswordInput
                     placeholder={t(
-                      'content:auth.sign_in.form_fields.password.placeholder',
+                      'content:erp.auth.sign_in.form_fields.password.placeholder',
                     )}
                     t={t}
                     {...field}
@@ -136,7 +136,7 @@ function SignInForm() {
       </Form>
       <div className="flex w-full items-center justify-center">
         <Link to="/sign-up" className="underline text-muted-foreground">
-          {t('content:auth.sign_in.sign_up_message')}
+          {t('content:erp.auth.sign_in.sign_up_message')}
         </Link>
       </div>
     </div>

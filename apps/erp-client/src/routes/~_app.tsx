@@ -51,8 +51,8 @@ function Layout(props: { children: React.ReactNode }) {
       <ResizablePanel minSize={50} className="flex h-full w-full">
         <div className="flex flex-1 flex-col h-full w-full">
           <Topbar />
-          <ScrollArea className="max-h-full">
-            <div className="p-4">{props.children}</div>
+          <ScrollArea className="flex h-full max-h-full">
+            <div className="p-4 flex w-full h-full">{props.children}</div>
           </ScrollArea>
         </div>
       </ResizablePanel>

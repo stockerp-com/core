@@ -13,7 +13,6 @@ model Stockpoint {
   phone       String?
   email       String?
   website     String?
-  coordinates String?
   isArchived  Boolean @default(false)
 
   goods                     Stock[]

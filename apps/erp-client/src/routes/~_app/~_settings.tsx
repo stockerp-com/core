@@ -37,17 +37,17 @@ type SettingsRoute = {
 
 const settingsRoutes: SettingsRoute[] = [
   {
-    text: 'content:settings.general.title',
+    text: 'content:erp.settings.general.title',
     icon: PiWrench,
     route: '/settings/general',
   },
   {
-    text: 'content:settings.security.title',
+    text: 'content:erp.settings.security.title',
     icon: PiFingerprintSimple,
     route: '/settings/security',
   },
   {
-    text: 'content:settings.organizations.title',
+    text: 'content:erp.settings.organizations.title',
     icon: PiBuildingOffice,
     route: '/settings/organizations',
   },

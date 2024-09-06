@@ -39,8 +39,8 @@ function Component() {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-2">
-        <h1>{t('content:settings.security.title')}</h1>
-        <p className="muted">{t('content:settings.security.subtitle')}</p>
+        <h1>{t('content:erp.settings.security.title')}</h1>
+        <p className="muted">{t('content:erp.settings.security.subtitle')}</p>
       </div>
       <ChangePassword />
     </div>
@@ -74,10 +74,10 @@ function ChangePassword() {
     <Card>
       <CardHeader>
         <CardTitle>
-          {t('content:settings.security.change_password.title')}
+          {t('content:erp.settings.security.change_password.title')}
         </CardTitle>
         <CardDescription>
-          {t('content:settings.security.change_password.subtitle')}
+          {t('content:erp.settings.security.change_password.subtitle')}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -93,14 +93,14 @@ function ChangePassword() {
                 <FormItem>
                   <FormLabel required>
                     {t(
-                      'content:auth.change_password.form_fields.new_password.label',
+                      'content:erp.auth.change_password.form_fields.new_password.label',
                     )}
                   </FormLabel>
                   <FormControl>
                     <PasswordInput
                       autoComplete="new-password"
                       placeholder={t(
-                        'content:auth.change_password.form_fields.new_password.placeholder',
+                        'content:erp.auth.change_password.form_fields.new_password.placeholder',
                       )}
                       t={t}
                       {...field}
@@ -108,7 +108,7 @@ function ChangePassword() {
                   </FormControl>
                   <FormDescription>
                     {t(
-                      'content:auth.change_password.form_fields.new_password.description',
+                      'content:erp.auth.change_password.form_fields.new_password.description',
                     )}
                   </FormDescription>
                   <FormMessage t={t} />

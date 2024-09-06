@@ -188,11 +188,13 @@
     },
     "find_one": {
       "success": "Successfully found stockpoint with id \"{{id}}\"",
-      "not_found": "Stockpoint with id \"{{id}}\" not found"
+      "not_found": "Stockpoint with id \"{{id}}\" not found",
+      "failed": "Failed to find stockpoint"
     },
     "find_many": {
       "success": "Successfully found stockpoints",
-      "not_found": "No stockpoints found"
+      "not_found": "No stockpoints found",
+      "failed": "An unexpected error occurred while fetching stockpoints"
     },
     "archive": {
       "success": "Successfully archived stockpoint with id \"{{id}}\"",

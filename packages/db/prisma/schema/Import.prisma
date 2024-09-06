@@ -15,7 +15,6 @@ model Import {
 }
 
 enum ImportStatus {
-  PENDING
   PROCESSING
   PROCESSED
   FAILED

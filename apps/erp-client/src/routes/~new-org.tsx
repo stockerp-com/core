@@ -94,9 +94,9 @@ function CreateOrg(props: { setIsStarted: (value: boolean) => void }) {
   return (
     <Card className="w-full max-w-screen-sm">
       <CardHeader>
-        <CardTitle>{t('content:organization.add.title')}</CardTitle>
+        <CardTitle>{t('content:erp.organization.add.title')}</CardTitle>
         <CardDescription>
-          {t('content:organization.add.subtitle')}
+          {t('content:erp.organization.add.subtitle')}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -111,12 +111,12 @@ function CreateOrg(props: { setIsStarted: (value: boolean) => void }) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel required>
-                    {t('content:organization.add.form_fields.name.label')}
+                    {t('content:erp.organization.add.form_fields.name.label')}
                   </FormLabel>
                   <FormControl>
                     <Input
                       placeholder={t(
-                        'content:organization.add.form_fields.name.placeholder',
+                        'content:erp.organization.add.form_fields.name.placeholder',
                       )}
                       {...field}
                     />
@@ -130,15 +130,15 @@ function CreateOrg(props: { setIsStarted: (value: boolean) => void }) {
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel required>
+                  <FormLabel>
                     {t(
-                      'content:organization.add.form_fields.description.label',
+                      'content:erp.organization.add.form_fields.description.label',
                     )}
                   </FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder={t(
-                        'content:organization.add.form_fields.description.placeholder',
+                        'content:erp.organization.add.form_fields.description.placeholder',
                       )}
                       className="resize-none"
                       {...field}
@@ -152,7 +152,7 @@ function CreateOrg(props: { setIsStarted: (value: boolean) => void }) {
         </Form>
       </CardContent>
       <CardFooter className="flex-col-reverse lg:flex-row lg:justify-end gap-4">
-        <Button variant="secondary" asChild>
+        <Button variant="secondary" asChild className="w-full lg:w-fit">
           <Link
             to="/settings/organizations"
             className="flex items-center gap-2"
@@ -163,7 +163,7 @@ function CreateOrg(props: { setIsStarted: (value: boolean) => void }) {
           </Link>
         </Button>
         <Button
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 w-full lg:w-fit"
           disabled={isPending}
           onClick={form.handleSubmit(onSubmit)}
         >
@@ -172,7 +172,7 @@ function CreateOrg(props: { setIsStarted: (value: boolean) => void }) {
           ) : (
             <PiBuildingOffice className="h-4 w-4" />
           )}
-          {t('content:organization.add.title')}
+          {t('content:erp.organization.add.title')}
         </Button>
       </CardFooter>
     </Card>
@@ -193,9 +193,9 @@ function OrgLoader(props: {
   return (
     <Card className="w-full max-w-screen-sm">
       <CardHeader>
-        <CardTitle>{t('content:organization.add.adding')}</CardTitle>
+        <CardTitle>{t('content:erp.organization.add.adding')}</CardTitle>
         <CardDescription>
-          {t('content:organization.add.adding_subtitle')}
+          {t('content:erp.organization.add.adding_subtitle')}
         </CardDescription>
       </CardHeader>
       <CardContent>

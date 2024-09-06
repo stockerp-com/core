@@ -73,8 +73,8 @@ function Component() {
   return (
     <div className="flex max-h-full flex-col gap-4">
       <div className="flex flex-col gap-2">
-        <h1>{t('content:settings.general.title')}</h1>
-        <p className="muted">{t('content:settings.general.subtitle')}</p>
+        <h1>{t('content:erp.settings.general.title')}</h1>
+        <p className="muted">{t('content:erp.settings.general.subtitle')}</p>
       </div>
       <Profile />
       <Appearance />
@@ -135,9 +135,9 @@ function Profile() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{t('content:settings.general.profile.title')}</CardTitle>
+        <CardTitle>{t('content:erp.settings.general.profile.title')}</CardTitle>
         <CardDescription>
-          {t('content:settings.general.profile.subtitle')}
+          {t('content:erp.settings.general.profile.subtitle')}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -153,7 +153,7 @@ function Profile() {
                 <FormItem>
                   <FormLabel required>
                     {t(
-                      'content:account.edit_profile.form_fields.full_name.label',
+                      'content:erp.account.edit_profile.form_fields.full_name.label',
                     )}
                   </FormLabel>
                   <FormControl>
@@ -162,7 +162,7 @@ function Profile() {
                     ) : (
                       <Input
                         placeholder={t(
-                          'content:account.edit_profile.form_fields.full_name.placeholder',
+                          'content:erp.account.edit_profile.form_fields.full_name.placeholder',
                         )}
                         {...field}
                       />
@@ -178,7 +178,9 @@ function Profile() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel required>
-                    {t('content:account.edit_profile.form_fields.email.label')}
+                    {t(
+                      'content:erp.account.edit_profile.form_fields.email.label',
+                    )}
                   </FormLabel>
                   <FormControl>
                     {isLoading ? (
@@ -187,7 +189,7 @@ function Profile() {
                       <Input
                         type="email"
                         placeholder={t(
-                          'content:account.edit_profile.form_fields.email.placeholder',
+                          'content:erp.account.edit_profile.form_fields.email.placeholder',
                         )}
                         {...field}
                       />
@@ -199,7 +201,9 @@ function Profile() {
             />
             <div className="space-y-2">
               <Label htmlFor="edit_profile_picture">
-                {t('content:account.edit_profile.form_fields.picture.label')}
+                {t(
+                  'content:erp.account.edit_profile.form_fields.picture.label',
+                )}
               </Label>
               <SingleFile
                 onRemove={() => form.setValue('picture', null)}
@@ -217,7 +221,7 @@ function Profile() {
                   uploadState.length > 0 && uploadState[0].status === 'pending'
                 }
                 placeholder={t(
-                  'content:account.edit_profile.form_fields.picture.placeholder',
+                  'content:erp.account.edit_profile.form_fields.picture.placeholder',
                 )}
                 file={form.watch('picture')}
               />
@@ -244,9 +248,11 @@ function Appearance() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{t('content:settings.general.appearance.title')}</CardTitle>
+        <CardTitle>
+          {t('content:erp.settings.general.appearance.title')}
+        </CardTitle>
         <CardDescription>
-          {t('content:settings.general.appearance.subtitle')}
+          {t('content:erp.settings.general.appearance.subtitle')}
         </CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
@@ -264,7 +270,7 @@ function LanguageField() {
   return (
     <div className="space-y-2">
       <Label htmlFor="language">
-        {t('content:settings.general.appearance.language.label')}
+        {t('content:erp.settings.general.appearance.language.label')}
       </Label>
       <Select
         defaultValue={i18n.language}
@@ -273,7 +279,7 @@ function LanguageField() {
         <SelectTrigger className="flex" id="language">
           <SelectValue
             placeholder={t(
-              'content:settings.general.appearance.language.placeholder',
+              'content:erp.settings.general.appearance.language.placeholder',
             )}
           />
         </SelectTrigger>
@@ -281,7 +287,7 @@ function LanguageField() {
           {languages.map((language) => (
             <SelectItem key={language} value={language}>
               {t(
-                `content:settings.general.appearance.language.options.${language}`,
+                `content:erp.settings.general.appearance.language.options.${language}`,
               )}
             </SelectItem>
           ))}
@@ -293,17 +299,17 @@ function LanguageField() {
 
 const themes = [
   {
-    text: 'content:settings.general.appearance.theme.options.light',
+    text: 'content:erp.settings.general.appearance.theme.options.light',
     value: 'light',
     icon: PiSun,
   },
   {
-    text: 'content:settings.general.appearance.theme.options.dark',
+    text: 'content:erp.settings.general.appearance.theme.options.dark',
     value: 'dark',
     icon: PiMoon,
   },
   {
-    text: 'content:settings.general.appearance.theme.options.system',
+    text: 'content:erp.settings.general.appearance.theme.options.system',
     value: 'system',
     icon: PiLaptop,
   },
@@ -315,7 +321,7 @@ function ThemeField() {
   return (
     <div className="space-y-2">
       <Label htmlFor="theme">
-        {t('content:settings.general.appearance.theme.label')}
+        {t('content:erp.settings.general.appearance.theme.label')}
       </Label>
       <RadioGroup
         defaultValue={theme}
@@ -384,9 +390,11 @@ function SignOut() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{t('content:settings.general.sign_out.title')}</CardTitle>
+        <CardTitle>
+          {t('content:erp.settings.general.sign_out.title')}
+        </CardTitle>
         <CardDescription>
-          {t('content:settings.general.sign_out.subtitle')}
+          {t('content:erp.settings.general.sign_out.subtitle')}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -394,14 +402,14 @@ function SignOut() {
           <DialogTrigger asChild>
             <Button variant="destructive" onClick={() => setIsOpened(true)}>
               <PiSignOut className="h-4 w-4 mr-2" />
-              {t('content:auth.sign_out.title')}
+              {t('content:erp.auth.sign_out.title')}
             </Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>{t('content:auth.sign_out.title')}</DialogTitle>
+              <DialogTitle>{t('content:erp.auth.sign_out.title')}</DialogTitle>
               <DialogDescription>
-                {t('content:auth.sign_out.subtitle')}
+                {t('content:erp.auth.sign_out.subtitle')}
               </DialogDescription>
             </DialogHeader>
             <DialogFooter>

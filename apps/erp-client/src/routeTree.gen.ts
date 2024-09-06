@@ -16,7 +16,6 @@ import { Route as AuthImport } from './routes/~_auth'
 import { Route as AppImport } from './routes/~_app'
 import { Route as AuthSignUpImport } from './routes/~_auth/~sign-up'
 import { Route as AuthSignInImport } from './routes/~_auth/~sign-in'
-import { Route as AppImportImport } from './routes/~_app/~import'
 import { Route as AppSettingsImport } from './routes/~_app/~_settings'
 import { Route as AppIndexImport } from './routes/~_app/~index'
 import { Route as AppSettingsSettingsSecurityImport } from './routes/~_app/~_settings/~settings.security'
@@ -48,11 +47,6 @@ const AuthSignUpRoute = AuthSignUpImport.update({
 const AuthSignInRoute = AuthSignInImport.update({
   path: '/sign-in',
   getParentRoute: () => AuthRoute,
-} as any)
-
-const AppImportRoute = AppImportImport.update({
-  path: '/import',
-  getParentRoute: () => AppRoute,
 } as any)
 
 const AppSettingsRoute = AppSettingsImport.update({
@@ -123,13 +117,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppSettingsImport
       parentRoute: typeof AppImport
     }
-    '/_app/import': {
-      id: '/_app/import'
-      path: '/import'
-      fullPath: '/import'
-      preLoaderRoute: typeof AppImportImport
-      parentRoute: typeof AppImport
-    }
     '/_auth/sign-in': {
       id: '/_auth/sign-in'
       path: '/sign-in'
@@ -178,7 +165,6 @@ export const routeTree = rootRoute.addChildren({
       AppSettingsSettingsOrganizationsRoute,
       AppSettingsSettingsSecurityRoute,
     }),
-    AppImportRoute,
   }),
   AuthRoute: AuthRoute.addChildren({ AuthSignInRoute, AuthSignUpRoute }),
   NewOrgRoute,
@@ -201,8 +187,7 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "~_app.tsx",
       "children": [
         "/_app/",
-        "/_app/_settings",
-        "/_app/import"
+        "/_app/_settings"
       ]
     },
     "/_auth": {
@@ -227,10 +212,6 @@ export const routeTree = rootRoute.addChildren({
         "/_app/_settings/settings/organizations",
         "/_app/_settings/settings/security"
       ]
-    },
-    "/_app/import": {
-      "filePath": "~_app/~import.tsx",
-      "parent": "/_app"
     },
     "/_auth/sign-in": {
       "filePath": "~_auth/~sign-in.tsx",

@@ -65,9 +65,9 @@ function Component() {
     <div className="flex flex-col max-h-full overflow-auto gap-8">
       <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4">
         <div className="flex flex-col gap-2">
-          <h1>{t('content:settings.organizations.title')}</h1>
+          <h1>{t('content:erp.settings.organizations.title')}</h1>
           <p className="muted">
-            {t('content:settings.organizations.subtitle')}
+            {t('content:erp.settings.organizations.subtitle')}
           </p>
         </div>
         <Tooltip>
@@ -75,12 +75,12 @@ function Component() {
             <Button className="w-full lg:w-fit" asChild>
               <Link to="/new-org" className="flex items-center gap-2">
                 <PiBuildingOffice className="h-4 w-4" />
-                {t('content:organization.add.title')}
+                {t('content:erp.organization.add.title')}
               </Link>
             </Button>
           </TooltipTrigger>
           <TooltipContent>
-            <p>{t('content:organization.add.subtitle')}</p>
+            <p>{t('content:erp.organization.add.subtitle')}</p>
           </TooltipContent>
         </Tooltip>
       </div>
@@ -102,16 +102,16 @@ function OrganizationsTable() {
       <TableHeader>
         <TableRow>
           <TableHead className="w-20">
-            {t('content:organization.find_many.columns.id')}
+            {t('content:erp.organization.find_many.columns.id')}
           </TableHead>
           <TableHead className="w-48">
-            {t('content:organization.find_many.columns.name')}
+            {t('content:erp.organization.find_many.columns.name')}
           </TableHead>
           <TableHead>
-            {t('content:organization.find_many.columns.description')}
+            {t('content:erp.organization.find_many.columns.description')}
           </TableHead>
           <TableHead className="text-right">
-            {t('content:organization.find_many.columns.staff._count')}
+            {t('content:erp.organization.find_many.columns.staff._count')}
           </TableHead>
           <TableHead className="text-right">
             {t('common:actions.actions')}
@@ -149,7 +149,7 @@ function OrganizationsTable() {
           <TableRow>
             <TableCell colSpan={6}>
               <div className="flex w-full h-24 items-center justify-center text-muted-foreground">
-                <p>{t('content:organization.find_many.empty')}</p>
+                <p>{t('content:erp.organization.find_many.empty')}</p>
               </div>
             </TableCell>
           </TableRow>
@@ -210,9 +210,9 @@ function EditOrganization(props: { id: number }) {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{t('content:organization.edit.title')}</DialogTitle>
+          <DialogTitle>{t('content:erp.organization.edit.title')}</DialogTitle>
           <DialogDescription>
-            {t('content:organization.edit.subtitle')}
+            {t('content:erp.organization.edit.subtitle')}
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -226,7 +226,7 @@ function EditOrganization(props: { id: number }) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel required>
-                    {t('content:organization.edit.form_fields.name.label')}
+                    {t('content:erp.organization.edit.form_fields.name.label')}
                   </FormLabel>
                   <FormControl>
                     {isLoading ? (
@@ -234,7 +234,7 @@ function EditOrganization(props: { id: number }) {
                     ) : (
                       <Input
                         placeholder={t(
-                          'content:organization.edit.form_fields.name.placeholder',
+                          'content:erp.organization.edit.form_fields.name.placeholder',
                         )}
                         {...field}
                       />
@@ -251,7 +251,7 @@ function EditOrganization(props: { id: number }) {
                 <FormItem>
                   <FormLabel>
                     {t(
-                      'content:organization.edit.form_fields.description.label',
+                      'content:erp.organization.edit.form_fields.description.label',
                     )}
                   </FormLabel>
                   <FormControl>
@@ -260,7 +260,7 @@ function EditOrganization(props: { id: number }) {
                     ) : (
                       <Textarea
                         placeholder={t(
-                          'content:organization.edit.form_fields.description.placeholder',
+                          'content:erp.organization.edit.form_fields.description.placeholder',
                         )}
                         className="resize-none"
                         {...field}
@@ -344,7 +344,7 @@ function DeleteOrganization(props: { id: number }) {
 
   function onDelete() {
     toast.promise(mutateAsync({ id: props.id }), {
-      loading: t('content:organization.delete.deleting'),
+      loading: t('content:erp.organization.delete.deleting'),
       success: ({ message }) => message,
       error: ({ message }) => message,
     });
@@ -359,9 +359,11 @@ function DeleteOrganization(props: { id: number }) {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{t('content:organization.delete.title')}</DialogTitle>
+          <DialogTitle>
+            {t('content:erp.organization.delete.title')}
+          </DialogTitle>
           <DialogDescription>
-            {t('content:organization.delete.subtitle')}
+            {t('content:erp.organization.delete.subtitle')}
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>

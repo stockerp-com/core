@@ -1,4 +1,7 @@
-import { findManyInfiniteStockpointsSchema } from '@core/validation/erp/stockpoint/find-many.schema';
+import {
+  findManyInfiniteStockpointsSchema,
+  findManyStockpointsSchema,
+} from '@core/validation/erp/stockpoint/find-many.schema';
 import { tenantProcedure } from '../../../procedures/tenant.js';
 
 export const findManyInfiniteHandler = tenantProcedure(['ADMIN', 'OWNER'])
@@ -7,7 +10,10 @@ export const findManyInfiniteHandler = tenantProcedure(['ADMIN', 'OWNER'])
     const items = await ctx.tenantDb?.stockpoint.findMany({
       take: input.limit + 1,
       where: {
-        name: { search: input.search },
+        name: {
+          contains: input.search,
+          mode: 'insensitive',
+        },
         isArchived: input.isArchived,
       },
       select: {
@@ -26,5 +32,20 @@ export const findManyInfiniteHandler = tenantProcedure(['ADMIN', 'OWNER'])
     return {
       items,
       nextCursor,
+    };
+  });
+
+export const findManyHandler = tenantProcedure(['ADMIN', 'OWNER'])
+  .input(findManyStockpointsSchema)
+  .query(async ({ ctx, input }) => {
+    const items = await ctx.tenantDb?.stockpoint.findMany({
+      where: {
+        name: { search: input.search },
+      },
+      orderBy: input.orderBy,
+    });
+
+    return {
+      items,
     };
   });

@@ -8,7 +8,6 @@ export const addStockpointSchema = z.object({
   phone: z.string().optional(),
   email: z.string().optional(),
   website: z.string().optional(),
-  coordinates: z.string().optional(),
 });
 
 export type AddStockpointInput = z.infer<typeof addStockpointSchema>;

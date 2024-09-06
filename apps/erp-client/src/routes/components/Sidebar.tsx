@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Button } from '@core/ui/components/ui/button';
 import { Link } from '@tanstack/react-router';
 import { PiGearSix } from 'react-icons/pi';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 export default function Sidebar() {
   const [isCollapsed, setIsCollapsed] = useState(
@@ -47,13 +47,11 @@ export default function Sidebar() {
 }
 
 function SidebarNavigation(props: { isCollapsed: boolean }) {
+  const { t } = useTranslation();
+
   return (
     <div className="flex flex-col justify-between h-full w-full">
-      <div className="flex h-full p-3">
-        <Button asChild type="button">
-          <Link to="/import">Import</Link>
-        </Button>
-      </div>
+      <div className="flex h-full p-3"></div>
       <div className="flex flex-col gap-2 p-3 border-t">
         <Button
           asChild
@@ -66,7 +64,7 @@ function SidebarNavigation(props: { isCollapsed: boolean }) {
         >
           <Link to="/settings/general">
             <PiGearSix className="h-4 w-4" />
-            {!props.isCollapsed && t('content:settings.title')}
+            {!props.isCollapsed && t('content:erp.settings.title')}
           </Link>
         </Button>
       </div>

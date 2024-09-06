@@ -1,196 +1,313 @@
 {
-  "auth": {
-    "sign_up": {
-      "title": "Sign up",
-      "subtitle": "Create your account",
-      "form_fields": {
-        "full_name": {
-          "label": "Full name",
-          "placeholder": "John Doe"
-        },
-        "email": {
-          "label": "Email address",
-          "placeholder": "john@doe.com"
-        },
-        "password": {
-          "label": "Password",
-          "placeholder": "••••••••"
-        }
-      },
-      "sign_in_message": "Already have an account?"
-    },
-    "forgot_password": {
-      "title": "Forgot password",
-      "subtitle": "We will send you a 6-digit code that will allow you to reset your password",
-      "form_fields": {
-        "email": {
-          "label": "Email address",
-          "placeholder": "john@doe.com"
-        },
-        "otp": {
-          "label": "6-digit code",
-          "placeholder": "123456"
-        },
-        "new_password": {
-          "label": "New password",
-          "placeholder": "••••••••"
-        }
-      }
-    },
-    "change_password": {
-      "title": "Change password",
-      "subtitle": "Change your password",
-      "form_fields": {
-        "new_password": {
-          "label": "New password",
-          "placeholder": "••••••••",
-          "description": "This is going to be your new password"
-        }
-      }
-    },
-    "sign_in": {
-      "title": "Sign in",
-      "subtitle": "Sign in to your account",
-      "form_fields": {
-        "email": {
-          "label": "Email address",
-          "placeholder": "john@doe.com"
-        },
-        "password": {
-          "label": "Password",
-          "placeholder": "••••••••••••"
-        }
-      },
-      "sign_up_message": "Don't have an account yet?",
-      "forgot_password": "Forgot my password"
-    },
-    "sign_out": {
-      "title": "Sign out",
-      "subtitle": "Are you sure you want to sign out?"
-    }
-  },
-  "account": {
-    "edit_profile": {
-      "title": "Edit profile",
-      "subtitle": "Update your profile",
-      "form_fields": {
-        "full_name": {
-          "label": "Full name",
-          "placeholder": "John Doe"
-        },
-        "email": {
-          "label": "Email address",
-          "placeholder": "john@doe.com"
-        },
-        "picture": {
-          "label": "Profile picture",
-          "placeholder": "Drag and drop your picture here or click to browse",
-          "dragging": "Drop your picture here..."
-        }
-      }
-    }
-  },
-  "settings": {
-    "title": "Settings",
-    "general": {
-      "title": "General",
-      "subtitle": "Manage your general settings",
-      "profile": {
-        "title": "Profile",
-        "subtitle": "Edit your personal information"
-      },
-      "appearance": {
-        "title": "Appearance",
-        "subtitle": "Customize the look of the app",
-        "theme": {
-          "label": "Theme",
-          "placeholder": "Select theme",
-          "options": {
-            "light": "Light",
-            "dark": "Dark",
-            "system": "System"
+  "erp": {
+    "auth": {
+      "sign_up": {
+        "title": "Sign up",
+        "subtitle": "Create your account",
+        "form_fields": {
+          "full_name": {
+            "label": "Full name",
+            "placeholder": "John Doe"
+          },
+          "email": {
+            "label": "Email address",
+            "placeholder": "john@doe.com"
+          },
+          "password": {
+            "label": "Password",
+            "placeholder": "••••••••"
           }
         },
-        "language": {
-          "label": "Language",
-          "placeholder": "Select language",
-          "empty": "No language found",
-          "options": {
-            "en": "English",
-            "ru": "Русский",
-            "uk-UA": "Українська"
+        "sign_in_message": "Already have an account?"
+      },
+      "forgot_password": {
+        "title": "Forgot password",
+        "subtitle": "We will send you a 6-digit code that will allow you to reset your password",
+        "form_fields": {
+          "email": {
+            "label": "Email address",
+            "placeholder": "john@doe.com"
+          },
+          "otp": {
+            "label": "6-digit code",
+            "placeholder": "123456"
+          },
+          "new_password": {
+            "label": "New password",
+            "placeholder": "••••••••"
           }
         }
+      },
+      "change_password": {
+        "title": "Change password",
+        "subtitle": "Change your password",
+        "form_fields": {
+          "new_password": {
+            "label": "New password",
+            "placeholder": "••••••••",
+            "description": "This is going to be your new password"
+          }
+        }
+      },
+      "sign_in": {
+        "title": "Sign in",
+        "subtitle": "Sign in to your account",
+        "form_fields": {
+          "email": {
+            "label": "Email address",
+            "placeholder": "john@doe.com"
+          },
+          "password": {
+            "label": "Password",
+            "placeholder": "••••••••••••"
+          }
+        },
+        "sign_up_message": "Don't have an account yet?",
+        "forgot_password": "Forgot my password"
       },
       "sign_out": {
         "title": "Sign out",
-        "subtitle": "Sign out of your account"
+        "subtitle": "Are you sure you want to sign out?"
       }
     },
-    "organizations": {
-      "title": "Organizations",
-      "subtitle": "Manage your organizations"
-    },
-    "security": {
-      "title": "Security",
-      "subtitle": "Manage your security settings",
-      "change_password": {
-        "title": "Change password",
-        "subtitle": "Change your password"
-      }
-    }
-  },
-  "organization": {
-    "add": {
-      "title": "Add organization",
-      "subtitle": "Add your organization to the stockerp platform.",
-      "adding": "Adding organization...",
-      "adding_subtitle": "Please wait while we add your organization.",
-      "form_fields": {
-        "name": {
-          "label": "Organization name",
-          "placeholder": "Acme Inc."
-        },
-        "description": {
-          "label": "Description",
-          "placeholder": "Acme Inc. is a company that..."
+    "account": {
+      "edit_profile": {
+        "title": "Edit profile",
+        "subtitle": "Update your profile",
+        "form_fields": {
+          "full_name": {
+            "label": "Full name",
+            "placeholder": "John Doe"
+          },
+          "email": {
+            "label": "Email address",
+            "placeholder": "john@doe.com"
+          },
+          "picture": {
+            "label": "Profile picture",
+            "placeholder": "Drag and drop your picture here or click to browse",
+            "dragging": "Drop your picture here..."
+          }
         }
       }
     },
-    "edit": {
-      "title": "Edit organization",
-      "subtitle": "Edit the general information about your organization.",
-      "form_fields": {
-        "name": {
-          "label": "Organization name",
-          "placeholder": "Acme Inc."
+    "settings": {
+      "title": "Settings",
+      "general": {
+        "title": "General",
+        "subtitle": "Manage your general settings",
+        "profile": {
+          "title": "Profile",
+          "subtitle": "Edit your personal information"
         },
-        "description": {
-          "label": "Description",
-          "placeholder": "Acme Inc. is a company that..."
+        "appearance": {
+          "title": "Appearance",
+          "subtitle": "Customize the look of the app",
+          "theme": {
+            "label": "Theme",
+            "placeholder": "Select theme",
+            "options": {
+              "light": "Light",
+              "dark": "Dark",
+              "system": "System"
+            }
+          },
+          "language": {
+            "label": "Language",
+            "placeholder": "Select language",
+            "empty": "No language found",
+            "options": {
+              "en": "English",
+              "ru": "Русский",
+              "uk-UA": "Українська"
+            }
+          }
+        },
+        "sign_out": {
+          "title": "Sign out",
+          "subtitle": "Sign out of your account"
         }
-      }
-    },
-    "delete": {
-      "title": "Delete organization",
-      "subtitle": "Are you totally sure you want to delete this organization? This action cannot be undone, it will completely erase the organization and all its data.",
-      "deleting": "Deleting organization..."
-    },
-    "find_many": {
-      "title": "Organizations",
-      "subtitle": "List of all organizations",
-      "not_selected": "No organization selected",
-      "search": {
-        "placeholder": "Search organizations...",
-        "no_results": "No organizations found"
       },
-      "empty": "It looks like there are no organizations yet.",
-      "columns": {
-        "id": "ID",
-        "name": "Name",
-        "description": "Description",
-        "staff": {
-          "_count": "Staff count"
+      "organizations": {
+        "title": "Organizations",
+        "subtitle": "Manage your organizations"
+      },
+      "security": {
+        "title": "Security",
+        "subtitle": "Manage your security settings",
+        "change_password": {
+          "title": "Change password",
+          "subtitle": "Change your password"
+        }
+      }
+    },
+    "organization": {
+      "add": {
+        "title": "Add organization",
+        "subtitle": "Add your organization to the stockerp platform.",
+        "adding": "Adding organization...",
+        "adding_subtitle": "Please wait while we add your organization.",
+        "form_fields": {
+          "name": {
+            "label": "Organization name",
+            "placeholder": "Acme Inc."
+          },
+          "description": {
+            "label": "Description",
+            "placeholder": "Acme Inc. is a company that..."
+          }
+        }
+      },
+      "edit": {
+        "title": "Edit organization",
+        "subtitle": "Edit the general information about your organization.",
+        "form_fields": {
+          "name": {
+            "label": "Organization name",
+            "placeholder": "Acme Inc."
+          },
+          "description": {
+            "label": "Description",
+            "placeholder": "Acme Inc. is a company that..."
+          }
+        }
+      },
+      "delete": {
+        "title": "Delete organization",
+        "subtitle": "Are you totally sure you want to delete this organization? This action cannot be undone, it will completely erase the organization and all its data.",
+        "deleting": "Deleting organization..."
+      },
+      "find_many": {
+        "title": "Organizations",
+        "subtitle": "List of all organizations",
+        "not_selected": "No organization selected",
+        "search": {
+          "placeholder": "Search organizations...",
+          "no_results": "No organizations found"
+        },
+        "empty": "It looks like there are no organizations yet.",
+        "columns": {
+          "id": "ID",
+          "name": "Name",
+          "description": "Description",
+          "staff": {
+            "_count": "Staff count"
+          }
+        }
+      }
+    },
+    "stockpoint": {
+      "title": "Stockpoints",
+      "subtitle": "Manage your stockpoints",
+      "select": {
+        "placeholder": {
+          "single": "Select a stockpoint",
+          "multiple": "Select stockpoints"
+        }
+      },
+      "add": {
+        "title": "Add stockpoint",
+        "subtitle": "Add a new stockpoint",
+        "form_fields": {
+          "name": {
+            "label": "Stockpoint name",
+            "placeholder": "Main store"
+          },
+          "description": {
+            "label": "Description",
+            "placeholder": "Main store is the place where we keep and sell our products..."
+          },
+          "address": {
+            "label": "Address",
+            "placeholder": "123 Main St, New York, NY"
+          },
+          "phone": {
+            "label": "Phone number",
+            "placeholder": "+1 123 456 7890"
+          },
+          "email": {
+            "label": "Email address",
+            "placeholder": "john@doe.com"
+          },
+          "website": {
+            "label": "Website",
+            "placeholder": "https://example.com"
+          }
+        }
+      },
+      "edit": {
+        "title": "Edit stockpoint",
+        "subtitle": "Edit the general information about your stockpoint.",
+        "form_fields": {
+          "name": {
+            "label": "Stockpoint name",
+            "placeholder": "Main store"
+          },
+          "description": {
+            "label": "Description",
+            "placeholder": "Main store is the place where we keep and sell our products"
+          },
+          "address": {
+            "label": "Address",
+            "placeholder": "123 Main St, New York, NY"
+          },
+          "phone": {
+            "label": "Phone number",
+            "placeholder": "+1 123 456 7890"
+          },
+          "email": {
+            "label": "Email address",
+            "placeholder": "john@doe.com"
+          },
+          "website": {
+            "label": "Website",
+            "placeholder": "https://example.com"
+          }
+        }
+      },
+      "delete": {
+        "title": "Delete stockpoint",
+        "subtitle": "Are you totally sure you want to delete this stockpoint? This action cannot be undone, it will completely erase the stockpoint and all its data.",
+        "deleting": "Deleting stockpoint..."
+      },
+      "find_many": {
+        "title": "Stockpoints",
+        "subtitle": "List of all stockpoints",
+        "not_selected": "No stockpoint selected",
+        "placeholder": "Search stockpoints...",
+        "empty": "It looks like there are no stockpoints yet.",
+        "columns": {
+          "id": "ID",
+          "name": "Name",
+          "description": "Description",
+          "address": "Address",
+          "phone": "Phone",
+          "email": "Email",
+          "website": "Website"
+        }
+      },
+      "find_one": {
+        "title": "Stockpoint",
+        "subtitle": "General information about the stockpoint",
+        "form_fields": {
+          "name": {
+            "label": "Stockpoint name"
+          },
+          "description": {
+            "label": "Description"
+          },
+          "address": {
+            "label": "Address"
+          },
+          "phone": {
+            "label": "Phone number"
+          },
+          "email": {
+            "label": "Email address"
+          },
+          "website": {
+            "label": "Website"
+          }
         }
       }
     }

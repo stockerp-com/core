@@ -12,6 +12,7 @@ import { z } from 'zod';
 import { addUtil } from '../../good/utils/add.js';
 import { EditGoodExistingDataInput, editUtil } from '../../good/utils/edit.js';
 import { Prisma, PrismaTX } from '@core/db';
+import logger from '@core/logger';
 
 type TransformedRow = {
   sku: string;
@@ -111,217 +112,274 @@ export const addHandler = tenantProcedure(['ADMIN', 'OWNER'])
         }
       }
 
-      for (const good of transformedGoods) {
-        let existingGood: EditGoodExistingDataInput | null = null;
+      const importEntry = await tx.import.create({
+        data: {
+          schemaId: importSchemaData.id,
+          status: 'PROCESSING',
+          stockpointId: importSchema.goods.stockpointId,
+        },
+      });
 
-        for (const {
-          identificatorName,
-        } of importSchemaData.additionalIdentificators) {
-          const value = good.additionalIdentificators.find(
-            (o) => o.name === identificatorName,
-          )?.value;
+      const importedIds: number[] = [];
 
-          if (value) {
-            const good = await ctx.tenantDb?.good.findFirst({
-              where: {
-                additionalIdentificators: {
-                  some: {
-                    identificatorName,
-                    value,
+      try {
+        for (const good of transformedGoods) {
+          let existingGood: EditGoodExistingDataInput | null = null;
+
+          for (const {
+            identificatorName,
+          } of importSchemaData.additionalIdentificators) {
+            const value = good.additionalIdentificators.find(
+              (o) => o.name === identificatorName,
+            )?.value;
+
+            if (value) {
+              const good = await ctx.tenantDb?.good.findFirst({
+                where: {
+                  additionalIdentificators: {
+                    some: {
+                      identificatorName,
+                      value,
+                    },
                   },
                 },
-              },
-              include: {
-                additionalIdentificators: true,
-                attributes: {
-                  include: {
-                    values: true,
+                include: {
+                  additionalIdentificators: true,
+                  attributes: {
+                    include: {
+                      values: true,
+                    },
                   },
-                },
-                media: {
-                  include: {
-                    file: true,
+                  media: {
+                    include: {
+                      file: true,
+                    },
                   },
+                  bulkPrices: true,
+                  retailPrices: true,
+                  stock: true,
+                  localizations: true,
                 },
-                bulkPrices: true,
-                retailPrices: true,
-                stock: true,
-                localizations: true,
-              },
-            });
+              });
 
-            if (good) {
-              existingGood = good;
-              break;
+              if (good) {
+                existingGood = good;
+                break;
+              }
             }
           }
-        }
 
-        const media: {
-          key: string;
-          type: string;
-          name: string;
-          size: number;
-        }[] = [];
-        for (const key of good.media) {
-          const file = await ctx.tenantDb?.file.findUnique({
-            where: {
-              key,
-            },
-          });
-
-          if (file) {
-            media.push({
-              key: file.key,
-              type: file.type,
-              name: file.name,
-              size: file.size,
-            });
-          } else {
-            const object = await ctx.aws?.s3.getObject({ key });
-
-            const newFile = await ctx.tenantDb?.file.create({
-              data: {
+          const media: {
+            key: string;
+            type: string;
+            name: string;
+            size: number;
+          }[] = [];
+          for (const key of good.media) {
+            const file = await ctx.tenantDb?.file.findUnique({
+              where: {
                 key,
-                name: key.split('/').pop() ?? '-',
-                size: object?.ContentLength ?? 0,
-                type: object?.ContentType ?? 'application/octet-stream',
               },
             });
 
-            if (newFile) {
+            if (file) {
               media.push({
-                key: newFile.key,
-                type: newFile.type,
-                name: newFile.name,
-                size: newFile.size,
+                key: file.key,
+                type: file.type,
+                name: file.name,
+                size: file.size,
+              });
+            } else {
+              const object = await ctx.aws?.s3.getObject({ key });
+
+              const newFile = await ctx.tenantDb?.file.create({
+                data: {
+                  key,
+                  name: key.split('/').pop() ?? '-',
+                  size: object?.ContentLength ?? 0,
+                  type: object?.ContentType ?? 'application/octet-stream',
+                },
+              });
+
+              if (newFile) {
+                media.push({
+                  key: newFile.key,
+                  type: newFile.type,
+                  name: newFile.name,
+                  size: newFile.size,
+                });
+              }
+            }
+          }
+
+          const attributes: { id: number; valueIds: number[] }[] = [];
+          for (const { id, value: attributeValue } of good.attributes ?? []) {
+            const attribute = await ctx.tenantDb?.attribute.findUnique({
+              where: {
+                id,
+              },
+            });
+
+            if (!attribute) {
+              throw new TRPCError({
+                code: 'NOT_FOUND',
+                message: ctx.t?.('res:import.add.attribute_not_found', { id }),
               });
             }
-          }
-        }
 
-        const attributes: { id: number; valueIds: number[] }[] = [];
-        for (const { id, value: attributeValue } of good.attributes ?? []) {
-          const attribute = await ctx.tenantDb?.attribute.findUnique({
-            where: {
-              id,
-            },
-          });
-
-          if (!attribute) {
-            throw new TRPCError({
-              code: 'NOT_FOUND',
-              message: ctx.t?.('res:import.add.attribute_not_found', { id }),
-            });
-          }
-
-          const value = await ctx.tenantDb?.attributeValue.findFirst({
-            where: {
-              attributeId: id,
-              localizations: {
-                some: {
-                  data: {
-                    equals: JSON.stringify(attributeValue),
-                  },
-                },
-              },
-            },
-          });
-
-          if (value) {
-            attributes.push({
-              id,
-              valueIds: [value.id],
-            });
-          } else {
-            const newValue = await ctx.tenantDb?.attributeValue.create({
-              data: {
+            const value = await ctx.tenantDb?.attributeValue.findFirst({
+              where: {
                 attributeId: id,
                 localizations: {
-                  create: {
-                    data: attributeValue,
-                    locale: importSchema.locale,
+                  some: {
+                    data: {
+                      equals: JSON.stringify(attributeValue),
+                    },
                   },
                 },
               },
             });
 
-            if (newValue) {
+            if (value) {
               attributes.push({
                 id,
-                valueIds: [newValue.id],
+                valueIds: [value.id],
               });
+            } else {
+              const newValue = await ctx.tenantDb?.attributeValue.create({
+                data: {
+                  attributeId: id,
+                  localizations: {
+                    create: {
+                      data: attributeValue,
+                      locale: importSchema.locale,
+                    },
+                  },
+                },
+              });
+
+              if (newValue) {
+                attributes.push({
+                  id,
+                  valueIds: [newValue.id],
+                });
+              }
             }
           }
+          let goodId: number | undefined;
+
+          if (existingGood) {
+            await editUtil({
+              editFields: importSchema.goods.editFields,
+              tx,
+              editData: {
+                id: existingGood.id,
+                retailGroupId: good.retailGoodsGroupId,
+                media,
+                attributes,
+                distributionChannel: 'RETAIL',
+                isArchived: false,
+                sku: good.sku,
+                additionalIdentificators: good.additionalIdentificators,
+                retailPrices: [
+                  {
+                    currencyId: importSchema.currency,
+                    price: good.price,
+                    discount: good.discount,
+                    fullPrice: good.fullPrice,
+                  },
+                ],
+                localizations: [
+                  {
+                    locale: importSchema.locale,
+                    name: good.name,
+                  },
+                ],
+                stock: [
+                  {
+                    stockpointId: importSchema.goods.stockpointId,
+                    quantity: good.quantity,
+                  },
+                ],
+              },
+              oldData: existingGood,
+            });
+            goodId = existingGood.id;
+          } else {
+            const newGood = await addUtil({
+              data: {
+                retailGroupId: good.retailGoodsGroupId,
+                media,
+                attributes,
+                distributionChannel: 'RETAIL',
+                isArchived: false,
+                sku: good.sku,
+                additionalIdentificators: good.additionalIdentificators,
+                retailPrices: [
+                  {
+                    currencyId: importSchema.currency,
+                    price: good.price,
+                    discount: good.discount,
+                    fullPrice: good.fullPrice,
+                  },
+                ],
+                localizations: [
+                  {
+                    locale: importSchema.locale,
+                    name: good.name,
+                  },
+                ],
+                stock: [
+                  {
+                    stockpointId: importSchema.goods.stockpointId,
+                    quantity: good.quantity,
+                  },
+                ],
+              },
+              tx,
+            });
+            goodId = newGood?.id;
+          }
+
+          if (goodId) {
+            importedIds.push(goodId);
+          }
         }
-        if (existingGood) {
-          await editUtil({
-            editFields: importSchema.goods.editFields,
-            tx,
-            editData: {
-              id: existingGood.id,
-              media,
-              attributes,
-              distributionChannel: 'RETAIL',
-              isArchived: false,
-              sku: good.sku,
-              additionalIdentificators: good.additionalIdentificators,
-              retailPrices: [
-                {
-                  currencyId: importSchema.currency,
-                  price: good.price,
-                  discount: good.discount,
-                  fullPrice: good.fullPrice,
-                },
-              ],
-              localizations: [
-                {
-                  locale: importSchema.locale,
-                  name: good.name,
-                },
-              ],
-              stock: [
-                {
-                  stockpointId: importSchema.goods.stockpointId,
-                  quantity: good.quantity,
-                },
-              ],
+
+        await tx.stock.updateMany({
+          where: {
+            stockpointId: importSchema.goods.stockpointId,
+            goodId: {
+              notIn: importedIds,
             },
-            oldData: existingGood,
-          });
-        } else {
-          await addUtil({
-            data: {
-              media,
-              attributes,
-              distributionChannel: 'RETAIL',
-              isArchived: false,
-              sku: good.sku,
-              additionalIdentificators: good.additionalIdentificators,
-              retailPrices: [
-                {
-                  currencyId: importSchema.currency,
-                  price: good.price,
-                  discount: good.discount,
-                  fullPrice: good.fullPrice,
-                },
-              ],
-              localizations: [
-                {
-                  locale: importSchema.locale,
-                  name: good.name,
-                },
-              ],
-              stock: [
-                {
-                  stockpointId: importSchema.goods.stockpointId,
-                  quantity: good.quantity,
-                },
-              ],
-            },
-            tx,
-          });
-        }
+          },
+          data: {
+            quantity: 0,
+          },
+        });
+
+        await tx.import.update({
+          where: {
+            id: importEntry.id,
+          },
+          data: {
+            status: 'PROCESSED',
+          },
+        });
+      } catch (error) {
+        await tx.import.update({
+          where: {
+            id: importEntry.id,
+          },
+          data: {
+            status: 'FAILED',
+          },
+        });
+        logger.error(error, 'Import Error');
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: ctx.t?.('errors:http.unknown'),
+        });
       }
     });
   });
