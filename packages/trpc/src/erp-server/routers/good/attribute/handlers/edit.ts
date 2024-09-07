@@ -25,28 +25,37 @@ export const editHandler = tenantProcedure(['ADMIN', 'OWNER'])
       },
       data: {
         localizations: {
-          upsert: {
+          upsert: input.localizations.map(({ locale, name }) => ({
             where: {
               attributeId_locale: {
                 attributeId: input.id,
-                locale: input.locale,
+                locale,
+              },
+            },
+            create: {
+              name,
+              localization: {
+                connectOrCreate: {
+                  where: {
+                    locale,
+                  },
+                  create: {
+                    locale,
+                  },
+                },
               },
             },
             update: {
-              name: input.name,
+              name,
             },
-            create: {
-              name: input.name,
-              locale: input.locale,
-            },
-          },
+          })),
         },
       },
     });
 
     return {
       message: ctx.t?.('res:good.attribute.edit.success', {
-        name: input.name,
+        name: input.localizations[0]?.name,
       }),
     };
   });

@@ -9,9 +9,13 @@ export const findManyInfiniteHandler = tenantProcedure(['ADMIN', 'OWNER'])
       where: {
         localizations: {
           some: {
-            data: { search: input.search },
+            data: {
+              contains: input.search,
+              mode: 'insensitive',
+            },
           },
         },
+        attributeId: input.attributeId,
       },
       select: {
         id: true,

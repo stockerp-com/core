@@ -7,26 +7,26 @@ export const addHandler = tenantProcedure(['ADMIN', 'OWNER'])
     await ctx.tenantDb?.attribute.create({
       data: {
         localizations: {
-          create: {
-            name: input.name,
+          create: input.localizations.map(({ locale, name }) => ({
+            name,
             localization: {
               connectOrCreate: {
                 where: {
-                  locale: input.locale,
+                  locale,
                 },
                 create: {
-                  locale: input.locale,
+                  locale,
                 },
               },
             },
-          },
+          })),
         },
       },
     });
 
     return {
       message: ctx.t?.('res:good.attribute.add.success', {
-        name: input.name,
+        name: input.localizations[0]?.name,
       }),
     };
   });

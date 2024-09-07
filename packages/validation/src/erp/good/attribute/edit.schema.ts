@@ -1,10 +1,9 @@
 import { z } from 'zod';
-import { numberField, stringField } from '../../../utils/common.js';
+import { numberField } from '../../../utils/common.js';
+import { addAttributeSchema } from './add.schema.js';
 
-export const editAttributeSchema = z.object({
+export const editAttributeSchema = addAttributeSchema.extend({
   id: numberField,
-  name: stringField,
-  locale: stringField,
 });
 
 export type EditAttributeInput = z.input<typeof editAttributeSchema>;

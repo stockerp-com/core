@@ -32,5 +32,13 @@
       "title": "Unsaved changes",
       "message": "You have unsaved changes. Are you sure you want to leave without saving?"
     }
+  },
+  "localization": {
+    "placeholder": "Select a language",
+    "options": {
+      "en": "English",
+      "ru": "Russian",
+      "uk": "Ukrainian"
+    }
   }
 }

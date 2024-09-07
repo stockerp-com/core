@@ -2,6 +2,7 @@ import { z } from 'zod';
 import {
   findManyInfiniteSchema,
   findManySchema,
+  numberField,
   orderByField,
   stringField,
 } from '../../../../utils/common.js';
@@ -16,6 +17,7 @@ export const findManyInfiniteAttributeValueSchema =
   findManyInfiniteSchema.extend({
     orderBy,
     locale: stringField,
+    attributeId: numberField.optional(),
   });
 
 export const findManyAttributeValueSchema = findManySchema.extend({

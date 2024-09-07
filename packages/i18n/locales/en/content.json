@@ -310,6 +310,57 @@
           }
         }
       }
+    },
+    "good": {
+      "attribute": {
+        "title": "Attributes",
+        "subtitle": "Manage your attributes",
+        "select": {
+          "placeholder": {
+            "single": "Select an attribute",
+            "multiple": "Select attributes"
+          }
+        },
+        "add": {
+          "title": "Add attribute",
+          "subtitle": "Add a new attribute",
+          "form_fields": {
+            "name": {
+              "label": "Attribute name",
+              "placeholder": "Color"
+            }
+          }
+        },
+        "edit": {
+          "title": "Edit attribute",
+          "subtitle": "Edit the general information about your attribute.",
+          "form_fields": {
+            "name": {
+              "label": "Attribute name",
+              "placeholder": "Color"
+            }
+          }
+        },
+        "delete": {
+          "title": "Delete attribute",
+          "subtitle": "Are you totally sure you want to delete this attribute? This action cannot be undone, it will completely erase the attribute and all its data.",
+          "deleting": "Deleting attribute..."
+        },
+        "find_many": {
+          "title": "Attributes",
+          "subtitle": "List of all attributes",
+          "not_selected": "No attribute selected",
+          "search": {
+            "placeholder": "Search attributes...",
+            "no_results": "No attributes found"
+          },
+          "empty": "It looks like there are no attributes yet.",
+          "columns": {
+            "id": "ID",
+            "name": "Name"
+          }
+        }
+      }
     }
   }
 }

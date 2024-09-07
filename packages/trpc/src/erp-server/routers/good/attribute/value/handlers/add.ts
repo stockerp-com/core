@@ -23,17 +23,26 @@ export const addHandler = tenantProcedure(['ADMIN', 'OWNER'])
       data: {
         attributeId: input.attributeId,
         localizations: {
-          create: {
-            data: input.data,
-            locale: input.locale,
-          },
+          create: input.localizations.map(({ locale, data }) => ({
+            localization: {
+              connectOrCreate: {
+                where: {
+                  locale,
+                },
+                create: {
+                  locale,
+                },
+              },
+            },
+            data,
+          })),
         },
       },
     });
 
     return {
       message: ctx.t?.('res:good.attribute.value.add.success', {
-        value: input.data,
+        value: input.localizations[0]?.data,
       }),
     };
   });
