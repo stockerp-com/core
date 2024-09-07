@@ -51,7 +51,9 @@ function SidebarNavigation(props: { isCollapsed: boolean }) {
 
   return (
     <div className="flex flex-col justify-between h-full w-full">
-      <div className="flex h-full p-3"></div>
+      <div className="flex flex-col h-full p-3">
+        <Link>{}</Link>
+      </div>
       <div className="flex flex-col gap-2 p-3 border-t">
         <Button
           asChild

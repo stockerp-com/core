@@ -16,7 +16,7 @@ export type AddStockpointForm = UseFormReturn<
   unknown,
   undefined
 >;
-export type AddStockpointFormOnSubmit = (values: AddStockpointInput) => void;
+export type AddStockpointFormOnSubmit = (value: AddStockpointInput) => void;
 
 export function AddStockpointForm(props: {
   form: AddStockpointForm;

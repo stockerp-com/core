@@ -359,6 +359,55 @@
             "id": "ID",
             "name": "Name"
           }
+        },
+        "value": {
+          "title": "Attribute values",
+          "subtitle": "Manage your attribute values",
+          "select": {
+            "placeholder": {
+              "single": "Select an attribute value",
+              "multiple": "Select attribute values"
+            }
+          },
+          "add": {
+            "title": "Add attribute value",
+            "subtitle": "Add a new attribute value",
+            "form_fields": {
+              "name": {
+                "label": "Attribute value name",
+                "placeholder": "Red"
+              }
+            }
+          },
+          "edit": {
+            "title": "Edit attribute value",
+            "subtitle": "Edit the general information about your attribute value.",
+            "form_fields": {
+              "name": {
+                "label": "Attribute value name",
+                "placeholder": "Red"
+              }
+            }
+          },
+          "delete": {
+            "title": "Delete attribute value",
+            "subtitle": "Are you totally sure you want to delete this attribute value? This action cannot be undone, it will completely erase the attribute value and all its data.",
+            "deleting": "Deleting attribute value..."
+          },
+          "find_many": {
+            "title": "Attribute values",
+            "subtitle": "List of all attribute values",
+            "not_selected": "No attribute value selected",
+            "search": {
+              "placeholder": "Search attribute values...",
+              "no_results": "No attribute values found"
+            },
+            "empty": "It looks like there are no attribute values yet.",
+            "columns": {
+              "id": "ID",
+              "name": "Name"
+            }
+          }
         }
       }
     }

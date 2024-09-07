@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { trpc } from '../../../../../../router';
+import { trpc, trpcQueryUtils } from '../../../../../../router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -19,6 +19,7 @@ import { AddAttributeValueForm } from './AddAttributeValueForm';
 import { Button } from '@core/ui/components/ui/button';
 import SpinnerIcon from '@core/ui/components/ui/spinner-icon';
 import { PiPlus } from 'react-icons/pi';
+import { toast } from '@core/ui/lib/toast';
 
 export function AddAttributeValueDialog(props: {
   isOpened: boolean;
@@ -26,7 +27,16 @@ export function AddAttributeValueDialog(props: {
   attributeId: number;
 }) {
   const { t, i18n } = useTranslation();
-  const { mutate, isPending } = trpc.good.attribute.value.add.useMutation({});
+  const { mutate, isPending } = trpc.good.attribute.value.add.useMutation({
+    onSuccess({ message }) {
+      toast.success(message);
+      trpcQueryUtils.good.attribute.value.findManyInfinite.invalidate();
+      props.setIsOpened(false);
+    },
+    onError({ message }) {
+      toast.error(message);
+    },
+  });
 
   const form = useForm<AddAttributeValueInput>({
     resolver: zodResolver(addAttributeValueSchema),
