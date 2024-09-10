@@ -157,18 +157,133 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren({
-  AppRoute: AppRoute.addChildren({
-    AppIndexRoute,
-    AppSettingsRoute: AppSettingsRoute.addChildren({
-      AppSettingsSettingsGeneralRoute,
-      AppSettingsSettingsOrganizationsRoute,
-      AppSettingsSettingsSecurityRoute,
-    }),
-  }),
-  AuthRoute: AuthRoute.addChildren({ AuthSignInRoute, AuthSignUpRoute }),
-  NewOrgRoute,
-})
+interface AppSettingsRouteChildren {
+  AppSettingsSettingsGeneralRoute: typeof AppSettingsSettingsGeneralRoute
+  AppSettingsSettingsOrganizationsRoute: typeof AppSettingsSettingsOrganizationsRoute
+  AppSettingsSettingsSecurityRoute: typeof AppSettingsSettingsSecurityRoute
+}
+
+const AppSettingsRouteChildren: AppSettingsRouteChildren = {
+  AppSettingsSettingsGeneralRoute: AppSettingsSettingsGeneralRoute,
+  AppSettingsSettingsOrganizationsRoute: AppSettingsSettingsOrganizationsRoute,
+  AppSettingsSettingsSecurityRoute: AppSettingsSettingsSecurityRoute,
+}
+
+const AppSettingsRouteWithChildren = AppSettingsRoute._addFileChildren(
+  AppSettingsRouteChildren,
+)
+
+interface AppRouteChildren {
+  AppIndexRoute: typeof AppIndexRoute
+  AppSettingsRoute: typeof AppSettingsRouteWithChildren
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppIndexRoute: AppIndexRoute,
+  AppSettingsRoute: AppSettingsRouteWithChildren,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
+interface AuthRouteChildren {
+  AuthSignInRoute: typeof AuthSignInRoute
+  AuthSignUpRoute: typeof AuthSignUpRoute
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthSignInRoute: AuthSignInRoute,
+  AuthSignUpRoute: AuthSignUpRoute,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
+export interface FileRoutesByFullPath {
+  '': typeof AppSettingsRouteWithChildren
+  '/new-org': typeof NewOrgRoute
+  '/': typeof AppIndexRoute
+  '/sign-in': typeof AuthSignInRoute
+  '/sign-up': typeof AuthSignUpRoute
+  '/settings/general': typeof AppSettingsSettingsGeneralRoute
+  '/settings/organizations': typeof AppSettingsSettingsOrganizationsRoute
+  '/settings/security': typeof AppSettingsSettingsSecurityRoute
+}
+
+export interface FileRoutesByTo {
+  '': typeof AppSettingsRouteWithChildren
+  '/new-org': typeof NewOrgRoute
+  '/': typeof AppIndexRoute
+  '/sign-in': typeof AuthSignInRoute
+  '/sign-up': typeof AuthSignUpRoute
+  '/settings/general': typeof AppSettingsSettingsGeneralRoute
+  '/settings/organizations': typeof AppSettingsSettingsOrganizationsRoute
+  '/settings/security': typeof AppSettingsSettingsSecurityRoute
+}
+
+export interface FileRoutesById {
+  __root__: typeof rootRoute
+  '/_app': typeof AppRouteWithChildren
+  '/_auth': typeof AuthRouteWithChildren
+  '/new-org': typeof NewOrgRoute
+  '/_app/': typeof AppIndexRoute
+  '/_app/_settings': typeof AppSettingsRouteWithChildren
+  '/_auth/sign-in': typeof AuthSignInRoute
+  '/_auth/sign-up': typeof AuthSignUpRoute
+  '/_app/_settings/settings/general': typeof AppSettingsSettingsGeneralRoute
+  '/_app/_settings/settings/organizations': typeof AppSettingsSettingsOrganizationsRoute
+  '/_app/_settings/settings/security': typeof AppSettingsSettingsSecurityRoute
+}
+
+export interface FileRouteTypes {
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | ''
+    | '/new-org'
+    | '/'
+    | '/sign-in'
+    | '/sign-up'
+    | '/settings/general'
+    | '/settings/organizations'
+    | '/settings/security'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | ''
+    | '/new-org'
+    | '/'
+    | '/sign-in'
+    | '/sign-up'
+    | '/settings/general'
+    | '/settings/organizations'
+    | '/settings/security'
+  id:
+    | '__root__'
+    | '/_app'
+    | '/_auth'
+    | '/new-org'
+    | '/_app/'
+    | '/_app/_settings'
+    | '/_auth/sign-in'
+    | '/_auth/sign-up'
+    | '/_app/_settings/settings/general'
+    | '/_app/_settings/settings/organizations'
+    | '/_app/_settings/settings/security'
+  fileRoutesById: FileRoutesById
+}
+
+export interface RootRouteChildren {
+  AppRoute: typeof AppRouteWithChildren
+  AuthRoute: typeof AuthRouteWithChildren
+  NewOrgRoute: typeof NewOrgRoute
+}
+
+const rootRouteChildren: RootRouteChildren = {
+  AppRoute: AppRouteWithChildren,
+  AuthRoute: AuthRouteWithChildren,
+  NewOrgRoute: NewOrgRoute,
+}
+
+export const routeTree = rootRoute
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()
 
 /* prettier-ignore-end */
 

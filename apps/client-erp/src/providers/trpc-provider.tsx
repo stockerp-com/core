@@ -19,7 +19,7 @@ interface TrpcProviderProps {
  * @param {ReactNode} props.children - The child components to be wrapped
  * @returns {JSX.Element} The wrapped children with tRPC and React Query providers
  */
-export function TrpcProvider({ children }: TrpcProviderProps) {
+export function TrpcProvider({ children }: TrpcProviderProps): JSX.Element {
   return (
     // tRPC provider wraps the entire app, providing the tRPC client
     <trpc.Provider client={trpcClient} queryClient={queryClient}>

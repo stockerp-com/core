@@ -29,8 +29,8 @@ export const wsClient = createWSClient({
     token: authStore.getState().accessToken ?? undefined,
   }),
   async onClose(cause) {
+    // WebSocket code 3000 is equivalent to HTTP 401 (unauthorized)
     if (cause?.code === 3000) {
-      // Unauthorized, equivalent to HTTP 401
       if (wsUnauthedReconnections >= 2) {
         wsUnauthedReconnections = 0;
         authStore.setState(null);

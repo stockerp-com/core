@@ -23,6 +23,6 @@ export default defineConfig({
     imagetools(),
   ],
   server: {
-    port: 4242,
+    port: 5173,
   },
 });
