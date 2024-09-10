@@ -5,7 +5,8 @@
     "packages:trpc",
     "packages:aws",
     "packages:validation",
-    "packages:i18n"
+    "packages:i18n",
+    "apps:client-erp"
   ],
   "editor.fontSize": 14,
   "editor.fontFamily": "Hack",

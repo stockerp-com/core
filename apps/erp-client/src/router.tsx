@@ -44,7 +44,7 @@ export const wsClient = createWSClient({
 });
 
 const httpLink = httpBatchLink({
-  url: import.meta.env.VITE_API_URL,
+  url: `${import.meta.env.VITE_API_URL}/erp/trpc`,
   transformer: SuperJSON,
   headers() {
     return {

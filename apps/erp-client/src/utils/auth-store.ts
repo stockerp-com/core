@@ -35,7 +35,7 @@ class AuthStore {
   async refreshTokens() {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/auth.refreshTokens`,
+        `${import.meta.env.VITE_API_URL}/erp/trpc/auth.refreshTokens`,
         {
           credentials: 'include',
         },
